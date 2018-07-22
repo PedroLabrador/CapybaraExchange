@@ -12,14 +12,10 @@
 */
 
 Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout');
 
-Route::get('/', function () {
-    return view('index');
-});
-
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get ('/', 'ExchangeController@main');
+Route::post('/', 'ExchangeController@main_store');
 
 Route::group(['middleware' => ['auth']], function() {
 	Route::group(['prefix' => 'user'], function(){
@@ -51,6 +47,3 @@ Route::group(['middleware' => ['auth']], function() {
     	Route::get ('/currency/deactivate/{id}', 'CurrencyController@deactivate');
 	});
 });
-
-// Route::post('/exchange/create', 'HomeController@create');
-// Route::get('/exchange/list', 'HomeController@list');

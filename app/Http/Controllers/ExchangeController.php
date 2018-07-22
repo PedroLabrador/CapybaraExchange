@@ -20,6 +20,13 @@ class ExchangeController extends Controller
         ]);
     }
 
+    public function main() {
+        $currencies = Currency::all();
+        return view('index', [
+            'currencies' => $currencies,
+        ]);
+    }
+
     public function store(Request $request) {
         $user = \Auth::user();
         $bank_id = $request->get('bankaccount');
@@ -74,6 +81,10 @@ class ExchangeController extends Controller
         ]);
 
         return view('user.success');
+    }
+
+    public function main_store(Request $request) {
+        dd($request->all());
     }
 
     public function show($id) {
