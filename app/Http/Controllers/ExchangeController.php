@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Payment;
+use App\Currency;
 
 class ExchangeController extends Controller
 {
     public function index() {
-    	return view('exchange');
+        $currencies = Currency::all();
+    	return view('exchange', [
+            'currencies' => $currencies
+        ]);
     }
 
     public function create(Request $request) {
