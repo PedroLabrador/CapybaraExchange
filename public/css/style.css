@@ -1,0 +1,194 @@
+#fondo{
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: fixed;
+	z-index: -1;
+}
+.contenido{
+	width: 950px;
+	margin: 0px auto;
+}
+
+
+.cabecera{
+
+	width: 950px;
+	height: 100px;
+	background: #f4f4f4;
+	border-radius: 20px;
+	box-shadow: -5px 3px 5px #555;
+	background-clip: padding-box;
+	border: 3px solid  ;
+	border-color: hsla(0,100%,100%,0.4);
+	float: left;
+}
+
+.cuerpo{
+	position: relative;
+	float: left;
+	width: 950px;
+	
+	
+	margin-top: 15px;
+	background: #f4f4f4;
+	background-clip: padding-box;
+	border: 3px solid  ;
+	border-color: hsla(0,100%,100%,0.4);
+	border-radius: 3px;
+	
+}
+.texto{
+	margin-top: 50px;
+	width: 500px;
+	float: left;
+	
+}
+#iniciar_sesion{
+	text-align: center;
+	font-size: 15px;
+	color: black;
+	font-weight: bold;
+}
+#bienvenido,#titulo_1{
+	color: 	#6495ED	;
+	font-size: 30px;
+	font-weight: bold;
+	font-family: cursive ;
+	text-align: center;
+}
+.seccion_seguridad{
+	width: 250px;
+	height: 300px;
+	float: right;
+	margin-top: 50px; 
+}
+#estudiante_index{
+	width: 120px;
+	height: 90px;
+}
+
+#titulo_1{
+	margin: 20px 0 0 0; 
+}
+
+#texto_1{
+	
+	font-family: heveltica|cursive;
+	font-weight: bold;
+	font-size: 20px;
+	color: black;
+	text-align: center;
+	
+}
+#guardia_index{
+	
+	width: 90px;
+	height: 90px;
+}
+
+
+
+#guardia{
+	float: left;
+	width: 120px;
+	height: 90px;
+	margin-left: 15px;
+}
+
+
+#logoUnet{
+	width: 80px;
+	height: 80px;
+	margin-right: 40px;
+	margin-top: 3px;
+	float: right;
+}
+#login_png{
+	width: 200px;
+	height: 200px;
+}
+
+#huella{
+	width: 40px;
+	height: 40px;
+	margin-left: 10px;
+	
+}
+
+#titulo{
+	float: left;
+	font-family:cursive;
+	margin: 0px 0 0 0px;
+	margin-left: 20px;
+	
+}
+
+#letras{
+	font-family: heveltica|cursive;
+	font-weight: bold;
+	font-size: 15px;
+	color: black;
+}
+
+.area_miembro{
+	width: 250px;
+	height: 300px;
+	background: #6495ED	;
+	float: left;
+	margin-left: 100px;
+	margin-top:60px;
+	border-radius: 15px;
+	box-shadow: -8px 5px 5px #555; 
+	box-shadow: -5px 3px 5px #555;
+	background-clip: padding-box;
+	border: 3px solid  ;
+}
+
+.area_contenedor{
+	margin: -2px auto;
+	width: 200px;
+	height: 230px;
+	background: #f4f4f4;
+
+}
+#caja_miembro{
+	width: 200px;
+	height: 30px;
+	background: black;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	margin: 10px auto;
+}
+
+#texto_miembro{
+	color: 	white;
+	font-size: 15px;
+	font-weight: bold;
+	font-family: cursive ;
+	text-align: center;
+
+}
+ #boton1,#boton2{
+ 	margin-top: 40px;
+ 	margin-left: 40px;
+ }
+
+ .footer{
+ 	float: right;
+ 	margin-top: 80px;
+ 	margin-right:30px; 
+ }
+
+ #texto_clave{
+ 	margin: 15px 0 0 0;
+ 	color: 	black;
+	font-size: 13px;
+	font-weight: bold;
+	font-family: heveltica;
+	text-align: center;
+ }
+
+
+
