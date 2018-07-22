@@ -14,6 +14,13 @@
                                 </div>
                             </div>
                         @endif
+                        @if (Session::has('wrong'))
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="form-control has-success">
+                                    <span style="border-color: #c01d1d; color: #c01d1d; text-align: center">{{ Session::get('wrong') }}</span>
+                                </div>
+                            </div>
+                        @endif
                         @if ($errors->any())
                             <div class="col-md-10 col-md-offset-1">
                                 <div class="form-group @if ($errors->any()) has-danger @endif">
@@ -50,11 +57,12 @@
 													<input id='bank' type="text" value="{{ $bankaccount->account }}" class="form-control" disabled>
 												</td>
 												<td style="width: 10%">
-													<!-- <form action="/user/profile/delete/{{ $bankaccount->id }}" onsubmit="return confirm('Seguro que desea borrar el numero de cuenta?');">
+													<form action="/user/profile/delete/{{ $bankaccount->id }}" 
+														onsubmit="return confirm('Seguro que desea borrar el numero de cuenta?');">
 				                                        <td>
-				                                        	<button type="submit" class="btn btn-primary">Borrar</button>
+				                                        	<button type="submit" class="btn btn-danger">Borrar</button>
 				                                        </td>
-				                                    </form> -->
+				                                    </form>
 												</td>
 											</tr>
 										@endforeach
@@ -78,7 +86,9 @@
 		                                		<div class="col-md-4">
 		                                			<select name='bank' class='form-control'>
 			                                			@foreach ($banks as $bank)
+			                                				@if (!$bank->status)
 			                                				<option value='{{ $bank->id }}'>{{ $bank->bankname }}</option>
+			                                				@endif
 			                                			@endforeach
 			                                		</select>
 		                                		</div>

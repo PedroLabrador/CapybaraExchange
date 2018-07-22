@@ -6,9 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $fillable = ['concept', 'amount', 'user_id'];
+    protected $fillable = ['user_id', 'bankaccount_id', 'currency', 'amount', 'to_pay', 'link'];
 
     public function user() {
-    	$this->belongsTo('User::class');
+    	return $this->belongsTo(User::class);
+    }
+
+    public function bankaccount() {
+    	return $this->belongsTo(Bankaccount::class);
+    }
+
+    public function currency() {
+    	return $this->belongsTo(Currency::class);
     }
 }

@@ -21,7 +21,8 @@ class UserController extends Controller
 
     public function update(Request $request) {
         $data = $request->all();
-        if (!$data['account'] || !$data['bank'])
+        
+        if (!isset($data['account']) || !isset($data['bank']))
             return redirect()->back();
         $request->validate([
             'bank' => 'required',
@@ -41,7 +42,8 @@ class UserController extends Controller
     	return redirect()->back()->with(['success' => 'Datos actualizados correctamente']);
     }
 
-    public function destroy($id) {
-        dd("test");
+    public function delete($id) {
+        $bankaccount = Bankaccount::destroy($id);
+        return redirect()->back()->with(['wrong' => 'Numero de cuenta eliminado']);
     }
 }

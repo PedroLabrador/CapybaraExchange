@@ -17,6 +17,9 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('bankaccount_id');
+            $table->string('currency');
+            $table->double('amount');
+            $table->double('to_pay');
             $table->string('link');
             $table->boolean('done')->default(0);
             $table->timestamps();

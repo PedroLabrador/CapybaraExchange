@@ -32,7 +32,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-coffee"></i> <span>{{ config('app.name', 'Laravel') }}</span></a>
+						<a href="index.html" class="site_title"> <span>{{ config('app.name', 'Laravel') }}</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -40,6 +40,7 @@
 					<!-- menu profile quick info -->
 					<div class="profile clearfix">
 						<div class="profile_pic">
+							<img class='img-responsive' src="{{ asset('img/main.png') }}">
 						</div>
 						<div class="profile_info">
 							<span>Bienvenid@</span>
@@ -85,6 +86,13 @@
 								</li>
 							</ul>
 						</div>
+						@if (\Auth::user()->role == 'Admin')
+						<ul class="nav side-menu">
+							<li>
+								<a href="/admin">Panel Administrativo</a>
+							</li>
+						</ul>
+						@endif
 					</div>
 					<!-- /menu profile quick info -->
 

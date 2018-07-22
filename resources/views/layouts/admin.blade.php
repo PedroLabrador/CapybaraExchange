@@ -30,7 +30,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><i class="fa fa-coffee"></i> <span>{{ config('app.name', 'Laravel') }}</span></a>
+						<a href="index.html" class="site_title"><span>{{ config('app.name', 'Laravel') }}</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -38,6 +38,7 @@
 					<!-- menu profile quick info -->
 					<div class="profile clearfix">
 						<div class="profile_pic">
+							<img class='img-responsive' src="{{ asset('img/main.png') }}">
 						</div>
 						<div class="profile_info">
 							<span>Bienvenid@</span>
@@ -55,34 +56,40 @@
 					<!-- sidebar menu -->
 					<div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 						<div class="menu_section">
+							<br>
+							<br>
+							<br>
 							<h3>Control</h3>
 							<ul class="nav side-menu">
 								<li>
-									<a href="#"><i class="fa fa-home"></i>Home</a>
-								</li>
-								<li>
 									<a>
-										<i class="fa fa-angle-right"></i>Item<span class="fa fa-chevron-down"></span>
+										<i class="fa fa-angle-right"></i>Opciones administrativas<span class="fa fa-chevron-down"></span>
 									</a>
 									<ul class="nav child_menu">
 										<li>
-											<a href="/admin/currency">Registrar nueva moneda</a>
+											<a href="/admin/currency">Monedas</a>
 										</li>
 										<li>
-											<a href="/admin/exchange/list">Listado de peticiones</a>
+											<a href="/admin/bank">Bancos</a>
 										</li>
 										<li>
+											<a href="/admin/exchange/list">Listado de peticiones por aprovar</a>
+										</li>
+										<li>
+											<a href="/admin/exchange/list/aproved">Listado de peticiones aprovadas</a>
+										</li>
+									<!-- 	<li>
 											<a href="#">Item</a>
-										</li>
+										</li> -->
 									</ul>
 								</li>
 							</ul>
 						</div>
-						<div class="menu_section">
-							<ul class="nav side-menu">
-
-							</ul>
-						</div>
+						<ul class="nav side-menu">
+							<li>
+								<a href="/user">Panel de usuario</a>
+							</li>
+						</ul>
 					</div>
 					<!-- /sidebar menu -->
 

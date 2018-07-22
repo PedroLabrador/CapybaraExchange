@@ -9,7 +9,24 @@ use App\Price;
 class CurrencyController extends Controller
 {
     public function create() {
-    	return view('currency');
+        $currencies = Currency::all();
+    	return view('currency', [
+            'currencies' => $currencies
+        ]);
+    }
+
+    public function deactivate($id) {
+        $currency = Currency::find($id);
+        $currency->status = 1;
+        $currency->save();
+        return redirect()->back()->with(['success' => 'Moneda desactivada']);
+    }
+
+    public function activate($id) {
+        $currency = Currency::find($id);
+        $currency->status = 0;
+        $currency->save();
+        return redirect()->back()->with(['success' => 'Moneda activada']);
     }
 
     public function store(Request $request) {
@@ -28,18 +45,16 @@ class CurrencyController extends Controller
     	return redirect()->back()->with(['success' => 'Moneda Agregada existosamente']);
     }
 
-    public function pricecreate() {
-    	$currencies = Currency::all();
-    	return view('price', [
-    		'currencies' => $currencies
-    	]);
+    public function edit($id) {
+        $currency = Currency::find($id);
+        return view('currencyedit', [
+            'currency' => $currency
+        ]);
     }
 
-    public function pricestore(Request $request) {
-    	$data = $request->all();
-    	$currency = Currency::find($data);
-    	$data['currency_id'] = $currency->id;
-    	$price = Price::create($data);
-    	return redirect()->back()->with(['success' => 'Precio agregado existosamente']);
+    public function update(Request $request, $id) {
+        $currency = Currency::find($id);
+        $currency->update($request->all());
+        return redirect()->back()->with(['success' => 'Moneda actualizada existosamente']);
     }
 }
