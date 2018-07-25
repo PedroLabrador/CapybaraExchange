@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Bankaccount;
+use App\Payment;
 use App\Bank;
 
 class UserController extends Controller
@@ -59,5 +60,14 @@ class UserController extends Controller
     public function delete($id) {
         $bankaccount = Bankaccount::destroy($id);
         return redirect()->back()->with(['wrong' => 'Numero de cuenta eliminado']);
+    }
+
+    public function list() {
+        $user = \Auth::user();
+        $payments = Payment::where('user_id', $user->id)
+                            ->get();
+        return view('user.exchangelist', [
+            'payments' => $payments
+        ]);
     }
 }

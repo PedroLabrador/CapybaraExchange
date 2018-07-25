@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Payment;
 use App\Currency;
 use App\Bankaccount;
+use App\Mail\PagoAprobado;
+use App\Mail\PagoDenegado;
+use App\Finance;
 
 class ExchangeController extends Controller
 {
@@ -55,7 +58,7 @@ class ExchangeController extends Controller
             'money_to' => 'required|numeric',
             'from' => 'required|integer',
             'to' => 'required|integer',
-            'link' => 'required|url',
+            'link' => 'required|url|unique:payments',
             'bankaccount' => 'required'
         ],[
             'money_from.required' => 'La cantidad de la moneda es requerida.',
@@ -63,6 +66,7 @@ class ExchangeController extends Controller
             'from.required' => 'Campo requerido.',
             'to.required' => 'Campo requerido.',
             'link.required' => 'El enlace es requerido.',
+            'link.unique' => 'El enlace ya ha sido registrado',
             'bankaccount.required' => 'La cuenta bancaria es requerida.',
             'money_from.numeric' => 'La cantidad a vender debe ser numerica.',
             'money_to.numeric' => 'La cantidad a recibir debe ser numerica.',
@@ -83,10 +87,6 @@ class ExchangeController extends Controller
         return view('user.success');
     }
 
-    public function main_store(Request $request) {
-        dd($request->all());
-    }
-
     public function show($id) {
         $payment = Payment::findOrfail($id);
         return view('admin.exchangeshow', [
@@ -94,17 +94,53 @@ class ExchangeController extends Controller
         ]);
     }
 
-    public function approve($id) {
+    public function approve($id, Request $request) {
+        $request->validate([
+            'reference' => 'required',
+            'btcwon' => 'required',
+            'btcspent' => 'required',
+        ],[
+            'reference.required' => 'El numero de referencia es requerido.',
+            'btcwon.required' => 'La cantidad de BTC generados es requerida.',
+            'btcspent.required' => 'La cantidad de BTC gastados es requerida.',
+        ]);
+
         $payment = Payment::findOrfail($id);
+        if ($payment->done != 0)
+            return redirect()->back();
         $payment->done = 1;
+        $payment->reference = $request->get('reference');
         $payment->save();
+
+        $finance = Finance::create([
+            'payment_id' => $payment->id,
+            'btc_won' => $request->get('btcwon'),
+            'btc_spent' => $request->get('btcspent')
+        ]);
+
+        $user = $payment->user;
+        $email = $user->email;
+        \Mail::to($email)->send(new PagoAprobado($user, $payment));
         return redirect('/admin/exchange/list')->with(['success' => "Venta aprobada satisfactoriamente"]);
     }
 
-    public function disapprove($id) {
+    public function disapprove($id, Request $request) {
+        $request->validate([
+            'reference' => 'required',
+        ],[
+            'reference.required' => 'La razon de rechazo es requerida.',
+        ]);
+
         $payment = Payment::findOrfail($id);
+        if ($payment->done != 0)
+            return redirect()->back();
         $payment->done = 2;
+        $payment->reference = $request->get('reference');
         $payment->save();
+
+        $user = $payment->user;
+        $email = $user->email;
+        \Mail::to($email)->send(new PagoDenegado($user, $payment));
         return redirect('/admin/exchange/list')->with(['wrong' => "Venta no aprobada"]);
     }
 

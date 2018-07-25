@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Bank;
+use App\Finance;
 
 class AdminController extends Controller
 {
@@ -54,5 +55,12 @@ class AdminController extends Controller
         $currency->status = 0;
         $currency->save();
         return redirect()->back()->with(['success' => 'Banco activado']);
+    }
+
+    public function finances() {
+        $finances = Finance::paginate(10);
+        return view('admin.finances', [
+            'finances' => $finances
+        ]);
     }
 }

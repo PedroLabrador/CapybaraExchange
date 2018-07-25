@@ -246,14 +246,18 @@
 	    </div>
 	</div>
 
-	<p style="text-align: center;"><img alt="" src="{{ asset('img/banesco.png') }}" style="width: 150px; height: 84px;" /><img alt="" src="{{ asset('img/merc2.png') }}" style="width: 150px; height: 84px;" /><img alt="" src="{{ asset('img/provincial.png') }}" style="width: 150px; height: 84px;" /></a></p>
+	<div class="panel">
+		<div class="panel-body">
+			<p style="text-align: center;"><img alt="" src="{{ asset('img/banesco.png') }}" style="width: 150px; height: 84px;" /><img alt="" src="{{ asset('img/merc2.png') }}" style="width: 150px; height: 84px;" /><img alt="" src="{{ asset('img/provincial.png') }}" style="width: 150px; height: 84px;" /></a></p>
 
-	<p style="text-align: center;">Trabajamos con Banesco, Mercantil y Provincial pero puedes preguntar por tu banco.&nbsp;</p>
+			<p style="text-align: center;">Trabajamos con Banesco, Mercantil y Provincial pero puedes preguntar por tu banco.&nbsp;</p>
 
-	<p style="text-align: center;">Tambi&eacute;n compramos montos inferiores a la orden m&iacute;nima, solo necesitas preguntar.</p>
+			<p style="text-align: center;">Tambi&eacute;n compramos montos inferiores a la orden m&iacute;nima, solo necesitas preguntar.</p>
 
-	<p style="text-align: center;"><br />
-	Contactanos a traves de Telegram @capybaraexchange&nbsp;y pregunta la tasa al momento ya que siempre tratamos de ofrecer la mejor tasa.</p>
+			<p style="text-align: center;"><br />
+			Contactanos a traves de Telegram @capybaraexchange&nbsp;y pregunta la tasa al momento ya que siempre tratamos de ofrecer la mejor tasa.</p>
+		</div>
+	</div>
 
 	<p style="text-align: center;"><a href="http://t.me/capybaraexchange"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" style="width: 100px; height: 100px;" /></a></p>
 
