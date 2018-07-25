@@ -23,7 +23,8 @@ Route::group(['middleware' => ['auth']], function() {
 		Route::post('/exchange', 'ExchangeController@store');
 		Route::get ('/exchange', 'ExchangeController@index');
 		Route::post('/profile', 'UserController@update');
-		Route::get ('/profile', 'UserController@index');
+        Route::get ('/profile', 'UserController@index');
+		Route::post('/profile/update', 'UserController@phone');
 		Route::get ('/profile/delete/{id}', 'UserController@delete');
 	});
 });
@@ -34,13 +35,15 @@ Route::group(['middleware' => ['auth']], function() {
     	Route::post('/currency', 'CurrencyController@store');
     	Route::get ('/currency', 'CurrencyController@create');
     	Route::get ('/exchange/list', 'ExchangeController@list');
+        Route::get ('/exchange/list/approved', 'ExchangeController@listapproved');
+        Route::get ('/exchange/list/disapproved', 'ExchangeController@listdisapproved');
     	Route::get ('/exchange/list/{id}', 'ExchangeController@show');
-    	Route::get ('/exchange/list/aproved', 'ExchangeController@listaproved');
     	Route::post('/bank', 'AdminController@bankcreate');
     	Route::get ('/bank', 'AdminController@bank');
     	Route::get ('/bank/activate/{id}', 'AdminController@activate');
     	Route::get ('/bank/deactivate/{id}', 'AdminController@deactivate');
-    	Route::get ('/exchange/aprove/{id}', 'ExchangeController@aprove');
+        Route::get ('/exchange/approve/{id}', 'ExchangeController@approve');
+    	Route::get ('/exchange/disapprove/{id}', 'ExchangeController@disapprove');
     	Route::post('/currency/edit/{id}', 'CurrencyController@update');
     	Route::get ('/currency/edit/{id}', 'CurrencyController@edit');
     	Route::get ('/currency/activate/{id}', 'CurrencyController@activate');

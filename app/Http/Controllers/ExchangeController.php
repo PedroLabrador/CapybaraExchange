@@ -88,17 +88,24 @@ class ExchangeController extends Controller
     }
 
     public function show($id) {
-        $payment = Payment::find($id);
+        $payment = Payment::findOrfail($id);
         return view('admin.exchangeshow', [
             'payment' => $payment
         ]);
     }
 
-    public function aprove($id) {
-        $payment = Payment::find($id);
+    public function approve($id) {
+        $payment = Payment::findOrfail($id);
         $payment->done = 1;
         $payment->save();
         return redirect('/admin/exchange/list')->with(['success' => "Venta aprobada satisfactoriamente"]);
+    }
+
+    public function disapprove($id) {
+        $payment = Payment::findOrfail($id);
+        $payment->done = 2;
+        $payment->save();
+        return redirect('/admin/exchange/list')->with(['wrong' => "Venta no aprobada"]);
     }
 
     public function create(Request $request) {
@@ -109,15 +116,22 @@ class ExchangeController extends Controller
         return redirect()->back()->with(['success' => "registrado satisfactoriamente"]);
     }
 
-    public function list() {
-        $payments = Payment::where('done', 0)->get();
+    public function listapproved() {
+        $payments = Payment::where('done', 1)->get();
         return view('admin.exchangelist', [
             'payments' => $payments
         ]);
     }
 
-    public function listaproved() {
-        $payments = Payment::where('done', 1)->get();
+    public function listdisapproved() {
+        $payments = Payment::where('done', 2)->get();
+        return view('admin.exchangelist', [
+            'payments' => $payments
+        ]);
+    }
+
+    public function list() {
+        $payments = Payment::where('done', 0)->get();
         return view('admin.exchangelist', [
             'payments' => $payments
         ]);

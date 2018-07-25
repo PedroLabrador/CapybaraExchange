@@ -21,7 +21,7 @@ class CreatePaymentsTable extends Migration
             $table->double('amount');
             $table->double('to_pay');
             $table->string('link');
-            $table->boolean('done')->default(0);
+            $table->integer('done')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

@@ -19,6 +19,14 @@ class UserController extends Controller
     	]);
     }
 
+    public function phone(Request $request) {
+        $user = \Auth::user();
+        $contact = $request->get('contact');
+        $user->contact = $contact;
+        $user->save();
+        return redirect()->back()->with(['success' => 'Información de contacto actualizada']);
+    }
+
     public function update(Request $request) {
         $data = $request->all();
         
@@ -27,9 +35,15 @@ class UserController extends Controller
         $request->validate([
             'bank' => 'required',
             'account' => 'required|min:20|max:20',
+            'user_name' => 'required',
+            'dni' => 'required',
+            'account_type' => 'required',
         ],[
             'bank.required' => 'El banco es requerido.',
             'account.required' => 'La cuenta es requerida.',
+            'account_type.required' => 'El tipo de cuenta es requerida.',
+            'user_name.required' => 'El titular de la cuenta es requerido.',
+            'dni.required' => 'La cédula es requerida.',
             'account.min' => 'El numero de cuenta debe tener 20 digitos.',
             'account.max' => 'El numero de cuenta debe tener 20 digitos.',
         ]);

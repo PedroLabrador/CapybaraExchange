@@ -18,6 +18,7 @@ class CreateCurrenciesTable extends Migration
             $table->string('name');
             $table->double('price_cu');
             $table->double('price_bs');
+            $table->string('deposit');
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

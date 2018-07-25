@@ -13,7 +13,7 @@
 									<tr>
 										<th style='padding: 1em'>#</th>
 										<th style='padding: 1em'>Monto</th>
-										<th style='padding: 1em'>concepto</th>
+										<th style='padding: 1em'>Concepto</th>
 										<th style='padding: 1em'>Aceptar</th>
 										<th style='padding: 1em'>Declinar</th>
 									</tr>

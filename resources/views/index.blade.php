@@ -21,35 +21,39 @@
 			margin-top: 1em
 		}
 		body {
-			background-image: url({{ "asset('img/Test3.png')" }});
+		    background-image: url("https://images2.alphacoders.com/587/thumb-1920-587359.jpg");
+		    background-size: cover;
+		    background-repeat: repeat;
+			
 		}
 	</style>
 </head>
 <body data-gramm="true" data-gramm_editor="true" data-gramm_id="30e6f27f-b069-9116-a676-5fdc0f5d0846">
-	<p style="text-align: center;"><img alt="" src="{{ asset('img/Test3.png') }}" style="width: 456px; height: 600px;" /></p>
+	<p style="text-align: center;"><img alt="" src="{{ asset('img/Test4.png') }}"style="width: 228px; height: 300px;" /></p>
 
-	<p style="text-align: center;"><strong><span style="font-size:36px;">Capybara Exchange</span></strong><br />
+
+	<p style="text-align: center;"><font color="#000000"><strong><span style="font-size:36px;">Capybara Exchange</span></strong><br />
 	<span style="font-size:18px;">Casa de cambio de Bytes a Bol&iacute;vares, en construcci&oacute;n.</span></p>
 
 	<p style="text-align: center;">Bienvenido a la version beta de Capybara Exchange, aqu&iacute; podr&aacute;s cambiar tus Bytes a Bol&iacute;vares f&aacute;cilmente.<br />
 	<br />
 	<strong>Tasa actual:</strong><br />
-	1Gb=1,000,000,000Bytes=373,000,000Bs<br />
+	1Gb=1,000,000,000bytes=396,935,640Bs<br />
 	<strong>Orden m&iacute;nima:</strong><br />
-	0.065Gb=65,000,000Bytes=24,245,000Bs</p>
+	0.065Gb=50,390,530bytes=20,000,000Bs</p>
 
 	<div class="container" id="calculadora">
 		<div class="row">
 			<div class="col-md-11" style="margin: 3%;">
 				<div class="panel">
-                    <div class="panel-body"  style="background-color: lightgray">
+                    <div class="panel-body"  style="background-color: rgba(102, 153, 153, 0.2)">
         				<h1 class="text-center" style="color: black; font-family: 'Raleway'"><strong>Calculadora</strong></h1>
 						<div class="mt-1">
 					        {{ csrf_field() }}
 				            <div class="col-md-10 col-md-offset-1">
 				            	<div class="form-group">
 				            		<div class="col-md-9">
-				                    	<input id='from' class='form-control' type="text" name='money_from' value="0" onkeyup="calculate()">
+				                    	<input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()">
 				                    </div>
 				                    <div class="col-md-2">
 					                    <select id='money_from' name='from' class="form-control" onchange="calculate()">
@@ -64,11 +68,11 @@
 				            </div>
 				            <div class="col-md-10 col-md-offset-1">
 				                <div class="col-md-9 mt-1">
-				                    <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()">
+				                    <input id='to' class='form-control' type="text" name='money_to' value="" onkeyup="calculate2()">
 				                </div>
 				                <div class="col-md-2 mt-1">
 				                    <select id='money_to' name='to' class="form-control" onchange="calculate2()">
-				                        <option value="1">BS</option>
+				                        <option value="1">Bs</option>
 				                    </select>
 				                </div>
 				            </div>
@@ -242,16 +246,16 @@
 	    </div>
 	</div>
 
-	<p style="text-align: center;"><img alt="" src="{{ asset('img/banesco.png') }}" style="width: 300px; height: 167px;" /><img alt="" src="{{ asset('img/merc2.png') }}" style="width: 300px; height: 167px;" /><a href="https://domiserver.com/wp-content/uploads/2018/04/provincial.png"><img alt="" src="https://domiserver.com/wp-content/uploads/2018/04/provincial.png" style="width: 300px; height: 150px;" /></a></p>
+	<p style="text-align: center;"><img alt="" src="{{ asset('img/banesco.png') }}" style="width: 150px; height: 84px;" /><img alt="" src="{{ asset('img/merc2.png') }}" style="width: 150px; height: 84px;" /><img alt="" src="{{ asset('img/provincial.png') }}" style="width: 150px; height: 84px;" /></a></p>
 
 	<p style="text-align: center;">Trabajamos con Banesco, Mercantil y Provincial pero puedes preguntar por tu banco.&nbsp;</p>
 
-	<p style="text-align: center;">Tambi&eacute;n compramos bytes inferiores a la orden m&iacute;nima, solo necesitas preguntar.</p>
+	<p style="text-align: center;">Tambi&eacute;n compramos montos inferiores a la orden m&iacute;nima, solo necesitas preguntar.</p>
 
 	<p style="text-align: center;"><br />
 	Contactanos a traves de Telegram @capybaraexchange&nbsp;y pregunta la tasa al momento ya que siempre tratamos de ofrecer la mejor tasa.</p>
 
-	<p style="text-align: center;"><a href="http://t.me/capybara"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" style="width: 150px; height: 150px;" /></a></p>
+	<p style="text-align: center;"><a href="http://t.me/capybaraexchange"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" style="width: 100px; height: 100px;" /></a></p>
 
 	<p style="text-align: center;"></p>
 

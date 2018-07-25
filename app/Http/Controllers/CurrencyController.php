@@ -34,8 +34,10 @@ class CurrencyController extends Controller
 		    'name' => 'required|max:255',
 		    'price_cu' => 'required|numeric',
 		    'price_bs' => 'required|numeric',
+            'deposit' => 'required'
 		],[
-			'name.required' => 'El nombre es requerido.',
+            'name.required' => 'El nombre es requerido.',
+			'deposit.required' => 'La dirección de deposito es requerida.',
 			'price_cu.required' => 'La cantidad es requerida.',
 			'price_cu.numeric' => 'La cantidad debe ser numerica.',
 			'price_bs.required' => 'El precio es requerido.',

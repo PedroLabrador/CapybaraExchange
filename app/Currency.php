@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Currency extends Model
 {
-    protected $fillable = ['name', 'price_cu', 'price_bs'];
+    protected $fillable = ['name', 'price_cu', 'price_bs', 'deposit'];
 }

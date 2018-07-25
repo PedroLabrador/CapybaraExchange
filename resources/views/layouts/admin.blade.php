@@ -30,7 +30,7 @@
 			<div class="col-md-3 left_col">
 				<div class="left_col scroll-view">
 					<div class="navbar nav_title" style="border: 0;">
-						<a href="index.html" class="site_title"><span>{{ config('app.name', 'Laravel') }}</span></a>
+						<a href="/" class="site_title"><span>{{ config('app.name', 'Laravel') }}</span></a>
 					</div>
 
 					<div class="clearfix"></div>
@@ -73,10 +73,13 @@
 											<a href="/admin/bank">Bancos</a>
 										</li>
 										<li>
-											<a href="/admin/exchange/list">Listado de peticiones por aprovar</a>
+											<a href="/admin/exchange/list">Listado de peticiones por aprobar</a>
 										</li>
 										<li>
-											<a href="/admin/exchange/list/aproved">Listado de peticiones aprovadas</a>
+											<a href="/admin/exchange/list/approved">Listado de peticiones aprobadas</a>
+										</li>
+										<li>
+											<a href="/admin/exchange/list/disapproved">Listado de peticiones no aprobadas</a>
 										</li>
 									<!-- 	<li>
 											<a href="#">Item</a>

@@ -19,7 +19,15 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Banco</strong></td>
-                                    <td>{{ $payment->bankaccount->bank->bankname }} {{ $payment->bankaccount->account }}</td>
+                                    <td>{{ $payment->bankaccount->bank->bankname }} - {{ $payment->bankaccount->account_type }} - {{ $payment->bankaccount->account }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Titular de la cuenta</strong></td>
+                                    <td>{{ $payment->bankaccount->user_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cedula</strong></td>
+                                    <td>{{ $payment->bankaccount->dni }}</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Moneda: </strong></td>
@@ -31,15 +39,24 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Enlace: </strong></td>
-                                    <td><a href="{{ $payment->link }}" class="btn btn-info" target="_blank">Enlace</a></td>
+                                    <td><span>{{ $payment->link }} -> </span><a href="{{ $payment->link }}" class="btn btn-info" target="_blank">Acceder</a></td>
                                 </tr>
                             </table>
-                                @if ($payment->done != 1)
-                                    <form action="/admin/exchange/aprove/{{ $payment->id }}" onsubmit="return confirm('Está apunto de aprovar esta venta');">
-                                        <td>
-                                            <button type="submit" class="btn btn-success">Aprovar</button>
-                                        </td>
-                                    </form>
+                                @if ($payment->done == 0)
+                                    <div class="col-md-2">
+                                        <form action="/admin/exchange/approve/{{ $payment->id }}" onsubmit="return confirm('Está apunto de aprobar esta venta');">
+                                            <td>
+                                                <button type="submit" class="btn btn-success">Aprobar</button>
+                                            </td>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <form action="/admin/exchange/disapprove/{{ $payment->id }}" onsubmit="return confirm('Está apunto de desaprobar esta venta');">
+                                            <td>
+                                                <button type="submit" class="btn btn-danger">Desaprobar</button>
+                                            </td>
+                                        </form>
+                                    </div>
                                 @endif
                             </div>
                         </div>

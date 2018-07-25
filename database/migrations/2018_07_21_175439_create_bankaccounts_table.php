@@ -18,6 +18,9 @@ class CreateBankaccountsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('bank_id');
             $table->string('account');
+            $table->string('user_name');
+            $table->string('dni');
+            $table->string('account_type');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
