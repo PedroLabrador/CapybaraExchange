@@ -27,9 +27,13 @@ class AdminController extends Controller
 
     public function detailsuser($id) {
         $user = User::findOrFail($id);
-        return view('admin.userdetails', [
-            'user' => $user
-        ]);
+        if ($user->role == 'Admin') 
+            return view('admin.userdetails', [
+                'user' => $user
+            ]);
+        else
+            return redirect('/user');
+        
     }
 
     public function updatedetails($id, Request $request) {
