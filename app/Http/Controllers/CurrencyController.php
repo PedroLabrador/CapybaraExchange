@@ -9,7 +9,7 @@ use App\Price;
 class CurrencyController extends Controller
 {
     public function create() {
-        $currencies = Currency::all();
+        $currencies = Currency::paginate(10);
     	return view('currency', [
             'currencies' => $currencies
         ]);

@@ -27,6 +27,10 @@
                                     <td>{{ $payment->user->email }}</td>
                                 </tr>
                                 <tr>
+                                  <td><strong>Contacto</strong></td>
+                                  <td>{{ $payment->user->contact }}</td>
+                                </tr>
+                                <tr>
                                     <td><strong>Banco</strong></td>
                                     <td>{{ $payment->bankaccount->bank->bankname }} - {{ $payment->bankaccount->account_type }} - {{ $payment->bankaccount->account }}</td>
                                 </tr>

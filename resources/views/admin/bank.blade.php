@@ -89,7 +89,7 @@
                                 @endforeach
 
                             </table>
-
+                            {{ $banks->links() }}
                         </div>
 
                     </div>

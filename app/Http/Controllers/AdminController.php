@@ -32,6 +32,16 @@ class AdminController extends Controller
         ]);
     }
 
+    public function updatedetails($id, Request $request) {
+        $user = User::findOrFail($id);
+        $admin = $request->input('admin');
+        if (!$admin)
+            $user->update(['role' => 'User']);
+        else 
+            $user->update(['role' => 'Admin']);
+        return redirect()->back()->with(['success' => 'Cambios realizados con exito']);
+    }
+
     public function deleteuser($id) {
         $user = User::findOrFail($id);
         $payments = $user->payments;
@@ -44,15 +54,8 @@ class AdminController extends Controller
         return redirect()->back()->with(['wrong' => 'Usuario eliminado']);
     }
 
-    public function list() {
-        $payments = Payment::all();
-        return view('list', [
-            'payments' => $payments
-        ]); 
-    }
-
     public function bank() {
-        $banks = Bank::all();
+        $banks = Bank::paginate(10);
         return view('admin.bank', [
             'banks' => $banks
         ]);
@@ -87,7 +90,8 @@ class AdminController extends Controller
     }
 
     public function finances() {
-        $finances = Finance::paginate(10);
+        $finances = Finance::orderBy('id', 'desc')
+                           ->paginate(10);
         return view('admin.finances', [
             'finances' => $finances
         ]);

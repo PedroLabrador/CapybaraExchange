@@ -92,28 +92,28 @@
 					        {{ csrf_field() }}
 				            <div class="col-md-10 col-md-offset-1">
 				            	<div class="form-group">
-				            		<div class="col-md-9">
-				                    	<input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()">
-				                    </div>
+				            		<div class="col-md-9 mt-1">
+                                        <input id='from' class='form-control' type="text" name='money_from' value="0" onkeyup="calculate()">
+                                    </div>
 				                    <div class="col-md-2">
-					                    <select id='money_from' name='from' class="form-control" onchange="calculate()">
-					                        @foreach ($currencies as $currency)
-					                            @if ($currency->status == 0)
-					                                <option value="{{ $currency->id }}">{{ $currency->name }}</option>
-					                            @endif
-					                        @endforeach
-					                    </select>
+											<select id='money_from' name='from' class="form-control" onclick="calculate()">
+                                            @foreach ($currencies as $currency)
+                                                @if ($currency->status == 0)
+                                                    <option value="{{ $currency->id }}">{{ $currency->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
 				                    </div>
 				                </div>
 				            </div>
 				            <div class="col-md-10 col-md-offset-1">
 				                <div class="col-md-9 mt-1">
-				                    <input id='to' class='form-control' type="text" name='money_to' value="" onkeyup="calculate2()">
-				                </div>
+                                    <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()">
+                                </div>
 				                <div class="col-md-2 mt-1">
-				                    <select id='money_to' name='to' class="form-control" onchange="calculate2()">
-				                        <option value="1">Bs</option>
-				                    </select>
+				                    <select id='money_to' name='to' class="form-control" onclick="calculate2()">
+                                        <option value="1">BS</option>
+                                    </select>
 				                </div>
 				            </div>
 				            @guest
@@ -355,71 +355,44 @@
         function calculate() {
             var money_from = $("#money_from").val();
             var money_to   = $("#money_to").val();
+            <?php foreach ($currencies as $currency): ?>
+                <?php 
+                    echo "if (money_from == $currency->id && money_to == 1) {";
 
-            if (money_from == 1 && money_to == 1) {
-                var price_cu = 0;
-                var price_bs = 0;
-                <?php foreach ($currencies as $currency): ?>
-                    <?php if ($currency->id == 1): ?>
-                        price_cu = <?php echo $currency->price_cu; ?>;
-                        price_bs = <?php echo $currency->price_bs; ?>;
-                    <?php endif ?>
-                <?php endforeach ?>
+                    echo "var price_cu = $currency->price_cu;";
+                    echo "var price_bs = $currency->price_bs;";
 
-                var from = $("#from").val();
-                var res  = parseFloat(from) * price_bs;
-                var to   = $("#to").val(res); 
-            }
-            if (money_from == 2 && money_to == 1) {
-                var price_cu = 0;
-                var price_bs = 0;
-                <?php foreach ($currencies as $currency): ?>
-                    <?php if ($currency->id == 2): ?>
-                        price_cu = <?php echo $currency->price_cu; ?>;
-                        price_bs = <?php echo $currency->price_bs; ?>;
-                    <?php endif ?>
-                <?php endforeach ?>
+                    echo "var from = $('#from').val();";
 
-                var from = $("#from").val();
-                var res  = parseFloat(from) * price_bs;
-                var to   = $("#to").val(res); 
-            }
+                    echo "var res  = parseFloat(from) * price_bs;";
+
+                    echo "var to   = $('#to').val(res);";
+
+                    echo "}";
+                ?>
+            <?php endforeach ?>
         }
 
         function calculate2() {
             var money_from = $("#money_from").val();
             var money_to   = $("#money_to").val();
+            <?php foreach ($currencies as $currency): ?>
+                <?php 
+                    echo "if (money_from == $currency->id && money_to == 1) {";
 
-            if (money_from == 1 && money_to == 1) {
-                var price_cu = 0;
-                var price_bs = 0;
-                <?php foreach ($currencies as $currency): ?>
-                    <?php if ($currency->id == 1): ?>
-                        price_cu = <?php echo $currency->price_cu; ?>;
-                        price_bs = <?php echo $currency->price_bs; ?>;
-                    <?php endif ?>
-                <?php endforeach ?>
+                    echo "var price_cu = $currency->price_cu;";
+                    echo "var price_bs = $currency->price_bs;";
 
-                var to   = $('#to').val(); 
-                var res  = parseFloat(to) / price_bs;
-                var from = $('#from').val(res);
-            }
-            if (money_from == 2 && money_to == 1) {
-                var price_cu = 0;
-                var price_bs = 0;
-                <?php foreach ($currencies as $currency): ?>
-                    <?php if ($currency->id == 2): ?>
-                        price_cu = <?php echo $currency->price_cu; ?>;
-                        price_bs = <?php echo $currency->price_bs; ?>;
-                    <?php endif ?>
-                <?php endforeach ?>
+                    echo "var to   = $('#to').val();";
 
-                var to   = $('#to').val(); 
-                var res  = parseFloat(to) / price_bs;
-                var from = $('#from').val(res);
-            }
+                    echo "var res  = parseFloat(to) / price_bs;";
+
+                    echo "var from = $('#from').val(res);";
+
+                    echo "}";
+                ?>
+            <?php endforeach ?>
         }
     </script>
-
 </body>
 </html>

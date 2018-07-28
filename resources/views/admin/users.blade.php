@@ -39,23 +39,15 @@
                                     <th>Correo</th>
                                     <th>Contacto</th>
                                     <th>Detalles</th>
-                                    <th>Borrar</th>
                                 </tr>
                                 @forelse ($users as $user)
-                                    @if ($user->role != 'Admin')
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->contact }}</td>
-                                            <td><a class='btn btn-primary' href="/admin/users/details/{{ $user->id }}">Detalles</a></td>
-                                            <form action="/admin/users/delete/{{ $user->id }}" onsubmit="return confirm('Está a punto de borrar este usuario, RECUERDE que todos los campos asociados a este serán permanentemente borrados y no hay vuelta atras, Seguro que desea borrar el usuario?');">
-                                            <td>
-                                                <button type="submit" class="btn btn-danger">Borrar</button>
-                                            </td>
-                                        </form>
-                                        </tr>
-                                    @endif
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->contact }}</td>
+                                        <td><a class='btn btn-primary' href="/admin/users/details/{{ $user->id }}">Detalles</a></td>
+                                    </tr>
                                 @empty
                                     <tr>
                                         <td></td>

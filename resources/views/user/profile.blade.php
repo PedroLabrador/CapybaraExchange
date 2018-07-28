@@ -222,6 +222,8 @@
 
 				                                		<option value="Corriente">Corriente</option>
 
+				                                		<option value="Juridica">Juridica</option>
+
 				                                	</select>
 
 				                                </div>
@@ -246,8 +248,6 @@
 				                                		<option value="E">E</option>
 
 				                                		<option value="J">J</option>
-
-				                                		<option value="RIF">RIF</option>
 
 				                                	</select>
 

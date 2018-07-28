@@ -34,7 +34,6 @@
                         <div class="col-md-12">
                             <table class="table">
                                 <tr>
-                                    <th>#</th>
                                     <th>Usuario</th>
                                     <th>Cantidad</th>
                                     <th>Gastado</th>
@@ -43,13 +42,12 @@
                                 </tr>
                                 @forelse ($finances as $finance)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $finance->payment->user->name }}</td>
-                                        <td>{{ $finance->payment->amount }} {{ $finance->payment->currency }}</td>
-                                        <td>{{ $finance->btc_spent }} BTC</td>
-                                        <td>{{ $finance->btc_won }} BTC</td>
-                                        <td><?php
-                                            echo (rtrim(sprintf('%.20F', $finance->btc_won - $finance->btc_spent), '0'));
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $finance->payment->user->name }}</td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $finance->payment->amount }} {{ $finance->payment->currency }}</td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $finance->btc_spent }} BTC</td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $finance->btc_won }} BTC</td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><?php
+                                            echo (rtrim(sprintf('%.8F', $finance->btc_won - $finance->btc_spent), '0'));
                                         ?> BTC</td>
                                     </tr>
                                 @empty
@@ -60,6 +58,7 @@
                                 @endforelse
                             </table>
                         </div>
+                        {{ $finances->links() }}
                     </div>
                 </div>
             </div>

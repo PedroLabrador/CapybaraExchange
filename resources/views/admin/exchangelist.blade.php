@@ -68,8 +68,6 @@
 
                                 <tr>
 
-                                    <th>#</th>
-
                                     <th>Usuario</th>
 
                                     <th>Cuenta Bancaria</th>
@@ -86,17 +84,15 @@
 
                                     <tr>
 
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $payment->user->name }}</td>
 
-                                        <td>{{ $payment->user->name }}</td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $payment->bankaccount->bank->bankname }}</td>
 
-                                        <td>{{ $payment->bankaccount->bank->bankname }}</td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $payment->amount }} {{ $payment->currency }}</td>
 
-                                        <td>{{ $payment->amount }} {{ $payment->currency }}</td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $payment->to_pay }} Bs</td>
 
-                                        <td>{{ $payment->to_pay }} Bs</td>
-
-                                        <td><a href="/admin/exchange/list/{{ $payment->id }}" class="btn btn-primary">Detalles</a></td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><a href="/admin/exchange/list/{{ $payment->id }}" class="btn btn-primary">Detalles</a></td>
 
                                     </tr>
 
@@ -115,6 +111,8 @@
                             </table>
 
                         </div>
+
+                        {{ $payments->links() }}
 
                     </div>
 

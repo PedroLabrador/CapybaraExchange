@@ -41,6 +41,17 @@
                                     <td>{{ $user->email }}</td>
                                 </tr>
                                 <tr>
+                                    <form method="post">
+                                        @csrf
+                                        <td>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name='admin' {{ ($user->role == 'User') ? '' : 'checked' }}>Administrador?</label>
+                                            </div>
+                                        </td>
+                                        <td><input type="submit" class="btn btn-primary" value="Enviar"></td>
+                                    </form>
+                                </tr>
+                                <tr>
                                     <td><strong>Bancos</strong></td>
                                     <td>
                                       <tr>
@@ -63,6 +74,15 @@
                                         
                                       </tr>
                                     </td>
+                                </tr>
+                                <tr><td></td><td></td></tr>
+                                <tr>
+                                    <th>Borrar usuario</th>
+                                    <form action="/admin/users/delete/{{ $user->id }}" onsubmit="return confirm('Está a punto de borrar este usuario, RECUERDE que todos los campos asociados a este serán permanentemente borrados y no hay vuelta atras, Seguro que desea borrar el usuario?');">
+                                        <td>
+                                            <button type="submit" class="btn btn-danger">Borrar</button>
+                                        </td>
+                                    </form>
                                 </tr>
                             </table>
                           </div>

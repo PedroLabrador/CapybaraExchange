@@ -32,6 +32,10 @@
  				font-size: .5em !important	
  			}
 		}
+
+		.color-blue {
+			background-color: lightblue
+		}
 	</style>
 </head>
 <body class="nav-md">

@@ -243,7 +243,7 @@
                             </div>
 
                         </div>
-
+                        {{ $currencies->links() }}
                     </div>
 
                 </div>

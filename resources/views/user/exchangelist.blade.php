@@ -76,8 +76,6 @@
 
                                     <th>Referencia</th>
 
-                                    <th>Enlace</th>
-
                                 </tr>
 
                                 @forelse ($payments as $payment)
@@ -121,8 +119,6 @@
                                             @endif
 
                                         </td>
-
-                                        <td><a class="btn btn-info" target="_blank" href="{{ $payment->link }}">Click</a></td>
 
                                     </tr>
 

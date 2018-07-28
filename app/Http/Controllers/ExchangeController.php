@@ -179,22 +179,28 @@ class ExchangeController extends Controller
         return redirect()->back()->with(['success' => "registrado satisfactoriamente"]);
     }
 
-    public function listapproved() {
-        $payments = Payment::where('done', 1)->get();
+    public function listdisapproved() {
+        $payments = Payment::orderBy('id', 'desc')
+                            ->where('done', 2)
+                            ->paginate(10);
         return view('admin.exchangelist', [
             'payments' => $payments
         ]);
     }
 
-    public function listdisapproved() {
-        $payments = Payment::where('done', 2)->get();
+    public function listapproved() {
+        $payments = Payment::orderBy('id', 'desc')
+                            ->where('done', 1)
+                            ->paginate(10);
         return view('admin.exchangelist', [
             'payments' => $payments
         ]);
     }
 
     public function list() {
-        $payments = Payment::where('done', 0)->get();
+        $payments = Payment::orderBy('id', 'asc')
+                            ->where('done', 0)
+                            ->paginate(10);
         return view('admin.exchangelist', [
             'payments' => $payments
         ]);
