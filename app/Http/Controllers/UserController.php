@@ -30,6 +30,10 @@ class UserController extends Controller
 
     public function update(Request $request) {
         $data = $request->all();
+        $data['dni'] = $data['na'] . "-" . $data['dni'];
+        $bank = Bank::where('id', $data['bank'])->first();
+        if (!(substr($data['account'], 0, 4 ) === $bank->accountcode))
+            return redirect()->back()->with(['wrong' => 'Cuenta incorrecta']);
         
         if (!isset($data['account']) || !isset($data['bank']))
             return redirect()->back();
@@ -48,7 +52,7 @@ class UserController extends Controller
             'account.min' => 'El numero de cuenta debe tener 20 digitos.',
             'account.max' => 'El numero de cuenta debe tener 20 digitos.',
         ]);
-        $bank = Bank::where('id', $data['bank'])->first();
+        
         $user = \Auth::user();
         $data['user_id'] = $user->id;
         $data['bank_id'] = $bank->id;
@@ -58,7 +62,10 @@ class UserController extends Controller
     }
 
     public function delete($id) {
-        $bankaccount = Bankaccount::destroy($id);
+        $bankaccount = Bankaccount::findOrFail($id);
+        foreach ($bankaccount->payments as $payment)
+            Payment::destroy($payment->id);
+        Bankaccount::destroy($id);
         return redirect()->back()->with(['wrong' => 'Numero de cuenta eliminado']);
     }
 

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-	<div class="container">
+	<div class="container" style="overflow-x: scroll;">
         <div class="row">
             <div class="col-md-11" style="margin: 3%;">
                 <div class="panel">
@@ -47,8 +47,13 @@
                                     <td>{{ $payment->to_pay }} Bs</td>
                                 </tr>
                                 <tr>
+                                  @if ($payment->memo == '')
                                     <td><strong>Enlace: </strong></td>
                                     <td><span>{{ $payment->link }} -> </span><a href="{{ $payment->link }}" class="btn btn-info" target="_blank">Acceder</a></td>
+                                  @else
+                                    <td><strong>Memo: </strong></td>
+                                    <td><strong>{{ $payment->memo }}</strong></td>
+                                  @endif
                                 </tr>
                             </table>
                                 @if ($payment->done == 0)

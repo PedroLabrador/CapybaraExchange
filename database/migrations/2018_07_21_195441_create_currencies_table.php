@@ -20,6 +20,7 @@ class CreateCurrenciesTable extends Migration
             $table->double('price_bs');
             $table->string('deposit');
             $table->boolean('status')->default(0);
+            $table->string('memo');
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@
 
     <?php $temp = false; ?>
 
-	<div class="container" onload="init();">
+	<div class="container">
 
         <div class="row">
 
@@ -12,7 +12,7 @@
 
                 <div class="panel">
 
-                    <div class="panel-header">Venta</div>
+                    <div class="panel-heading">Venta</div>
 
                     <div class="panel-body">
 
@@ -66,9 +66,9 @@
 
                             {{ csrf_field() }}
 
-                            <div class="col-md-10 col-md-offset-1">
+                            <div class="container">
 
-                                <div class="col-md-10 col-md-offset-1">
+                                <div class="row">
 
                                     <div class="col-md-9 mt-1">
 
@@ -78,7 +78,7 @@
 
                                     <div class="col-md-3 mt-1">
 
-                                        <select id='money_from' name='from' class="form-control" onchange="calculate()">
+                                        <select id='money_from' name='from' class="form-control" onclick="calculate()">
 
                                             @foreach ($currencies as $currency)
 
@@ -96,7 +96,7 @@
 
                                 </div>
 
-                                <div class="col-md-10 col-md-offset-1">
+                                <div class="row">
 
                                     <div class="col-md-9 mt-1">
 
@@ -106,7 +106,7 @@
 
                                     <div class="col-md-3 mt-1">
 
-                                        <select id='money_to' name='to' class="form-control" onchange="calculate2()">
+                                        <select id='money_to' name='to' class="form-control" onclick="calculate2()">
 
                                             <option value="1">BS</option>
 
@@ -140,7 +140,7 @@
 
                                                 </div>
 
-                                                <div class="modal-body">
+                                                <div class="modal-body" style="overflow-x: scroll; text-align: center">
 
                                                     <div class="form-group">
 
@@ -148,29 +148,25 @@
 
                                                             <div class="col-md-12">
 
-                                                                <div class="col-md-12">
+                                                                <div class="col-md-12 mt-1">
 
-                                                                    <div class="col-md-3">
+                                                                    <label>Por favor deposita aquí:</label>
                                                                         
-                                                                        <label>Por favor deposita aquí:</label>
+                                                                    <span id='deposit' class="form-control"></span>
 
-                                                                    </div>
+                                                                    <div id='fixedshow' style="display: none;">
+                                                                        <label>No olvides usar este memo al depositar</label>
 
-                                                                    <div class="col-md-9">
-                                                                        
-                                                                        <span id='deposit' class="form-control"></span>
-
+                                                                        <span id='fixedmemo' class="form-control"></span>
                                                                     </div>
 
                                                                 </div>
 
-                                                                <div class="col-md-12">
+                                                            </div>
+
+                                                            <div class="col-md-12 mt-1">
 
                                                                     <label for="bankaccount">Seleccione la cuenta bancaria: </label>
-
-                                                                </div>
-
-                                                                <div class="col-md-12">
 
                                                                     <select id='bankaccount' name="bankaccount" class="form-control">
 
@@ -188,17 +184,11 @@
 
                                                                     </select>
 
-                                                                </div>
-
                                                                 @if ($temp)
 
-                                                                    <div class="col-md-10 col-md-offset-1">
+                                                                    <div class="mt-1">
 
-                                                                        <div class="mt-1">
-
-                                                                            <a class='form-control btn btn-success' href="/user/profile">Por favor accede aqui para asociar una cuenta bancaria.</a>
-
-                                                                        </div>
+                                                                        <a class='form-control btn btn-success' href="/user/profile">Asocia una cuenta aqui</a>
 
                                                                     </div>
 
@@ -206,19 +196,18 @@
 
                                                             </div>
 
-                                                            <div class="col-md-12 mt-1">
+                                                            <div id='memo' class="col-md-12 mt-1">
 
-                                                                <div class="col-md-12">
+                                                                <label for="url">Inserte el link del pago: </label>
 
-                                                                    <label for="url">Inserte el link del pago: </label>
+                                                                <input id='url' type="url" name="link" class="form-control">
 
-                                                                </div>
+                                                            </div>
 
-                                                                <div class="col-md-12">
+                                                             <div id='memo2' class="col-md-12 mt-1" style="display: none">
 
-                                                                    <input id='url' type="url" name="link" class="form-control">
-
-                                                                </div>
+                                                                <label>Antes de proceder, por favor usa este codigo para realizar tu transferencia</label>
+                                                                <span class="form-control">{{ $memo }}</span>
 
                                                             </div>
 
@@ -245,7 +234,7 @@
                                 </div>
 
                             </div>
-
+                            <input type="hidden" value="{{ $memo }}" name="memo">
                         </form>
 
                     </div>
@@ -292,8 +281,33 @@
                     echo "var price_bs = $currency->price_bs;";
 
                     echo "$('#deposit').html('$currency->deposit');";
+                    echo "$('#fixedmemo').html('$currency->fixedmemo');";
+
+                    echo "if ('$currency->fixedmemo' == '') {";
+
+                    echo "$('#fixedshow').hide();";
+
+                    echo "} else {";
+
+                    echo "$('#fixedshow').show();";
+
+                    echo "}";
 
                     echo "var from = $('#from').val();";
+
+                    echo "if ('$currency->memo' == 'on') {";
+
+                    echo "$('#memo').hide();";
+
+                    echo "$('#memo2').show();";
+
+                    echo "} else {";
+
+                    echo "$('#memo2').hide();";
+
+                    echo "$('#memo').show();";
+
+                    echo "}";
 
                     echo "var res  = parseFloat(from) * price_bs;";
 
@@ -323,8 +337,33 @@
                     echo "var price_bs = $currency->price_bs;";
 
                     echo "$('#deposit').html('$currency->deposit');";
+                    echo "$('#fixedmemo').html('$currency->fixedmemo');";
+
+                    echo "if ('$currency->fixedmemo' == '') {";
+
+                    echo "$('#fixedshow').hide();";
+
+                    echo "} else {";
+
+                    echo "$('#fixedshow').show();";
+
+                    echo "}";
 
                     echo "var to   = $('#to').val();";
+
+                    echo "if ('$currency->memo' == 'on') {";
+
+                    echo "$('#memo').hide();";
+
+                    echo "$('#memo2').show();";
+
+                    echo "} else {";
+
+                    echo "$('#memo2').hide();";
+                    
+                    echo "$('#memo').show();";
+
+                    echo "}";
 
                     echo "var res  = parseFloat(to) / price_bs;";
 

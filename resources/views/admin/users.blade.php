@@ -36,30 +36,35 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Usuario</th>
-                                    <th>Cantidad</th>
-                                    <th>Gastado</th>
-                                    <th>Generado</th>
-                                    <th>Ganancia</th>
+                                    <th>Correo</th>
+                                    <th>Contacto</th>
+                                    <th>Detalles</th>
+                                    <th>Borrar</th>
                                 </tr>
-                                @forelse ($finances as $finance)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $finance->payment->user->name }}</td>
-                                        <td>{{ $finance->payment->amount }} {{ $finance->payment->currency }}</td>
-                                        <td>{{ $finance->btc_spent }} BTC</td>
-                                        <td>{{ $finance->btc_won }} BTC</td>
-                                        <td><?php
-                                            echo (rtrim(sprintf('%.20F', $finance->btc_won - $finance->btc_spent), '0'));
-                                        ?> BTC</td>
-                                    </tr>
+                                @forelse ($users as $user)
+                                    @if ($user->role != 'Admin')
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->contact }}</td>
+                                            <td><a class='btn btn-primary' href="/admin/users/details/{{ $user->id }}">Detalles</a></td>
+                                            <form action="/admin/users/delete/{{ $user->id }}" onsubmit="return confirm('Está a punto de borrar este usuario, RECUERDE que todos los campos asociados a este serán permanentemente borrados y no hay vuelta atras, Seguro que desea borrar el usuario?');">
+                                            <td>
+                                                <button type="submit" class="btn btn-danger">Borrar</button>
+                                            </td>
+                                        </form>
+                                        </tr>
+                                    @endif
                                 @empty
                                     <tr>
                                         <td></td>
-                                        <td>No hay finanzas en este momento.</td>
+                                        <td>No hay usuarios en este momento.</td>
                                     </tr>
                                 @endforelse
                             </table>
                         </div>
+                        {{ $users->links() }}
                     </div>
                 </div>
             </div>

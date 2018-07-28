@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="container">
+	<div class="container" style="overflow-x: scroll;">
 
         <div class="row">
 
@@ -78,8 +78,6 @@
 
                                     <th>Precio a pagar</th>
 
-                                    <th>Enlace</th>
-
                                     <th></th>
 
                                 </tr>
@@ -97,8 +95,6 @@
                                         <td>{{ $payment->amount }} {{ $payment->currency }}</td>
 
                                         <td>{{ $payment->to_pay }} Bs</td>
-
-                                        <td><a class="btn btn-info" target="_blank" href="{{ $payment->link }}">Click</a></td>
 
                                         <td><a href="/admin/exchange/list/{{ $payment->id }}" class="btn btn-primary">Detalles</a></td>
 

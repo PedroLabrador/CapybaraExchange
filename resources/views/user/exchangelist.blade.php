@@ -2,17 +2,13 @@
 
 @section('content')
 
-	<div class="container">
+	<div class="container" style="overflow: scroll; overflow-x: scroll;">
 
         <div class="row">
 
-            <div class="col-md-11" style="margin: 3%;">
+            <div class="col-md-11">
 
                 <div class="panel">
-
-                    <div class="panel-header"></div>
-
-
 
                     <div class="panel-body">
 

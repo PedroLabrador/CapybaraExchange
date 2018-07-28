@@ -5,7 +5,7 @@
 	<!-- Meta, title, CSS, favicons, etc. -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
 	<link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/ico"/>
 
 	<title>{{ config('app.name', 'Laravel') }}</title>
@@ -21,6 +21,16 @@
 	<style type="text/css">
 		.mt-1 {
 			margin-top: 1em
+		}
+
+		.title {
+			font-size: 2em
+		}
+
+		@media only screen and (max-width : 480px) {
+ 			.right_col table{
+ 				font-size: .5em !important	
+ 			}
 		}
 	</style>
 </head>
@@ -61,6 +71,16 @@
 							<br>
 							<h3>Control</h3>
 							<ul class="nav side-menu">
+								<li>
+									<a>
+										<i class="fa fa-angle-right"></i>Usuarios<span class="fa fa-chevron-down"></span>
+									</a>
+									<ul class="nav child_menu">
+										<li>
+											<a href="/admin/users">Ver</a>
+										</li>
+									</ul>
+								</li>
 								<li>
 									<a>
 										<i class="fa fa-angle-right"></i>Opciones administrativas<span class="fa fa-chevron-down"></span>
@@ -133,7 +153,7 @@
 							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 						</div >
 						<div class='nav'>
-							<h1>Administrador</h1>
+							<h1 class="title">Administrador</h1>
 						</div>
 					</nav>
 				</div> 

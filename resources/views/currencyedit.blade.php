@@ -106,7 +106,7 @@
 
                                 <div class="col-md-10 col-md-offset-1 mt-1">
 
-                                    <label for='price'>Cuenta deposito:</label>
+                                    <label for='deposit'>Cuenta deposito:</label>
 
                                 </div>
 
@@ -115,6 +115,20 @@
                                     <input id='deposit' class='form-control' type="text" value='{{ $currency->deposit }}' name="deposit">
 
                                 </div>
+
+                                @if ($currency->fixedmemo != "")
+                                    <div class="col-md-10 col-md-offset-1 mt-1">
+
+                                        <label for='fixedmemo'>MEMO:</label>
+
+                                    </div>
+
+                                    <div class="col-md-10 col-md-offset-1">
+
+                                        <input id='fixedmemo' class='form-control' type="text" value='{{ $currency->fixedmemo }}' name="fixedmemo">
+
+                                    </div>
+                                @endif
 
                                 <div class="col-md-10 col-md-offset-1 mt-1">
 

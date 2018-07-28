@@ -16,10 +16,23 @@ class ExchangeController extends Controller
         $currencies = Currency::all();
         $user = \Auth::user();
         $bankaccounts = $user->bankaccounts;
+
+        $memodatabase = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        $memogenerated = "";
+        do {
+            for ($i = 0;$i < 8;$i++)
+                $memogenerated .= substr($memodatabase, rand(0,61), 1);
+
+            $count = Payment::where('memo', 'like', "%$memogenerated%")
+                            ->get()
+                            ->count();
+        } while ($count != 0);
+
     	return view('exchange', [
             'currencies' => $currencies,
             'user' => 'user',
-            'bankaccounts' => $bankaccounts
+            'bankaccounts' => $bankaccounts,
+            'memo' => $memogenerated
         ]);
     }
 
@@ -36,9 +49,10 @@ class ExchangeController extends Controller
         $money_from = $request->get('money_from');
         $money_to = $request->get('money_to');
         $link = $request->get('link');
+        $memo = $request->get('memo');
 
-        if (!$link)
-            return redirect()->back()->with(['wrong' => 'El correo no puede estar vacio']);
+        if (!$link && !$memo)
+            return redirect()->back()->with(['wrong' => 'El enlace no puede estar vacio']);
 
         if (!$bank_id)
             return redirect('/user/profile')->with(['wrong' => 'Por favor registra un banco donde pagar']);
@@ -48,6 +62,20 @@ class ExchangeController extends Controller
         $currency = Currency::find($request->get('from'));
         if (!($money_from * $currency->price_bs == $money_to))
             return redirect()->back()->with(['wrong' => 'Saldo incorrecto']);
+        
+        if ($currency->memo == 'on') {
+            if (!$link)
+                $link = "";
+        } else {
+            $memo = "";
+            $request->validate([
+                'link' => 'required|url|unique:payments'
+            ], [
+                'link.required' => 'El enlace es requerido.',
+                'link.unique' => 'El enlace ya ha sido registrado',
+                'link.url' => 'Debe ingresar un enlace.',
+            ]);
+        }
 
         $bankaccount = Bankaccount::where('id', $bank_id)->first();
         if (!($bankaccount->user->id == $user->id))
@@ -58,21 +86,19 @@ class ExchangeController extends Controller
             'money_to' => 'required|numeric',
             'from' => 'required|integer',
             'to' => 'required|integer',
-            'link' => 'required|url|unique:payments',
-            'bankaccount' => 'required'
+            'bankaccount' => 'required',
+            'memo' => 'unique:payments'
         ],[
             'money_from.required' => 'La cantidad de la moneda es requerida.',
             'money_to.required' => 'La cantidad de bs es requerida.',
             'from.required' => 'Campo requerido.',
             'to.required' => 'Campo requerido.',
-            'link.required' => 'El enlace es requerido.',
-            'link.unique' => 'El enlace ya ha sido registrado',
             'bankaccount.required' => 'La cuenta bancaria es requerida.',
             'money_from.numeric' => 'La cantidad a vender debe ser numerica.',
             'money_to.numeric' => 'La cantidad a recibir debe ser numerica.',
             'to.integer' => 'Campo debe ser entero.',
             'from.integer' => 'Campo debe ser entero.',
-            'link.url' => 'Debe ingresar un enlace.',
+            'memo.unique' => 'El memo ya existe'
         ]);
 
         Payment::create([
@@ -81,7 +107,8 @@ class ExchangeController extends Controller
             'amount' => $money_from,
             'to_pay' => $money_to,
             'link' => $link,
-            'currency' => $currency->name
+            'currency' => $currency->name,
+            'memo' => $memo
         ]);
 
         return view('user.success');

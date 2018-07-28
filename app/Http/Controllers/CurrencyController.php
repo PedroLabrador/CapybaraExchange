@@ -30,6 +30,13 @@ class CurrencyController extends Controller
     }
 
     public function store(Request $request) {
+        $memo = $request->get('memo');
+        $data = $request->all();
+        if (!($memo == 'on'))
+            $data['memo'] = 'off';
+        if (!$request->get('fixedmemo'))
+            $data['fixedmemo'] = "";
+        
     	$request->validate([
 		    'name' => 'required|max:255',
 		    'price_cu' => 'required|numeric',
@@ -43,7 +50,7 @@ class CurrencyController extends Controller
 			'price_bs.required' => 'El precio es requerido.',
 			'price_bs.numeric' => 'El precio debe ser numerico.',
 		]);
-    	$currency = Currency::create($request->all());
+    	$currency = Currency::create($data);
     	return redirect()->back()->with(['success' => 'Moneda Agregada existosamente']);
     }
 

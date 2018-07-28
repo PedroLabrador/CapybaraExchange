@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="container">
+	<div class="container" style="overflow: scroll; overflow-x: scroll;">
 
 		<div class="row">
 
@@ -144,7 +144,7 @@
 
 							</div>
 
-							<div class="col-md-10 col-md-offset-1 mt-1">
+							<div class="col-md-10 col-md-offset-1 mt-1" style="overflow: scroll; overflow-x: scroll;">
 
 								<div class="col-md-12 mt-1">
 
@@ -166,8 +166,6 @@
 
 											<th>Tipo de cuenta</th>
 
-											<th>Eliminar</th>
-
 										</tr>								
 
 										@foreach ($bankaccounts as $bankaccount)
@@ -185,22 +183,6 @@
 												</td>
 
 												<td style="width: 10%">{{ $bankaccount->account_type }}</td>
-
-												<td style="width: 10%">
-
-													<form action="/user/profile/delete/{{ $bankaccount->id }}" 
-
-														onsubmit="return confirm('Seguro que desea borrar el numero de cuenta?');">
-
-				                                        <td>
-
-				                                        	<button type="submit" class="btn btn-danger">Borrar</button>
-
-				                                        </td>
-
-				                                    </form>
-
-												</td>
 
 											</tr>
 
@@ -232,68 +214,44 @@
 		                                		
 		                                		<div class="col-md-10 col-md-offset-1 mt-1">
 				                                	
-				                                	<div class="col-md-2">
+			                                		<label for="account_type">Tipo de cuenta</label>
 
-				                                		<label for="account_type">Tipo de cuenta</label>
+				                                	<select id='account_type' class="form-control" name="account_type">
 
-				                                	</div>
+				                                		<option value="Ahorro">Ahorro</option>
 
-				                                	<div class="col-md-10">
+				                                		<option value="Corriente">Corriente</option>
 
-					                                	<select id='account_type' class="form-control" name="account_type">
-
-					                                		<option value="Ahorro">Ahorro</option>
-
-					                                		<option value="Corriente">Corriente</option>
-
-					                                	</select>
-
-													</div>
+				                                	</select>
 
 				                                </div>
 
 				                                <div class="col-md-10 col-md-offset-1 mt-1">
 
-				                                	<div class="col-md-2">
+			                                		<label for="user_name">Titular de la cuenta</label>
 
-				                                		<label for="user_name">Titular de la cuenta</label>
-
-				                                	</div>
-
-				                                	<div class="col-md-10">
-
-				                                		<input id='user_name' type="text" class="form-control" name="user_name">
-
-				                                	</div>
+			                                		<input id='user_name' type="text" class="form-control" name="user_name">
 
 				                                </div>
 
 
 				                                <div class="col-md-10 col-md-offset-1 mt-1">
 
-				                                	<div class="col-md-2">
+				                                	<label for="dni">Cédula</label>
 
-					                                	<label for="dni">Cédula</label>
+				                                	<select name="na" class="form-control">
+				                                		
+				                                		<option value="V">V</option>
 
-					                                </div>
+				                                		<option value="E">E</option>
 
-					                                <div class="col-md-2">
-					                                	
-					                                	<select name="na" class="form-control">
-					                                		
-					                                		<option value="V">V</option>
+				                                		<option value="J">J</option>
 
-					                                		<option value="E">E</option>
+				                                		<option value="RIF">RIF</option>
 
-					                                	</select>
+				                                	</select>
 
-					                                </div>
-
-				                                	<div class="col-md-8">
-
-					                                	<input id='dni' type="text" class="form-control" name="dni">
-
-					                                </div>
+				                                	<input id='dni' type="text" class="form-control" name="dni">
 
 				                                </div>
 
@@ -301,29 +259,21 @@
 
 				                                	<div class='col-md-10 col-md-offset-1 mt-1'>
 
-				                                		<div class="col-md-4">
+			                                			<select name='bank' class='form-control'>
 
-				                                			<select name='bank' class='form-control'>
+				                                			@foreach ($banks as $bank)
 
-					                                			@foreach ($banks as $bank)
+				                                				@if (!$bank->status)
 
-					                                				@if (!$bank->status)
+				                                				<option value='{{ $bank->id }}'>{{ $bank->bankname }}</option>
 
-					                                				<option value='{{ $bank->id }}'>{{ $bank->bankname }}</option>
+				                                				@endif
 
-					                                				@endif
+				                                			@endforeach
 
-					                                			@endforeach
+				                                		</select>
 
-					                                		</select>
-
-				                                		</div>
-
-				                                		<div class="col-md-8">
-
-					                                		<input type="text" name="account" class="form-control">
-
-					                                	</div>
+				                                		<input type="text" name="account" class="form-control">
 
 										            </div>
 
@@ -331,9 +281,9 @@
 
 				                            </div>
 
-		                                	</div>
+	                                	</div>
 
-		                                </div>
+	                                </div>
 
 								</div>
 

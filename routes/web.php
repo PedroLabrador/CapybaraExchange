@@ -32,6 +32,9 @@ Route::group(['middleware' => ['auth']], function() {
 Route::group(['middleware' => ['auth']], function() {
 	Route::group(['prefix' => 'admin'],function(){
         Route::get ('/', 'AdminController@index');
+        Route::get ('/users', 'AdminController@users');
+        Route::get ('/users/delete/{id}', 'AdminController@deleteuser');
+        Route::get ('/users/details/{id}', 'AdminController@detailsuser');
     	Route::get ('/finances', 'AdminController@finances');
     	Route::post('/currency', 'CurrencyController@store');
     	Route::get ('/currency', 'CurrencyController@create');

@@ -5,7 +5,7 @@
 	<!-- Meta, title, CSS, favicons, etc. -->
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'/>
 	<link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/ico"/>
 
 	<title>{{ config('app.name', 'Laravel') }}</title>
@@ -23,6 +23,15 @@
 			margin-top: 1em
 		}
 
+		.title {
+			font-size: 2em
+		}
+
+		@media only screen and (max-width : 480px) {
+			.right_col table{
+ 				font-size: .5em !important	
+ 			}
+		}
 	</style>
 	
 </head>
@@ -134,7 +143,7 @@
 							<a id="menu_toggle"><i class="fa fa-bars"></i></a>
 						</div >
 						<div class='nav'>
-							<h1>Panel de usuario</h1>
+							<h1 class="title">Panel de usuario</h1>
 						</div>
 					</nav>
 				</div> 

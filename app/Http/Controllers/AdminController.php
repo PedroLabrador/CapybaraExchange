@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Bank;
 use App\Finance;
+use App\User;
+use App\Payment;
+use App\Bankaccount;
 
 class AdminController extends Controller
 {
@@ -13,6 +16,32 @@ class AdminController extends Controller
     		return view('admin.index');
 		else
 			return redirect('/user');
+    }
+
+    public function users() {
+        $users = User::paginate(10);
+        return view('admin.users', [
+            'users' => $users
+        ]);
+    }
+
+    public function detailsuser($id) {
+        $user = User::findOrFail($id);
+        return view('admin.userdetails', [
+            'user' => $user
+        ]);
+    }
+
+    public function deleteuser($id) {
+        $user = User::findOrFail($id);
+        $payments = $user->payments;
+        $bankaccounts = $user->bankaccounts;
+        foreach ($payments as $payment)
+            Payment::destroy($payment->id);
+        foreach ($bankaccounts as $bankaccount)
+            Bankaccount::destroy($bankaccount->id);
+        User::destroy($id);
+        return redirect()->back()->with(['wrong' => 'Usuario eliminado']);
     }
 
     public function list() {

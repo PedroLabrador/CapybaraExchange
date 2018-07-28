@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    protected $fillable = ['user_id', 'bankaccount_id', 'currency', 'amount', 'to_pay', 'link', 'reference'];
+    protected $fillable = ['user_id', 'bankaccount_id', 'currency', 'amount', 'to_pay', 'link', 'reference', 'memo'];
     
     public function user() {
     	return $this->belongsTo(User::class);
@@ -14,9 +14,5 @@ class Payment extends Model
 
     public function bankaccount() {
     	return $this->belongsTo(Bankaccount::class);
-    }
-
-    public function currency() {
-    	return $this->belongsTo(Currency::class);
     }
 }

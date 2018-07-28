@@ -2,7 +2,7 @@
 
 @section('content')
 
-	<div class="container">
+	<div class="container" style="overflow-x: scroll;">
 
         <div class="row">
 
@@ -10,7 +10,7 @@
 
                 <div class="panel">
 
-                    <div class="panel-header"></div>
+                    <div class="panel-heading"></div>
 
 
 
@@ -194,9 +194,31 @@
                                                 
                                             </div>
 
-                                            <div class="col-md-10 col-md-offset-1 mt-1">
+                                            <div class="col-md-10 col-md-offset-1">
 
                                                 <input id='deposit' class='form-control' type="text" name="deposit">
+
+                                            </div>
+
+                                            <div class="col-md-10 col-md-offset-1 mt-1">
+                                                
+                                                <label for='fixedmemo'>Si la moneda posee memo fijo: (dejar en blanco si no lo posee) </label>
+                                                
+                                            </div>
+
+                                            <div class="col-md-10 col-md-offset-1">
+
+                                                <input id='fixedmemo' class='form-control' type="text" name="fixedmemo">
+
+                                            </div>
+
+                                            <div class="col-md-10 col-md-offset-1 mt-1">
+
+                                                <div class="checkbox">
+
+                                                  <label><input type="checkbox" name='memo'>Generar memos</label>
+
+                                                </div>
 
                                             </div>
 
