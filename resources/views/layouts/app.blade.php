@@ -28,10 +28,35 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style type="text/css">
+        html {
+            background: url({{ asset('img/FondoCentrado.jpg') }}) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        body{
+            background: transparent !important;
+        }
+        .opaque-2 {
+            background-color: rgba(102,153,153,0.8) !important;
+        }
+        .opaque-8 {
+            background-color: rgba(200, 200, 200, 0.5) !important; 
+        } 
+        .opaque-border {
+            border: 1px solid rgba(175, 175, 175, 0.8) !important;
+        }
+        .opaque-radius {
+            border-radius: 50px
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel opaque-8">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
