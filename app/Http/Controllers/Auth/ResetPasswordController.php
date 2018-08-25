@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user';
 
     /**
      * Create a new controller instance.
@@ -35,5 +35,22 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    protected function validationErrorMessages()
+    {
+        return [
+            'email.required' => 'La dirección de correo es requerida.',
+            'email.email' => 'Debe ingresar uan dirección de correo correcta.',
+            'password.required' => 'La contraseña es requerida.' ,
+            'password.confirmed' => 'Las contraseñas no concuerdan.',
+            'password.min' => 'La contraseña debe tener minimo 6 caracteres.'
+        ];
+    }
+
+    protected function sendResetResponse($response)
+    {
+        return redirect($this->redirectPath())
+                            ->with('status', 'Tu contraseña ha sido restablecida');
     }
 }

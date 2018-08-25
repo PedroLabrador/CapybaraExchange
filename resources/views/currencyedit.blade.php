@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -129,6 +129,20 @@
 
                                     </div>
                                 @endif
+
+                                <div class="col-md-10 col-md-offset-1 mt-1">
+
+                                    <div class="col-md-10 col-md-offset-1 mt-1">
+
+                                        <div class="checkbox">
+
+                                          <label><input type="checkbox" name='memo' {{ ($currency->memo == 'on') ? 'checked' : '' }}>Generar memos</label>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
 
                                 <div class="col-md-10 col-md-offset-1 mt-1">
 

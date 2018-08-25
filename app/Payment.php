@@ -15,4 +15,8 @@ class Payment extends Model
     public function bankaccount() {
     	return $this->belongsTo(Bankaccount::class);
     }
+
+    public function finances() {
+    	return $this->hasMany(Finance::class);
+    }
 }

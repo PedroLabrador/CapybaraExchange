@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<!-- Meta, title, CSS, favicons, etc. -->
 	<meta charset="utf-8">
@@ -80,31 +89,53 @@
 								</li>
 								<li>
 									<a>
-										<i class="fa fa-angle-right"></i>Peticiones<span class="fa fa-chevron-down"></span>
+										<i class="fa fa-angle-right"></i>Transacciones<span class="fa fa-chevron-down"></span>
 									</a>
 									<ul class="nav child_menu">
 										<li>
-											<a href="/user/exchange/list">Listado</a>
+											<a href="/user/exchange/list">Lista de transacciones</a>
 										</li>
 									</ul>
 								</li>
 							</ul>
 						</div>
 						<div class="menu_section">
-							<h3>Control</h3>
+							<h3>Cambiar</h3>
 							<ul class="nav side-menu">
 								<li>
 									<a>
-										<i class="fa fa-angle-right"></i>Vender<span class="fa fa-chevron-down"></span>
+										<i class="fa fa-angle-right"></i>Cambiar<span class="fa fa-chevron-down"></span>
 									</a>
 									<ul class="nav child_menu">
 										<li>
-											<a href="/user/exchange">vender</a>
+											<a href="/user/exchange">Vender</a>
 										</li>
 									</ul>
 								</li>
 							</ul>
 						</div>
+						
+						<div class="menu_section">
+							<h3>Tutoriales</h3>
+							<ul class="nav side-menu">
+								<li>
+									<a>
+										<i class="fa fa-angle-right"></i>Tutoriales<span class="fa fa-chevron-down"></span>
+									</a>
+									<ul class="nav child_menu">
+									    <li>
+											<a href="/howto"target="_blank">Como depositar bytes u otros</a>
+										</li>
+									    <li>
+											<a href="/howdeposit"target="_blank">Como depositar SBD/STEEM</a>
+										</li>
+
+										
+									</ul>
+								</li>
+							</ul>
+						</div>
+						
 						@if (\Auth::user()->role == 'Admin')
 						<ul class="nav side-menu">
 							<li>

@@ -248,6 +248,10 @@
 				                                		<option value="E">E</option>
 
 				                                		<option value="J">J</option>
+				                                		
+				                                		<option value="P">P</option>
+
+				                                		<option value="G">G</option>
 
 				                                	</select>
 

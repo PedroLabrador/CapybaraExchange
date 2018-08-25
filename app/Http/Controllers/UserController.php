@@ -20,6 +20,10 @@ class UserController extends Controller
     	]);
     }
 
+    public function home() {
+        return view('home');
+    }
+
     public function phone(Request $request) {
         $user = \Auth::user();
         $contact = $request->get('contact');

@@ -1,5 +1,14 @@
 <html>
 <head>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,13 +35,13 @@
 		    background-repeat: no-repeat;
 		    background-attachment: fixed;
 		    background-size: cover;
-		    background-color: #464646;
+		    background-color: #545454;
 		}
 		.opaque-2 {
 			background-color: rgba(102,153,153,0.8) !important;
 		}
 		.opaque-8 {
-			background-color: rgba(175, 175, 175, 0.8) !important; 
+			background-color: rgba(200, 200, 200, 0.8) !important; 
 		} 
 		.opaque-border {
 			border: 1px solid rgba(175, 175, 175, 0.8) !important;
@@ -44,18 +53,21 @@
 </head>
 <body data-gramm="true" data-gramm_editor="true" data-gramm_id="30e6f27f-b069-9116-a676-5fdc0f5d0846">
 
-	<nav class="navbar navbar-default navbar-fixed-top opaque-8 opaque-border">
+	<nav class="navbar navbar-default navbar-top-top opaque-8 opaque-border">
 
 	      <ul class="nav navbar-nav navbar-right">
 	        @guest
 		        <li><a href="/login">Entrar</a></li>
 		        <li><a href="/register">Registrarse</a></li>
+		        <li><a href="/howdeposit">Tutorial</a></li>
+		        
 	        @else
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ \Auth::user()->email }}<span class="caret"></span></a>
 		          <ul class="dropdown-menu opaque-8">
 		            <li><a href="/user/profile" style="color:black">Perfil</a></li>
 		            <li><a href="/user" style="color:black">Panel de usuario</a></li>
+		            <li><a href="/howto" style="color:black">Tutorial</a></li>
 		            @if (\Auth::user()->role == 'Admin')
 		            	<li><a href="/admin" style="color:black">Panel de administrador</a></li>
 		            @endif
@@ -69,18 +81,21 @@
 	  </div>
 	</nav>
 
-	<p style="text-align: center; margin-top: 5%"><img alt="" src="{{ asset('img/Test4.png') }}"style="width: 228px; height: 300px;" /></p>
+	<p style="text-align: center; margin-top: 5%"><a href="/"><style>img {max-width: 230px; width: 35%;height: auto;}</style><img src="/img/Icono.png" width="230px" maxheight="230px"></p></a>
 <div class="col-md-11" style="margin: 3%;">
 				<div class="panel">
                     <div class="panel-body opaque-8 opaque-radius">
 	<p style="text-align: center;"><font color="#000000"><strong><span style="font-size:36px;">Capybara Exchange</span></strong><br />
-	<span style="font-size:18px;">Casa de cambio de Bytes a Bol&iacute;vares, en construcci&oacute;n.</span></p>
+	<span style="font-size:18px;">Casa de cambio de Bytes y criptomonedas en general a Bol&iacute;vares, en construcci&oacute;n.</span></p>
 
 
-	<p style="text-align: center;"><span style="font-size:16px;">Bienvenido a la version beta de Capybara Exchange, aqu&iacute; podr&aacute;s cambiar tus Bytes a Bol&iacute;vares f&aacute;cilmente.<br />
+	<p style="text-align: center;"><font color="#000000"><span style="font-size:16px;">Bienvenido a la versi&oacute;n beta de Capybara Exchange, aqu&iacute; podr&aacute;s cambiar tus Bytes a Bol&iacute;vares f&aacute;cilmente.</br>
+	Si vas a cambiar por favor siempre cont&aacute;ctanos primero para poder verificar la tasa y disponibilidad.
 	<br />
-    <strong>Orden m&iacute;nima:</strong><br />
-	<strong>25,000,000Bs</strong></p></span>
+    <strong>Orden m&iacute;nima:</strong></br>
+	<strong>100Bs.S</strong></br>
+	<strong>Nota:</strong> Todos los precios estan marcados en Bs.S o bolívares soberanos, 1Bs.S=100.000Bs antiguos.</p></span>
+	
 
 	<div class="container" id="calculadora">
 		<div class="row">
@@ -93,7 +108,7 @@
 				            <div class="col-md-10 col-md-offset-1">
 				            	<div class="form-group">
 				            		<div class="col-md-9 mt-1">
-                                        <input id='from' class='form-control' type="text" name='money_from' value="0" onkeyup="calculate()">
+                                        <input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()">
                                     </div>
 				                    <div class="col-md-2">
 											<select id='money_from' name='from' class="form-control" onclick="calculate()">
@@ -108,14 +123,15 @@
 				            </div>
 				            <div class="col-md-10 col-md-offset-1">
 				                <div class="col-md-9 mt-1">
-                                    <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()">
+                                    <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()" >
                                 </div>
 				                <div class="col-md-2 mt-1">
 				                    <select id='money_to' name='to' class="form-control" onclick="calculate2()">
-                                        <option value="1">BS</option>
+                                        <option value="1">Bs.S</option>
                                     </select>
 				                </div>
 				            </div>
+				           
 				            @guest
 					        	<div class="col-md-10 col-md-offset-1 mt-1">
 					        		<div class="col-md-12">
@@ -289,23 +305,24 @@
 			</div>
 	    </div>
 	</div>
-
+<p style="text-align: center;"><span style="font-size:16px;"><strong>Disponibilidad:</strong></p></span>
 	<div class="panel">
 		<div class="panel-body">
-			<p style="text-align: center;"><img alt="" src="{{ asset('img/banesco.png') }}" style="width: 150px; height: 84px;" /><img alt="" src="{{ asset('img/LogoMercantil.png') }}" style="width: 150px; height: 84px;" /><img alt="" src="{{ asset('img/provincial.png') }}" style="width: 150px; height: 84px;" /><img alt="" src="{{ asset('img/LogoBOD.png') }}" style="width: 150px; height: 84px;" /></a></p>
+			<p style="text-align: center;">
+				@foreach ($banks as $bank)
+					<img src='{{ asset("img/$bank->url") }}' style="max-width: 120px; width: 15%; height: auto;"/>
+				@endforeach
+			</p>
 
-			<p style="text-align: center;"><span style="font-size:16px;">Trabajamos con Banesco, Mercantil, Provincial y BOD pero puedes preguntar por tu banco.&nbsp;</p>
-
-			<p style="text-align: center;"><span style="font-size:16px;">Tambi&eacute;n compramos montos inferiores a la orden m&iacute;nima, solo necesitas preguntar.</span></p>
-
+			<p style="text-align: center;"><span style="font-size:16px;">Si no encuentras tu banco te invitamos a preguntar, igualmente si deseas vender por un monto inferior a la orden m&iacute;nima.&nbsp;</p>
 			<p style="text-align: center;"><br /><span style="font-size:16px;">
-			Contactanos a traves de Telegram <a href="http://t.me/capybaraexchange">@capybaraexchange</a>&nbsp;y pregunta la tasa al momento ya que siempre tratamos de ofrecer la mejor tasa.</p></span>
+			Cont&aacute;ctanos a traves de Telegram <a href="http://t.me/capybaraexchange">@capybaraexchange</a>&nbsp;o nuestro Discord y pregunta la tasa al momento ya que siempre tratamos de ofrecer la mejor tasa.</p></span>
+			<p style="text-align: center;"><a href="http://t.me/capybaraexchange" target="_blank"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" style="width: 90px; height: 90px;" /></a><a href="https://discord.gg/zFPWeVK" target="_blank"><img alt="" src="https://www.shareicon.net/data/512x512/2017/06/21/887435_logo_512x512.png" style="width: 100px; height: 100px;" /></a></p>
 		</div>
 	</div>
 
-	<p style="text-align: center;"><a href="http://t.me/capybaraexchange"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" style="width: 100px; height: 100px;" /></a></p>
+	
 
-	<p style="text-align: center;"></p>
 
 	<!-- jQuery -->
 	<script src="{{ asset('vendors/jquery/dist/jquery.min.js') }}"></script>
@@ -351,6 +368,7 @@
 	</script>
 
 	<script type="text/javascript">
+	window.onload = function() { calculate(); };
         
         function calculate() {
             var money_from = $("#money_from").val();

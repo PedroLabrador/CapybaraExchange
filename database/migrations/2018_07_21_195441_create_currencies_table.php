@@ -21,7 +21,6 @@ class CreateCurrenciesTable extends Migration
             $table->string('deposit');
             $table->boolean('status')->default(0);
             $table->string('memo');
-            $table->string('fixedmemo');
             $table->timestamps();
         });
     }

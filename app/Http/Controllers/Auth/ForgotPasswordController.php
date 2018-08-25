@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
@@ -28,5 +29,20 @@ class ForgotPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    protected function validateEmail(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email'
+        ], [
+            'email.required' => 'El correo electrónico es requerido.',
+            'email.email' => 'Debe ingresar un correo electrónico válido.',
+        ]);
+    }
+
+    protected function sendResetLinkResponse($response)
+    {
+        return back()->with('status', 'Te hemos enviado a tu e-mail un enlace para restablecer tu contraseña!');
     }
 }

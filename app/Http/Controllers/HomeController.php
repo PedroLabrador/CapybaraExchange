@@ -13,16 +13,22 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function home()
-    {
-        return view('home');
+    public function howto() {
+        return view('howto');
+    }
+
+    public function howdeposit() {
+        return view('howdeposit');
+    }
+
+    public function termsofservice() {
+        return view('termsofservice');
+    }
+    
+    public function testzone() {
+        return view('testzone');
     }
 }

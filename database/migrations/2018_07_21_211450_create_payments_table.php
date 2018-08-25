@@ -23,7 +23,6 @@ class CreatePaymentsTable extends Migration
             $table->string('link');
             $table->integer('done')->default(0);
             $table->string('reference')->nullable();
-            $table->string('memo');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

@@ -32,6 +32,25 @@
                             </div>
                         @endif
                         <div class="col-md-12">
+                            <form method="GET" accept-charset="UTF-8" role="search">
+                                <div class="input-group">
+                                    <div class="col-md-6">
+                                        <label for="from_date">Desde: </label>
+                                        <input type="date" name="from_date" id="from_date" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="to_date">Hasta: </label>
+                                        <input type="date" name="to_date"   id="to_date"   class="form-control">
+                                    </div>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default mt-1" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+
+                            <hr>
                             <table class="table">
                                 <tr>
                                     <th>Usuario</th>
@@ -39,6 +58,8 @@
                                     <th>Gastado</th>
                                     <th>Generado</th>
                                     <th>Ganancia</th>
+                                    <th>Fecha</th>
+                                    <th>Editar</th>
                                 </tr>
                                 @forelse ($finances as $finance)
                                     <tr>
@@ -49,6 +70,8 @@
                                         <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><?php
                                             echo (rtrim(sprintf('%.8F', $finance->btc_won - $finance->btc_spent), '0'));
                                         ?> BTC</td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ date('d-m-Y h:i:s', strtotime($finance->created_at)) }}</td>
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><a href="/admin/finances/{{ $finance->id }}" class="btn btn-primary">Editar</a></td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -57,8 +80,8 @@
                                     </tr>
                                 @endforelse
                             </table>
+                            Ganancias totales {{ $winning }}
                         </div>
-                        {{ $finances->links() }}
                     </div>
                 </div>
             </div>

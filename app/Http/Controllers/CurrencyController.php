@@ -62,8 +62,11 @@ class CurrencyController extends Controller
     }
 
     public function update(Request $request, $id) {
+        $data = $request->all();
         $currency = Currency::find($id);
-        $currency->update($request->all());
+        if (!isset($data['memo']))
+            $data['memo'] = 'off';
+        $currency->update($data);
         return redirect()->back()->with(['success' => 'Moneda actualizada existosamente']);
     }
 }

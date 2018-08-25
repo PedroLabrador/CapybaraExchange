@@ -60,7 +60,9 @@
 
                                     <th style='width: 20%'>Cantidad minima natural</th>
 
-                                    <th style='width: 20%'>Precio en Bs</th>
+                                    <th style='width: 10%'>Precio en Bs</th>
+
+                                    <th style='width: 10%'>Memo</th>
 
                                     <th style='width: 10%'>Editar</th>
 
@@ -79,6 +81,8 @@
                                         <td>{{ $currency->price_cu }}</td>
 
                                         <td>{{ $currency->price_bs }}</td>
+
+                                        <td>{{ ($currency->memo == 'on') ? 'Si' : 'No' }}</td>
 
                                         <td><a href="/admin/currency/edit/{{ $currency->id }}" class="btn btn-info">Editar</a></td>
 

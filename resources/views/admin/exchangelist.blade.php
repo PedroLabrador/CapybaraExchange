@@ -76,6 +76,8 @@
 
                                     <th>Precio a pagar</th>
 
+                                    <th>Fecha</th>
+
                                     <th></th>
 
                                 </tr>
@@ -91,6 +93,8 @@
                                         <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $payment->amount }} {{ $payment->currency }}</td>
 
                                         <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $payment->to_pay }} Bs</td>
+
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ date('d-m-Y h:i:s', strtotime($payment->created_at)) }}</td>
 
                                         <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><a href="/admin/exchange/list/{{ $payment->id }}" class="btn btn-primary">Detalles</a></td>
 

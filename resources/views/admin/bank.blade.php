@@ -54,11 +54,15 @@
 
                                 <tr>
 
-                                    <th style="width: 20%">#</th>
+                                    <th style="width: 10%">#</th>
 
-                                    <th style="width: 50%">Nombre del banco</th>
+                                    <th style="width: 30%">Nombre del banco</th>
 
                                     <th style="width: 20%">Prefijo del banco</th>
+
+                                    <th style="width: 20%"></th>
+
+                                    <th style="width: 10%">Editar</th>
 
                                     <th style="width: 10%"></th>
 
@@ -73,6 +77,10 @@
                                         <td>{{ $bank->bankname }}</td>
 
                                         <td>{{ $bank->accountcode }}</td>
+
+                                        <td>{{ $bank->url }}</td>
+
+                                        <td><a class='btn btn-primary' href="/admin/bank/{{ $bank->id }}">Editar</a></td>
 
                                         @if (!$bank->status)
 
@@ -147,6 +155,18 @@
                                             <div class="col-md-12">
 
                                                 <input id='accountcode' type="text" name="accountcode" class="form-control" placeholder="ejemplo: 0105">
+
+                                            </div>
+
+                                            <div class="col-md-12 mt-1">
+
+                                                <label for='url'>Url de la imagen del banco</label>
+
+                                            </div>
+
+                                            <div class="col-md-12">
+
+                                                <input id='url' type="text" name="url" class="form-control" placeholder="no olvides poner la extensión '.jpg' ejemplo mercantil.jpg">
 
                                             </div>
 

@@ -11,14 +11,28 @@
 |
 */
 
-Auth::routes();
-Route::get('/logout', 'Auth\LoginController@logout');
+Route::get ('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
+Route::get ('/register', 'Auth\RegisterController@showRegistrationForm')->name('register'); //Si quieres desactivar los registros, comenta esta linea.
+Route::post('/register', 'Auth\RegisterController@register');
+Route::get ('/logout', 'Auth\LoginController@logout');
+Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
+Route::get ('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::get ('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+
+
+// Route::auth();
 
 Route::get ('/', 'ExchangeController@main');
+Route::get ('/howto', 'HomeController@howto');
+Route::get ('/howdeposit', 'HomeController@howdeposit');
+Route::get ('/termsofservice', 'HomeController@termsofservice');
+Route::get ('/testzone', 'HomeController@testzone');
 
 Route::group(['middleware' => ['auth']], function() {
 	Route::group(['prefix' => 'user'], function(){
-		Route::get ('/', 'HomeController@home');
+		Route::get ('/', 'UserController@home');
 		Route::post('/exchange', 'ExchangeController@store');
 		Route::get ('/exchange', 'ExchangeController@index');
         Route::get ('/exchange/list', 'UserController@list');
@@ -36,7 +50,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get ('/users/delete/{id}', 'AdminController@deleteuser');
         Route::get ('/users/details/{id}', 'AdminController@detailsuser');
         Route::post('/users/details/{id}', 'AdminController@updatedetails');
-    	Route::get ('/finances', 'AdminController@finances');
+        Route::get ('/finances', 'AdminController@finances');
+        Route::get ('/finances/{id}', 'AdminController@financesedit');
+    	Route::post('/finances/{id}', 'AdminController@financesupdate');
     	Route::post('/currency', 'CurrencyController@store');
     	Route::get ('/currency', 'CurrencyController@create');
     	Route::get ('/exchange/list', 'ExchangeController@list');
@@ -44,7 +60,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get ('/exchange/list/disapproved', 'ExchangeController@listdisapproved');
     	Route::get ('/exchange/list/{id}', 'ExchangeController@show');
     	Route::post('/bank', 'AdminController@bankcreate');
-    	Route::get ('/bank', 'AdminController@bank');
+        Route::get ('/bank', 'AdminController@bank');
+        Route::get ('/bank/{id}', 'AdminController@bankedit');
+    	Route::post('/bank/{id}', 'AdminController@bankupdate');
     	Route::get ('/bank/activate/{id}', 'AdminController@activate');
     	Route::get ('/bank/deactivate/{id}', 'AdminController@deactivate');
         Route::post('/exchange/approve/{id}', 'ExchangeController@approve');

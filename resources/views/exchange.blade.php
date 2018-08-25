@@ -72,7 +72,7 @@
 
                                     <div class="col-md-9 mt-1">
 
-                                        <input id='from' class='form-control' type="text" name='money_from' value="0" onkeyup="calculate()">
+                                        <input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()">
 
                                     </div>
 
@@ -108,14 +108,16 @@
 
                                         <select id='money_to' name='to' class="form-control" onclick="calculate2()">
 
-                                            <option value="1">BS</option>
+                                            <option value="1">Bs.S</option>
 
                                         </select>
 
                                     </div>
-
+                                
                                 </div>
-
+                                
+                                <div class="panel"><strong>Nota:</strong> Todos los precios estan marcados en Bs.S o bolívares soberanos, 1Bs.S=100.000Bs antiguos.</div>
+                                
                                 <div class="col-md-10 col-md-offset-1 mt-1">
 
                                     <!-- <button class="btn btn-primary">Proceder</button> -->
@@ -264,6 +266,7 @@
     </script> 
 
     <script type="text/javascript">
+    window.onload = function() { calculate(); };
 
         function calculate() {
 

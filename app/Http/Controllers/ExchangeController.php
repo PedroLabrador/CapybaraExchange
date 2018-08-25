@@ -9,6 +9,7 @@ use App\Bankaccount;
 use App\Mail\PagoAprobado;
 use App\Mail\PagoDenegado;
 use App\Finance;
+use App\Bank;
 
 class ExchangeController extends Controller
 {
@@ -38,8 +39,10 @@ class ExchangeController extends Controller
 
     public function main() {
         $currencies = Currency::all();
+        $banks = Bank::where('status', 0)->get();
         return view('index', [
             'currencies' => $currencies,
+            'banks' => $banks
         ]);
     }
 
@@ -147,6 +150,7 @@ class ExchangeController extends Controller
 
         $user = $payment->user;
         $email = $user->email;
+        
         \Mail::to($email)->send(new PagoAprobado($user, $payment));
         return redirect('/admin/exchange/list')->with(['success' => "Venta aprobada satisfactoriamente"]);
     }
