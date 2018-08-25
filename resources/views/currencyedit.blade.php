@@ -115,21 +115,19 @@
                                     <input id='deposit' class='form-control' type="text" value='{{ $currency->deposit }}' name="deposit">
 
                                 </div>
+                            
+                                <div class="col-md-10 col-md-offset-1 mt-1">
 
-                                @if ($currency->fixedmemo != "")
-                                    <div class="col-md-10 col-md-offset-1 mt-1">
+                                    <label for='fixedmemo'>MEMO:</label>
 
-                                        <label for='fixedmemo'>MEMO:</label>
+                                </div>
 
-                                    </div>
+                                <div class="col-md-10 col-md-offset-1">
 
-                                    <div class="col-md-10 col-md-offset-1">
+                                    <input id='fixedmemo' class='form-control' type="text" value='{{ $currency->fixedmemo }}' name="fixedmemo">
 
-                                        <input id='fixedmemo' class='form-control' type="text" value='{{ $currency->fixedmemo }}' name="fixedmemo">
-
-                                    </div>
-                                @endif
-
+                                </div>
+                            
                                 <div class="col-md-10 col-md-offset-1 mt-1">
 
                                     <div class="col-md-10 col-md-offset-1 mt-1">

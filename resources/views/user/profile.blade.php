@@ -277,7 +277,9 @@
 
 				                                		</select>
 
-				                                		<input type="text" name="account" class="form-control">
+				                                		<label for="account" class="mt-1">Número de cuenta</label>
+
+				                                		<input id='account' type="text" name="account" class="form-control">
 
 										            </div>
 

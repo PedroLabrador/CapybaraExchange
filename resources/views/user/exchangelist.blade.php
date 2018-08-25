@@ -76,6 +76,12 @@
 
                                     <th>Referencia</th>
 
+                                    <th>Enlace</th>
+
+                                    <th>Memo</th>
+
+                                    <th>Fecha</th>
+
                                 </tr>
 
                                 @forelse ($payments as $payment)
@@ -119,6 +125,28 @@
                                             @endif
 
                                         </td>
+
+                                        <td>
+
+                                            @if ($payment->link != '')
+
+                                                <a class='btn btn-primary' href="{{ $payment->link }}">Enlace</a>
+
+                                            @endif
+
+                                        </td>
+
+                                        <td>
+
+                                            @if ($payment->memo != '')
+
+                                                {{ $payment->memo }}
+
+                                            @endif
+
+                                        </td>
+
+                                        <td>{{ date('h:i:s d-m-Y', strtotime($payment->created_at)) }}</td>
 
                                     </tr>
 
