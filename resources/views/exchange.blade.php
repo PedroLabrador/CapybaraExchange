@@ -174,7 +174,7 @@
 
                                                                         @forelse ($bankaccounts as $bankaccount)
 
-                                                                            <option value='{{ $bankaccount->id }}'>{{ $bankaccount->bank->bankname }} -- {{ $bankaccount->account }}</option>
+                                                                            <option value='{{ $bankaccount->id }}'>{{ $bankaccount->user_name }} -- {{ $bankaccount->bank->bankname }} -- {{ $bankaccount->account_type }} -- {{ $bankaccount->account }}</option>
 
                                                                         @empty
 
@@ -206,10 +206,45 @@
 
                                                             </div>
 
-                                                             <div id='memo2' class="col-md-12 mt-1" style="display: none">
+                                                            <div id='memo2' class="col-md-12 mt-1" style="display: none">
 
                                                                 <label>Antes de proceder, por favor usa este codigo para realizar tu transferencia</label>
                                                                 <span class="form-control">{{ $memo }}</span>
+
+
+                                                            </div>
+
+                                                            <div id='steemconnect' class="col-md-12 mt-1" style="display: none">
+
+                                                                <div class="col-md-12">
+                                                                    <label class="mt-1">También puedes pagar con steemconnect: </label>
+                                                                </div>
+
+                                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confimation">Pagar con SteemConnect</button>
+
+                                                                <div id="confimation" class="modal fade" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                                                                  <div class="modal-dialog modal-md">
+
+                                                                    <div class="modal-content">
+                                                                      <div class="modal-header">
+                                                                        <h4 class="modal-title">Paga con SteemConnect</h4>
+                                                                      </div>
+                                                                      <div class="modal-body">
+                                                                        <div class="col-md-12">
+                                                                            <h3 style="color:blue">Vas a ser redirigido a SteemConnect, no olvides regresar a esta pestaña para registrar tu pago en nuestra plataforma despues de darle al boton cerrar.</h3>
+                                                                            <img alt="" src="https://www.capybaraexchange.com/img/Instrucciones.jpg" /> 
+                                                                        </div>
+                                                                        <div class="col-md-12">
+                                                                            <a id='steemlink' target="_blank" class="btn btn-primary mt-1" href="">Transferir</a> 
+                                                                        </div>
+                                                                      </div>
+                                                                      <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default" id='btnCancelConfimation'>Cerrar</button>
+                                                                      </div>
+                                                                    </div>
+
+                                                                  </div>
+                                                                </div>
 
                                                             </div>
 
@@ -252,13 +287,13 @@
     <script type="text/javascript">
 
     function stopRKey(evt) {
-
         var evt = (evt) ? evt : ((event) ? event : null);
 
         var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
 
-        if ((evt.keyCode == 13) && (node.type=="text"))  {return false;}
+        if (evt.keyCode == 27) $("#confimation").modal('toggle');
 
+        if ((evt.keyCode == 13) && (node.type=="text")) return false;
     }
 
     document.onkeypress = stopRKey;
@@ -266,7 +301,13 @@
     </script> 
 
     <script type="text/javascript">
-    window.onload = function() { calculate(); };
+    window.onload = function() { 
+        calculate(); 
+
+        $("#btnCancelConfimation").click(function(){
+            $("#confimation").modal('toggle');
+        });
+    };
 
         function calculate() {
 
@@ -304,11 +345,22 @@
 
                     echo "$('#memo2').show();";
 
+                    echo "if ('$currency->name' == 'SBD' || '$currency->name' == 'STEEM') {";
+
+                    echo "var route = 'https://steemconnect.com/sign/transfer?to=capybaraexchange&amount='+from+'%20$currency->name&memo=$memo';";
+
+                    echo "$('#steemlink').attr('href', route);";
+                    echo "$('#steemconnect').show();";
+
+                    echo "}";
+
                     echo "} else {";
 
                     echo "$('#memo2').hide();";
 
                     echo "$('#memo').show();";
+
+                    echo "$('#steemconnect').hide();";
 
                     echo "}";
 
@@ -360,11 +412,20 @@
 
                     echo "$('#memo2').show();";
 
+                    echo "if ('$currency->name' == 'SBD' || '$currency->name' == 'STEEM')";
+
+                    echo "var route = 'https://steemconnect.com/sign/transfer?to=capybaraexchange&amount='+from+'%20$currency->name&memo=$memo';";
+
+                    echo "$('#steemlink').attr('href', route);";
+                    echo "$('#steemconnect').show()";
+
                     echo "} else {";
 
                     echo "$('#memo2').hide();";
                     
                     echo "$('#memo').show();";
+
+                    echo "$('#steemconnect').hide()";
 
                     echo "}";
 

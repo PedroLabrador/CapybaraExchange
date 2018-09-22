@@ -20,6 +20,56 @@ class UserController extends Controller
     	]);
     }
 
+    public function show($id) {
+        $bankaccount = Bankaccount::where('id', $id)->first();
+        $banks = Bank::all();
+        $nationality = $bankaccount->dni[0];
+        $dni = substr($bankaccount->dni, 2);
+        return view('user.show', [
+            'bankaccount' => $bankaccount,
+            'banks' => $banks,
+            'nationality' => $nationality,
+            'dni' => $dni
+        ]);
+    }
+
+    public function update_single($id, Request $request) {
+        $bankaccount = Bankaccount::where('id', $id)->first();
+
+        $data = $request->all();
+        $data['dni'] = $data['na'] . "-" . $data['dni'];
+        $bank = Bank::where('id', $data['bank'])->first();
+
+
+        if (!($data['account_type'] == 'Pago Movil')) {
+            if (!(substr($data['account'], 0, 4 ) === $bank->accountcode))
+                return redirect()->back()->with(['wrong' => 'Cuenta incorrecta']);
+            if (strlen($data['account']) != 20)
+                return redirect()->back()->with(['wrong' => 'Numero de cuenta incorrecto']);
+        }
+        
+        if (!isset($data['account']) || !isset($data['bank']))
+            return redirect()->back();
+        
+        $request->validate([
+            'bank' => 'required',
+            'account' => 'required',
+            'user_name' => 'required',
+            'dni' => 'required',
+            'account_type' => 'required',
+        ],[
+            'bank.required' => 'El banco es requerido.',
+            'account.required' => 'La cuenta es requerida.',
+            'account_type.required' => 'El tipo de cuenta es requerida.',
+            'user_name.required' => 'El titular de la cuenta es requerido.',
+            'dni.required' => 'La cédula es requerida.',
+        ]);
+        
+        $bankaccount->update($data);
+
+        return redirect('/user/profile')->with(['success' => 'Datos actualizados correctamente']);
+    }
+
     public function home() {
         return view('home');
     }
@@ -36,14 +86,22 @@ class UserController extends Controller
         $data = $request->all();
         $data['dni'] = $data['na'] . "-" . $data['dni'];
         $bank = Bank::where('id', $data['bank'])->first();
-        if (!(substr($data['account'], 0, 4 ) === $bank->accountcode))
-            return redirect()->back()->with(['wrong' => 'Cuenta incorrecta']);
+        $prefix = $request['prefix'];
+
+        if ($data['account_type'] == 'Pago Movil'){
+            $data['account'] = $prefix . " " . $data['account'];
+        } else  {
+            if (!(substr($data['account'], 0, 4 ) === $bank->accountcode))
+                return redirect()->back()->with(['wrong' => 'Cuenta incorrecta']);
+            if (strlen($data['account']) != 20)
+                return redirect()->back()->with(['wrong' => 'Numero de cuenta incorrecto']);
+        }
         
         if (!isset($data['account']) || !isset($data['bank']))
             return redirect()->back();
         $request->validate([
             'bank' => 'required',
-            'account' => 'required|min:20|max:20',
+            'account' => 'required',
             'user_name' => 'required',
             'dni' => 'required',
             'account_type' => 'required',
@@ -53,8 +111,6 @@ class UserController extends Controller
             'account_type.required' => 'El tipo de cuenta es requerida.',
             'user_name.required' => 'El titular de la cuenta es requerido.',
             'dni.required' => 'La cédula es requerida.',
-            'account.min' => 'El numero de cuenta debe tener 20 digitos.',
-            'account.max' => 'El numero de cuenta debe tener 20 digitos.',
         ]);
         
         $user = \Auth::user();

@@ -1,5 +1,5 @@
 <html>
-<head>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb18030">
     
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -9,7 +9,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     
-	<meta charset="utf-8">
+	
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -41,7 +41,7 @@
 			background-color: rgba(102,153,153,0.8) !important;
 		}
 		.opaque-8 {
-			background-color: rgba(175, 175, 175, 0.8) !important; 
+			background-color: rgba(200, 200, 200, 0.8) !important; 
 		} 
 		.opaque-border {
 			border: 1px solid rgba(175, 175, 175, 0.8) !important;
@@ -57,14 +57,16 @@
         @guest
 	        <li><a href="/login">Entrar</a></li>
 	        <li><a href="/register">Registrarse</a></li>
-	        <li><a href="/howdeposit">Tutorial</a></li>
+	        <li><a href="/howto">Tutorial Bytes/Crypto</a></li>
+	        <li><a href="/howdeposit">Tutorial SBD/Steem</a></li>
         @else
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ \Auth::user()->email }}<span class="caret"></span></a>
 	          <ul class="dropdown-menu opaque-8">
 	            <li><a href="/user/profile" style="color:black">Perfil</a></li>
 	            <li><a href="/user" style="color:black">Panel de usuario</a></li>
-	            <li><a href="/howto" style="color:black">Tutorial</a></li>
+	            <li><a href="/howto" style="color:black">Tutorial Bytes/Crypto</a></li>
+	            <li><a href="/howdeposit" style="color:black">Tutorial SBD/Steem</a></li>
 	            @if (\Auth::user()->role == 'Admin')
 	            	<li><a href="/admin" style="color:black">Panel de administrador</a></li>
 	            @endif
@@ -92,10 +94,10 @@
 		<div class="panel">
             <div class="panel-body opaque-8 opaque-radius">
 				<p style="text-align: center;">
-					<font color="#000000"></font>
+					<font color="#000000">
 					<strong><span style="font-size:36px;">Capybara Exchange</span></strong>
 					<br/>
-					<span style="font-size:18px;">Casa de cambio de Bytes a Bolívares, en construcción.</span>
+					<span style="font-size:18px;">Casa de cambio de Bytes a Bolívares, en construcción.</span></font>
 				</p>
 
 				<div class="col-md-11" style="margin: 3%;">

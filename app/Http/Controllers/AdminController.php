@@ -62,7 +62,7 @@ class AdminController extends Controller
     }
 
     public function bank() {
-        $banks = Bank::paginate(10);
+        $banks = Bank::paginate(15);
         return view('admin.bank', [
             'banks' => $banks
         ]);
@@ -102,6 +102,14 @@ class AdminController extends Controller
         $currency->status = 1;
         $currency->save();
         return redirect()->back()->with(['success' => 'Banco desactivado']);
+    }
+    
+    public function totaldeactivate() {
+        $banks = Bank::all();
+        foreach ($banks as $bank) {
+           
+        }
+        return redirect()->back()->with(['success' => 'Bancos desactivados']);
     }
 
     public function activate($id) {

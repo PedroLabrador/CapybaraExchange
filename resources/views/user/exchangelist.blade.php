@@ -133,7 +133,12 @@
                                                 <a class='btn btn-primary' href="{{ $payment->link }}">Enlace</a>
 
                                             @endif
-
+                                            
+                                            @if ($payment->link == '')
+                                            
+                                                <a class='btn btn-primary' href="https://steemconnect.com/sign/transfer?to=capybaraexchange&amount={{ $payment->amount }}%20{{ $payment->currency }}&memo={{ $payment->memo }}">Pagar</a></a>
+                                            
+                                            @endif
                                         </td>
 
                                         <td>
@@ -146,7 +151,7 @@
 
                                         </td>
 
-                                        <td>{{ date('h:i:s d-m-Y', strtotime($payment->created_at)) }}</td>
+                                        <td>{{ date('H:i:s d-m-Y', strtotime($payment->created_at)) }}</td>
 
                                     </tr>
 

@@ -51,22 +51,24 @@
 		}
 	</style>
 </head>
-<body>
+<body data-gramm="true" data-gramm_editor="true" data-gramm_id="30e6f27f-b069-9116-a676-5fdc0f5d0846">
+    
 	<nav class="navbar navbar-default navbar-top-top opaque-8 opaque-border">
 
 	      <ul class="nav navbar-nav navbar-right" >
-	          
 	        @guest
-		        <li><a href="/login" >Entrar</a></li>
-		        <li><a href="/register" >Registrarse</a></li>
-		        <li><a href="/howto" >Tutorial</a></li>
+		        <li><a href="/login">Entrar</a></li>
+		        <li><a href="/register">Registrarse</a></li>
+		        <li><a href="/howto">Tutorial</a></li>
+		        
 	        @else
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ \Auth::user()->email }}<span class="caret"></span></a>
 		          <ul class="dropdown-menu opaque-8">
 		            <li><a href="/user/profile" style="color:#8f8f8f">Perfil</a></li>
 		            <li><a href="/user" style="color:#8f8f8f">Panel de usuario</a></li>
-		            <li><a href="/howto" style="color:#8f8f8f">Tutorial</a></li>
+		            <li><a href="/howto" style="color:#8f8f8f">Tutorial Bytes/Crypto</a></li>
+	                <li><a href="/howdeposit" style="color:#8f8f8f">Tutorial SBD/Steem</a></li>
 		            @if (\Auth::user()->role == 'Admin')
 		            	<li><a href="/admin" style="color:#8f8f8f">Panel de administrador</a></li>
 		            @endif
@@ -80,13 +82,8 @@
 	  </div>
 	</nav>
 
-	<p style="text-align: center; margin-top: 5%">
-		<a href="/">
-			<style>img {max-width: 230px; width: 35%;height: auto;}</style>
-			<img src="/img/Icono.png" width="230px" maxheight="230px">
-		</a>
-	</p>
-	<div class="col-md-11" style="margin: 3%;">
+	<p style="text-align: center; margin-top: 5%"><a href="/"><style>img {max-width: 230px; width: 35%;height: auto;}</style><img src="/img/Icono.png" width="230px" maxheight="230px"></p></a>
+<div class="col-md-11" style="margin: 3%;">
 		<div class="panel">
             <div class="panel-body opaque-8 opaque-radius">
 				<p style="text-align: center;">

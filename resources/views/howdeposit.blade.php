@@ -5,6 +5,7 @@
 	<div class="panel">
         <div class="panel-body opaque-2 opaque-radius">
             <p style="text-align: center;"><span style="font-size:18px;">
+                <font color="#000000">
         	<strong>Paso 1: Registrarse</strong><br />
 				        	
 			Solo necesitas hacer clic en el boton de registrarse rellenar los campos y estarás en tu cuenta.</br>			        	

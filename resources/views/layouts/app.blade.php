@@ -31,7 +31,7 @@
 
     <style type="text/css">
         html {
-            background: url({{ asset('img/FondoCentrado.jpg') }}) no-repeat center center fixed;
+            background: url({{ asset('img/CapybaraDAG3-min.jpg') }}) no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
@@ -44,7 +44,7 @@
             background-color: rgba(102,153,153,0.8) !important;
         }
         .opaque-8 {
-            background-color: rgba(200, 200, 200, 0.5) !important; 
+            background-color: rgba(200, 200, 200, 0.9) !important; 
         } 
         .opaque-border {
             border: 1px solid rgba(175, 175, 175, 0.8) !important;

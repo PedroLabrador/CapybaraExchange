@@ -40,6 +40,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get ('/profile', 'UserController@index');
         Route::post('/profile/update', 'UserController@phone');
         Route::get ('/profile/delete/{id}', 'UserController@delete');
+        Route::get ('/profile/update/{id}', 'UserController@show');
+        Route::post('/profile/update/{id}', 'UserController@update_single');
 	});
 });
 
@@ -65,6 +67,7 @@ Route::group(['middleware' => ['auth']], function() {
     	Route::post('/bank/{id}', 'AdminController@bankupdate');
     	Route::get ('/bank/activate/{id}', 'AdminController@activate');
     	Route::get ('/bank/deactivate/{id}', 'AdminController@deactivate');
+    	Route::get ('/bank/totaldeactivate/', 'AdminController@totaldeactivate');
         Route::post('/exchange/approve/{id}', 'ExchangeController@approve');
     	Route::post('/exchange/disapprove/{id}', 'ExchangeController@disapprove');
     	Route::post('/currency/edit/{id}', 'CurrencyController@update');

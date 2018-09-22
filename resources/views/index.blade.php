@@ -67,7 +67,8 @@
 		          <ul class="dropdown-menu opaque-8">
 		            <li><a href="/user/profile" style="color:black">Perfil</a></li>
 		            <li><a href="/user" style="color:black">Panel de usuario</a></li>
-		            <li><a href="/howto" style="color:black">Tutorial</a></li>
+		            <li><a href="/howto" style="color:black">Tutorial Bytes/Crypto</a></li>
+	                <li><a href="/howdeposit" style="color:black">Tutorial SBD/Steem</a></li>
 		            @if (\Auth::user()->role == 'Admin')
 		            	<li><a href="/admin" style="color:black">Panel de administrador</a></li>
 		            @endif
@@ -89,11 +90,11 @@
 	<span style="font-size:18px;">Casa de cambio de Bytes y criptomonedas en general a Bol&iacute;vares, en construcci&oacute;n.</span></p>
 
 
-	<p style="text-align: center;"><font color="#000000"><span style="font-size:16px;">Bienvenido a la versi&oacute;n beta de Capybara Exchange, aqu&iacute; podr&aacute;s cambiar tus Bytes a Bol&iacute;vares f&aacute;cilmente.</br>
-	Si vas a cambiar por favor siempre cont&aacute;ctanos primero para poder verificar la tasa y disponibilidad.
+	<p style="text-align: center;"><font color="#000000"><span style="font-size:16px;">Bienvenido a la versi&oacute;n beta de Capybara Exchange, aqu&iacute; podr&aacute;s cambiar tus Bytes y otras cryptomonedas a Bol&iacute;vares f&aacute;cilmente.</br>
+	Si vas a cambiar por favor siempre cont&aacute;ctanos primero para poder verificar la disponibilidad.
 	<br />
     <strong>Orden m&iacute;nima:</strong></br>
-	<strong>100Bs.S</strong></br>
+	<strong>0.01Bs.S</strong></br>
 	<strong>Nota:</strong> Todos los precios estan marcados en Bs.S o bolívares soberanos, 1Bs.S=100.000Bs antiguos.</p></span>
 	
 
@@ -310,13 +311,13 @@
 		<div class="panel-body">
 			<p style="text-align: center;">
 				@foreach ($banks as $bank)
-					<img src='{{ asset("img/$bank->url") }}' style="max-width: 120px; width: 15%; height: auto;"/>
+					<img src='{{ asset("img/$bank->url") }}' style="max-width: 90px; width: 15%; height: auto;"/>
 				@endforeach
 			</p>
 
 			<p style="text-align: center;"><span style="font-size:16px;">Si no encuentras tu banco te invitamos a preguntar, igualmente si deseas vender por un monto inferior a la orden m&iacute;nima.&nbsp;</p>
 			<p style="text-align: center;"><br /><span style="font-size:16px;">
-			Cont&aacute;ctanos a traves de Telegram <a href="http://t.me/capybaraexchange">@capybaraexchange</a>&nbsp;o nuestro Discord y pregunta la tasa al momento ya que siempre tratamos de ofrecer la mejor tasa.</p></span>
+			Cont&aacute;ctanos a traves de Telegram <a href="http://t.me/capybaraexchange">@capybaraexchange</a>&nbsp;o nuestro <a href="https://discord.gg/zFPWeVK">Discord</a> y pregunta la liquidez al momento ya que siempre tratamos de ofrecer la mejor tasa y se nos agota rápido.</p></span>
 			<p style="text-align: center;"><a href="http://t.me/capybaraexchange" target="_blank"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" style="width: 90px; height: 90px;" /></a><a href="https://discord.gg/zFPWeVK" target="_blank"><img alt="" src="https://www.shareicon.net/data/512x512/2017/06/21/887435_logo_512x512.png" style="width: 100px; height: 100px;" /></a></p>
 		</div>
 	</div>

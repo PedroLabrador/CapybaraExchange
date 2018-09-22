@@ -56,13 +56,20 @@
                                     <td>
                                       <tr>
                                         <th>#</th>
-                                        <th>N. cuenta</th>
+                                        <th>Banco</th>
+										<th>Titular de la cuenta</th>
+										<th>Cédula</th>
+										<th>Número de cuenta    /    Número de telefono</th>
+										<th>Tipo de cuenta</th>
                                         <th></th>
                                         @foreach ($user->bankaccounts as $bankaccount)
                                         <tr>
                                           <td>{{ $loop->iteration }}</td>
+                                          <td>{{ $bankaccount->bank->bankname }}</td>
+                                          <td>{{ $bankaccount->user_name }}</td>
+                                          <td>{{ $bankaccount->dni }}</td>
                                           <td>{{ $bankaccount->account }}</td>
-                                          <td>
+                                          <td>{{ $bankaccount->account_type }}</td>
                                             <form action="/user/profile/delete/{{ $bankaccount->id }}"onsubmit="return confirm('Seguro que desea borrar el numero de cuenta?, recuerde que esta acción también eliminará todas los pagos asociados a este número de cuenta, proceda bajo su propio riesgo.');">
                                                 <td>
                                                     <button type="submit" class="btn btn-danger">Borrar</button>

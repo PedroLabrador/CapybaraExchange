@@ -162,9 +162,13 @@
 
 											<th>Titular de la cuenta</th>
 
-											<th>Numero de cuenta</th>
+											<th>Cédula</th>
+
+											<th>Número de cuenta    /    Número de telefono</th>
 
 											<th>Tipo de cuenta</th>
+
+											<th>Editar</th>
 
 										</tr>								
 
@@ -176,13 +180,17 @@
 
 												<td style="width: 20%">{{ $bankaccount->user_name }}</td>
 
-												<td style="width: 50%">
+												<td style="width: 10%">{{ $bankaccount->dni }}</td>
+
+												<td style="width: 40%">
 
 													<input id='bank' type="text" value="{{ $bankaccount->account }}" class="form-control" disabled>
 
 												</td>
 
 												<td style="width: 10%">{{ $bankaccount->account_type }}</td>
+
+												<td><a href="/user/profile/update/{{ $bankaccount->id }}" class="btn btn-primary">Editar</a></td>
 
 											</tr>
 
@@ -216,13 +224,15 @@
 				                                	
 			                                		<label for="account_type">Tipo de cuenta</label>
 
-				                                	<select id='account_type' class="form-control" name="account_type">
+				                                	<select id='account_type' class="form-control" name="account_type" onchange="switch_acc()">
 
 				                                		<option value="Ahorro">Ahorro</option>
 
 				                                		<option value="Corriente">Corriente</option>
 
 				                                		<option value="Juridica">Juridica</option>
+
+				                                		<option value="Pago Movil">Pago Movil</option>
 
 				                                	</select>
 
@@ -239,31 +249,43 @@
 
 				                                <div class="col-md-10 col-md-offset-1 mt-1">
 
-				                                	<label for="dni">Cédula</label>
+				                                	<div class="col-md-12">
 
-				                                	<select name="na" class="form-control">
-				                                		
-				                                		<option value="V">V</option>
+				                                		<label for="dni">Cédula</label>
 
-				                                		<option value="E">E</option>
+				                                	</div>
 
-				                                		<option value="J">J</option>
-				                                		
-				                                		<option value="P">P</option>
+				                                	<div class="col-md-12">
 
-				                                		<option value="G">G</option>
+					                                	<select name="na" class="form-control">
+					                                		
+					                                		<option value="V">V</option>
 
-				                                	</select>
+					                                		<option value="E">E</option>
 
-				                                	<input id='dni' type="text" class="form-control" name="dni">
+					                                		<option value="J">J</option>
+					                                		
+					                                		<option value="P">P</option>
+
+					                                		<option value="G">G</option>
+
+					                                	</select>
+
+					                                </div>
+
+					                                <div class="col-md-12">
+
+				                                		<input id='dni' type="text" class="form-control" name="dni">
+
+				                                	</div>
 
 				                                </div>
 
 				                                <div id="wrap">
 
 				                                	<div class='col-md-10 col-md-offset-1 mt-1'>
-
-			                                			<select name='bank' class='form-control'>
+                                                        <label for="bank" class="mt-1">bankaccount</label>
+                                                        <select name='bank' class='form-control'>
 
 				                                			@foreach ($banks as $bank)
 
@@ -276,10 +298,23 @@
 				                                			@endforeach
 
 				                                		</select>
+				                                		<div class="col-md-12">
+				                                			<label id='account_label' for="account" class="mt-1">Número de cuenta</label>
+			                                			</div>
 
-				                                		<label for="account" class="mt-1">Número de cuenta</label>
+				                                		<div id='prefix' class="col-md-3" style="display: none">
+					                                		<select class='form-control' name='prefix'>
+					                                			<option value="0416">0416</option>
+					                                			<option value="0426">0426</option>
+					                                			<option value="0414">0414</option>
+					                                			<option value="0424">0424</option>
+					                                			<option value="0412">0412</option>
+					                                		</select>
+														</div>
 
-				                                		<input id='account' type="text" name="account" class="form-control">
+														<div class="col-md-9">
+				                                			<input id='account' type="text" name="account" class="form-control">
+				                                		</div>
 
 										            </div>
 
@@ -312,5 +347,19 @@
 		</div>
 
 	</div>
+
+<script type="text/javascript">
+	window.onload = function() { switch_acc(); };
+	
+	function switch_acc() {
+		$("#prefix").hide();
+        console.log($("#account_type").val());
+        if ($("#account_type").val() == 'Pago Movil') {
+			$('#account_label').html('Número de teléfono');
+            $("#prefix").show();
+        } else
+        	$('#account_label').html('Número de cuenta');
+	}
+</script>
 
 @endsection
