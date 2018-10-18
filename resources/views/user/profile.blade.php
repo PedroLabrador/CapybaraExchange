@@ -289,11 +289,7 @@
 
 				                                			@foreach ($banks as $bank)
 
-				                                				@if (!$bank->status)
-
 				                                				<option value='{{ $bank->id }}'>{{ $bank->bankname }}</option>
-
-				                                				@endif
 
 				                                			@endforeach
 

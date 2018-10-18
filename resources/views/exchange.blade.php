@@ -173,9 +173,9 @@
                                                                     <select id='bankaccount' name="bankaccount" class="form-control">
 
                                                                         @forelse ($bankaccounts as $bankaccount)
-
+                                                                            @if ($bankaccount->bank->status == 0)
                                                                             <option value='{{ $bankaccount->id }}'>{{ $bankaccount->user_name }} -- {{ $bankaccount->bank->bankname }} -- {{ $bankaccount->account_type }} -- {{ $bankaccount->account }}</option>
-
+                                                                            @endif
                                                                         @empty
 
                                                                             <option disabled>No hay bancos asociados a su cuenta</option>

@@ -138,6 +138,26 @@ class AdminController extends Controller
         ]);
     }
 
+    public function rates(Request $request) {
+        
+        if ($request->btcrateves == 0 || $request->btcrate == 0)
+            return redirect()->back()->with(['wrong' => "Division por 0???"]);
+        if (!$request->checked)
+            return redirect()->back();
+        foreach ($request->checked as $checked) {
+            $finance = Finance::where('id', $checked)->first();
+            $payment = $finance->payment;
+            $btc_spent = (floatval($payment->to_pay) * floatval($request->cfactor)) / floatval($request->btcrateves);
+            $btc_won = floatval($payment->amount) * floatval($request->btcrate);
+
+            $finance->btc_spent = $btc_spent;
+            $finance->btc_won = $btc_won;
+
+            $finance->save();
+        }
+        return redirect()->back();
+    }
+
     public function financesedit($id) {
         $finance = Finance::findOrFail($id);
         return view('admin.financesedit', [

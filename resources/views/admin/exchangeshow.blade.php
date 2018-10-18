@@ -16,6 +16,13 @@
                                 </div>
                             </div>
                         @endif
+                        @if (Session::has('wrong'))
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="form-control has-danger">
+                                    <span style="border-color: #FF4136; color: #FF4136; text-align: center">{{ Session::get('wrong') }}</span>
+                                </div>
+                            </div>
+                        @endif
                         <div class="col-md-12" style="font-size: 24px">
                             <table class="table">
                                 <tr>
@@ -85,11 +92,16 @@
                                                       <input id='reference' type="text" class="form-control" name="reference">
                                                     </div>
                                                   </div>
-                                                  <div class="col-md-6 mt-1">
-                                                    <input id='btcwon' type="text" class="form-control" name="btcwon" placeholder="BTC ganado">
+                                                  <div class="col-md-12">
+                                                    <div class="col-md-4 mt-1">
+                                                    <input id='btcwon' type="text" class="form-control" name="btcrate" placeholder="Tasa BTC">
                                                   </div>
-                                                  <div class="col-md-6 mt-1">
-                                                    <input id='btcspent' type="text" class="form-control" name="btcspent" placeholder="BTC gastado">
+                                                  <div class="col-md-4 mt-1">
+                                                    <input id='btcspent' type="text" class="form-control" name="btcrateves" placeholder="Tasa BTC ves">
+                                                  </div>
+                                                  <div class="col-md-4 mt-1">
+                                                    <input type="text" class="form-control" name="cfactor" placeholder="Factor de correción">
+                                                  </div>
                                                   </div>
                                                 </div>
                                                 

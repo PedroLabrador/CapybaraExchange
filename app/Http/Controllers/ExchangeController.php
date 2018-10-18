@@ -127,25 +127,34 @@ class ExchangeController extends Controller
     public function approve($id, Request $request) {
         $request->validate([
             'reference' => 'required',
-            'btcwon' => 'required',
-            'btcspent' => 'required',
+            'btcrate' => 'required',
+            'btcrateves' => 'required',
+            'cfactor' => 'required'
         ],[
             'reference.required' => 'El numero de referencia es requerido.',
-            'btcwon.required' => 'La cantidad de BTC generados es requerida.',
-            'btcspent.required' => 'La cantidad de BTC gastados es requerida.',
+            'btcrate.required' => 'La tasa de BTC es requerida.',
+            'btcrateves.required' => 'La tasa de BTC ves es requerida.',
+            'cfactor.required' => 'El factor de correcion es requerido.',
         ]);
 
+        if ($request->btcrateves == 0 || $request->btcrate == 0)
+            return redirect()->back()->with(['wrong' => "Division por 0???"]);
+
         $payment = Payment::findOrfail($id);
+        
         if ($payment->done != 0)
             return redirect()->back();
         $payment->done = 1;
         $payment->reference = $request->get('reference');
         $payment->save();
 
+        $btc_spent = (floatval($payment->to_pay) * floatval($request->cfactor)) / floatval($request->btcrateves);
+        $btc_won = floatval($payment->amount) * floatval($request->btcrate);
+
         $finance = Finance::create([
             'payment_id' => $payment->id,
-            'btc_won' => $request->get('btcwon'),
-            'btc_spent' => $request->get('btcspent')
+            'btc_won' => $btc_won,
+            'btc_spent' => $btc_spent
         ]);
 
         $user = $payment->user;

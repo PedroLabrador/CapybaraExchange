@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get ('/users/details/{id}', 'AdminController@detailsuser');
         Route::post('/users/details/{id}', 'AdminController@updatedetails');
         Route::get ('/finances', 'AdminController@finances');
+        Route::post('/finances', 'AdminController@rates');
         Route::get ('/finances/{id}', 'AdminController@financesedit');
     	Route::post('/finances/{id}', 'AdminController@financesupdate');
     	Route::post('/currency', 'CurrencyController@store');
