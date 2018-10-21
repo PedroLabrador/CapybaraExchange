@@ -109,7 +109,7 @@
 				            <div class="col-md-10 col-md-offset-1">
 				            	<div class="form-group">
 				            		<div class="col-md-9 mt-1">
-                                        <input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()">
+                                        <input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()" onkeypress="return validateFloatKeyPress(this,event);">
                                     </div>
 				                    <div class="col-md-2">
 											<select id='money_from' name='from' class="form-control" onclick="calculate()">
@@ -124,7 +124,7 @@
 				            </div>
 				            <div class="col-md-10 col-md-offset-1">
 				                <div class="col-md-9 mt-1">
-                                    <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()" >
+                                    <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()" onkeypress="return validateFloatKeyPress(this,event);">
                                 </div>
 				                <div class="col-md-2 mt-1">
 				                    <select id='money_to' name='to' class="form-control" onclick="calculate2()">
@@ -369,6 +369,31 @@
 	</script>
 
 	<script type="text/javascript">
+		function validateFloatKeyPress(el, evt) {
+	        var charCode = (evt.which) ? evt.which : evt.keyCode;
+	        var number = el.value.split('.');
+	        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+	            return false;
+	        }
+	        if (number.length>1 && charCode == 46){
+	             return false;
+	        }
+	        var caratPos = getSelectionStart(el);
+	        var dotPos = el.value.indexOf(".");
+	        if ((caratPos > dotPos && dotPos>-1 && (number[1].length > 7)) && charCode != 8){
+	            return false;
+	        }
+	        return true;
+	    }
+
+	    function getSelectionStart(o) {
+	        if (o.createTextRange) {
+	            var r = document.selection.createRange().duplicate()
+	            r.moveEnd('character', o.value.length)
+	            if (r.text == '') return o.value.length
+	            return o.value.lastIndexOf(r.text)
+	        } else return o.selectionStart
+	    }
 	window.onload = function() { calculate(); };
         
         function calculate() {

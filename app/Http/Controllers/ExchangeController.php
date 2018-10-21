@@ -137,7 +137,7 @@ class ExchangeController extends Controller
             'cfactor.required' => 'El factor de correcion es requerido.',
         ]);
 
-        if ($request->btcrateves == 0 || $request->btcrate == 0)
+        if ($request->btcrateves == 0)
             return redirect()->back()->with(['wrong' => "Division por 0???"]);
 
         $payment = Payment::findOrfail($id);

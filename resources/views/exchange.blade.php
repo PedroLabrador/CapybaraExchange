@@ -72,7 +72,7 @@
 
                                     <div class="col-md-9 mt-1">
 
-                                        <input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()">
+                                        <input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()" onkeypress="return validateFloatKeyPress(this,event);">
 
                                     </div>
 
@@ -100,7 +100,7 @@
 
                                     <div class="col-md-9 mt-1">
 
-                                        <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()">
+                                        <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()" onkeypress="return validateFloatKeyPress(this, event);">
 
                                     </div>
 
@@ -286,28 +286,54 @@
 
     <script type="text/javascript">
 
-    function stopRKey(evt) {
-        var evt = (evt) ? evt : ((event) ? event : null);
+        function validateFloatKeyPress(el, evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            var number = el.value.split('.');
+            if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            if (number.length>1 && charCode == 46){
+                 return false;
+            }
+            var caratPos = getSelectionStart(el);
+            var dotPos = el.value.indexOf(".");
+            if ((caratPos > dotPos && dotPos>-1 && (number[1].length > 7)) && charCode != 8){
+                return false;
+            }
+            return true;
+        }
 
-        var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+        function getSelectionStart(o) {
+            if (o.createTextRange) {
+                var r = document.selection.createRange().duplicate()
+                r.moveEnd('character', o.value.length)
+                if (r.text == '') return o.value.length
+                return o.value.lastIndexOf(r.text)
+            } else return o.selectionStart
+        }
 
-        if (evt.keyCode == 27) $("#confimation").modal('toggle');
+        function stopRKey(evt) {
+            var evt = (evt) ? evt : ((event) ? event : null);
 
-        if ((evt.keyCode == 13) && (node.type=="text")) return false;
-    }
+            var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
 
-    document.onkeypress = stopRKey;
+            if (evt.keyCode == 27) $("#confimation").modal('toggle');
+
+            if ((evt.keyCode == 13) && (node.type=="text")) return false;
+        }
+
+        document.onkeypress = stopRKey;
 
     </script> 
 
     <script type="text/javascript">
-    window.onload = function() { 
-        calculate(); 
+        window.onload = function() { 
+            calculate(); 
 
-        $("#btnCancelConfimation").click(function(){
-            $("#confimation").modal('toggle');
-        });
-    };
+            $("#btnCancelConfimation").click(function(){
+                $("#confimation").modal('toggle');
+            });
+        };
 
         function calculate() {
 

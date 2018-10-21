@@ -140,7 +140,7 @@ class AdminController extends Controller
 
     public function rates(Request $request) {
         
-        if ($request->btcrateves == 0 || $request->btcrate == 0)
+        if ($request->btcrateves == 0)
             return redirect()->back()->with(['wrong' => "Division por 0???"]);
         if (!$request->checked)
             return redirect()->back();
