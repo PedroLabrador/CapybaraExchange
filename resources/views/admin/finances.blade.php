@@ -76,7 +76,7 @@
                                                 echo (rtrim(sprintf('%.8F', $finance->btc_won - $finance->btc_spent), '0'));
                                             ?> BTC</td>
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><?=
-                                                ($finance->btc_won == 0) ? '0%' : rtrim(sprintf('%.2F', (($finance->btc_won - $finance->btc_spent) / $finance->btc_won)*100) ,'0')
+                                                ($finance->btc_won == 0) ? '0' : rtrim(sprintf('%.2F', (($finance->btc_won - $finance->btc_spent) / $finance->btc_won)*100) ,'0')
                                             ?>%</td>
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ date('d-m-Y H:i:s', strtotime($finance->created_at)) }}</td>
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><a href="/admin/finances/{{ $finance->id }}" class="btn btn-primary">Editar</a></td>
@@ -126,6 +126,8 @@
                                     </div>
                                   </div>
                             </form>
+                            Total Gastado <?= rtrim(sprintf('%.8F', $total_btc_spent), '0') ?> BTC <br>
+                            Total Generado <?= rtrim(sprintf('%.8F', $total_btc_won), '0') ?> BTC <br>
                             Ganancias totales <?= rtrim(sprintf('%.8F', $winning), '0') ?> BTC
                         </div>
                     </div>

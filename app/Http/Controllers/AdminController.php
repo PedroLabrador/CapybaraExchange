@@ -129,30 +129,40 @@ class AdminController extends Controller
             $finances = Finance::orderBy('id', 'desc')->get();
     
         $winning = 0;
-        foreach ($finances as $finance)
+        $total_btc_won = 0;
+        $total_btc_spent = 0;
+
+        foreach ($finances as $finance) {
             $winning += ($finance->btc_won - $finance->btc_spent);
+            $total_btc_won += $finance->btc_won;
+            $total_btc_spent += $finance->btc_spent;
+        }
         
         return view('admin.finances', [
             'finances' => $finances,
-            'winning' => $winning
+            'winning' => $winning,
+            'total_btc_won' => $total_btc_won,
+            'total_btc_spent' => $total_btc_spent
         ]);
     }
 
     public function rates(Request $request) {
-        
-        if ($request->btcrateves == 0)
+        if ($request->btcrateves === 0)
             return redirect()->back()->with(['wrong' => "Division por 0???"]);
         if (!$request->checked)
             return redirect()->back();
         foreach ($request->checked as $checked) {
             $finance = Finance::where('id', $checked)->first();
             $payment = $finance->payment;
-            $btc_spent = (floatval($payment->to_pay) * floatval($request->cfactor)) / floatval($request->btcrateves);
-            $btc_won = floatval($payment->amount) * floatval($request->btcrate);
 
-            $finance->btc_spent = $btc_spent;
-            $finance->btc_won = $btc_won;
-
+            if ($request->btcrateves !== null && $request->cfactor !== null) {
+                $btc_spent = (floatval($payment->to_pay) * floatval($request->cfactor)) / floatval($request->btcrateves);
+                $finance->btc_spent = $btc_spent;
+            }
+            if ($request->btcrate !== null) {
+                $btc_won = floatval($payment->amount) * floatval($request->btcrate);
+                $finance->btc_won = $btc_won;
+            }
             $finance->save();
         }
         return redirect()->back();

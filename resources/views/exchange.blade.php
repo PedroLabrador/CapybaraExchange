@@ -72,7 +72,7 @@
 
                                     <div class="col-md-9 mt-1">
 
-                                        <input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()" onkeypress="return validateFloatKeyPress(this,event);">
+                                        <input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()" step="0.01" onkeypress="return validateFloatKeyPress(this, event);">
 
                                     </div>
 
@@ -100,7 +100,7 @@
 
                                     <div class="col-md-9 mt-1">
 
-                                        <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()" onkeypress="return validateFloatKeyPress(this, event);">
+                                        <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()" step="0.01" onkeypress="return validateFloatKeyPress(this, event);">
 
                                     </div>
 
@@ -353,32 +353,42 @@
                     echo "$('#deposit').html('$currency->deposit');";
                     echo "$('#fixedmemo').html('$currency->fixedmemo');";
 
-                    echo "if ('$currency->fixedmemo' == '') {";
+                        echo "if ('$currency->fixedmemo' == '') {";
 
-                    echo "$('#fixedshow').hide();";
+                            echo "$('#fixedshow').hide();";
 
-                    echo "} else {";
+                        echo "} else {";
 
-                    echo "$('#fixedshow').show();";
+                            echo "$('#fixedshow').show();";
 
-                    echo "}";
+                        echo "}";
 
-                    echo "var from = $('#from').val();";
+                        echo "var from = $('#from').val();";
 
-                    echo "if ('$currency->memo' == 'on') {";
+                        echo "var res  = parseFloat(from) * price_bs;";
 
-                    echo "$('#memo').hide();";
+                        echo "$('#to').val(res.toFixed(2));";
 
-                    echo "$('#memo2').show();";
+                        echo "var to   = $('#to').val();";
 
-                    echo "if ('$currency->name' == 'SBD' || '$currency->name' == 'STEEM') {";
+                        echo "if ('$currency->memo' == 'on') {";
 
-                    echo "var route = 'https://steemconnect.com/sign/transfer?to=capybaraexchange&amount='+from+'%20$currency->name&memo=$memo';";
+                        echo "$('#memo').hide();";
 
-                    echo "$('#steemlink').attr('href', route);";
-                    echo "$('#steemconnect').show();";
+                        echo "$('#memo2').show();";
 
-                    echo "}";
+                        echo "if ('$currency->name' == 'SBD' || '$currency->name' == 'STEEM') {";
+
+                            echo "from = parseFloat(from).toFixed(3);";
+
+                            echo "$('#to').val(res.toFixed(3));";
+
+                            echo "var route = 'https://steemconnect.com/sign/transfer?to=capybaraexchange&amount='+from+'%20$currency->name&memo=$memo';";
+
+                            echo "$('#steemlink').attr('href', route);";
+                            echo "$('#steemconnect').show();";
+
+                        echo "}";
 
                     echo "} else {";
 
@@ -389,10 +399,6 @@
                     echo "$('#steemconnect').hide();";
 
                     echo "}";
-
-                    echo "var res  = parseFloat(from) * price_bs;";
-
-                    echo "var to   = $('#to').val(res);";
 
                     echo "}";
 
@@ -414,50 +420,56 @@
 
                     echo "if (money_from == $currency->id && money_to == 1) {";
 
-                    echo "var price_cu = $currency->price_cu;";
-                    echo "var price_bs = $currency->price_bs;";
+                        echo "var price_cu = $currency->price_cu;";
+                        echo "var price_bs = $currency->price_bs;";
 
-                    echo "$('#deposit').html('$currency->deposit');";
-                    echo "$('#fixedmemo').html('$currency->fixedmemo');";
+                        echo "$('#deposit').html('$currency->deposit');";
+                        echo "$('#fixedmemo').html('$currency->fixedmemo');";
 
-                    echo "if ('$currency->fixedmemo' == '') {";
+                        echo "if ('$currency->fixedmemo' == '') {";
 
-                    echo "$('#fixedshow').hide();";
+                        echo "$('#fixedshow').hide();";
 
                     echo "} else {";
 
-                    echo "$('#fixedshow').show();";
+                        echo "$('#fixedshow').show();";
 
                     echo "}";
 
                     echo "var to   = $('#to').val();";
 
+                    echo "var res  = parseFloat(to) / price_bs;";
+
+                    echo "$('#from').val(res.toFixed(8));";
+
+                    echo "var from = $('#from').val();";
+
                     echo "if ('$currency->memo' == 'on') {";
 
-                    echo "$('#memo').hide();";
+                        echo "$('#memo').hide();";
 
-                    echo "$('#memo2').show();";
+                        echo "$('#memo2').show();";
 
-                    echo "if ('$currency->name' == 'SBD' || '$currency->name' == 'STEEM')";
+                        echo "if ('$currency->name' == 'SBD' || '$currency->name' == 'STEEM')";
 
-                    echo "var route = 'https://steemconnect.com/sign/transfer?to=capybaraexchange&amount='+from+'%20$currency->name&memo=$memo';";
+                            echo "from = parseFloat(from).toFixed(3);";
 
-                    echo "$('#steemlink').attr('href', route);";
-                    echo "$('#steemconnect').show()";
+                            echo "$('#from').val(res.toFixed(3));";
+
+                            echo "var route = 'https://steemconnect.com/sign/transfer?to=capybaraexchange&amount='+from+'%20$currency->name&memo=$memo';";
+
+                        echo "$('#steemlink').attr('href', route);";
+                        echo "$('#steemconnect').show()";
 
                     echo "} else {";
 
-                    echo "$('#memo2').hide();";
-                    
-                    echo "$('#memo').show();";
+                        echo "$('#memo2').hide();";
+                        
+                        echo "$('#memo').show();";
 
-                    echo "$('#steemconnect').hide()";
+                        echo "$('#steemconnect').hide()";
 
                     echo "}";
-
-                    echo "var res  = parseFloat(to) / price_bs;";
-
-                    echo "var from = $('#from').val(res);";
 
                     echo "}";
 
