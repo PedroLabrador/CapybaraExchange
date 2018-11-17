@@ -34,8 +34,10 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::group(['prefix' => 'user'], function(){
 		Route::get ('/', 'UserController@home');
 		Route::post('/exchange', 'ExchangeController@store');
-		Route::get ('/exchange', 'ExchangeController@index');
+        Route::get ('/exchange', 'ExchangeController@index');
+		Route::post('/exchange/steem', 'ExchangeController@steem');
         Route::get ('/exchange/list', 'UserController@list');
+        Route::get ('/payment/{memo}', 'ExchangeController@payment');
         Route::post('/profile', 'UserController@update');
         Route::get ('/profile', 'UserController@index');
         Route::post('/profile/update', 'UserController@phone');

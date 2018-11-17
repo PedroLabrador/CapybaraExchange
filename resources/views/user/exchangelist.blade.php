@@ -127,17 +127,16 @@
                                         </td>
 
                                         <td>
-
-                                            @if ($payment->link != '')
-
-                                                <a class='btn btn-primary' href="{{ $payment->link }}">Enlace</a>
-
-                                            @endif
-                                            
-                                            @if ($payment->link == '')
-                                            
-                                                <a class='btn btn-primary' href="https://steemconnect.com/sign/transfer?to=capybaraexchange&amount={{ $payment->amount }}%20{{ $payment->currency }}&memo={{ $payment->memo }}">Pagar</a></a>
-                                            
+                                            @if ($payment->currency == 'SBD' || $payment->currency == 'STEEM')
+                                                @if ($payment->link != '')
+                                                    <a class='btn btn-primary' <?= ($payment->done == 1) ? 'disabled' : '' ?> href="{{ $payment->link }}">Pagar</a>
+                                                @else
+                                                    <a class='btn btn-primary' <?= ($payment->done == 1) ? 'disabled' : '' ?> href="https://steemconnect.com/sign/transfer?to=capybaraexchange&amount={{ $payment->amount }}%20{{ $payment->currency }}&memo={{ $payment->memo }}">Pagar</a></a>
+                                                @endif
+                                            @else
+                                                @if ($payment->link != '')
+                                                    <a class='btn btn-primary' href="{{ $payment->link }}">Enlace</a>
+                                                @endif
                                             @endif
                                         </td>
 
