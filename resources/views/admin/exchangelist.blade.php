@@ -75,6 +75,8 @@
                                     <th>Cantidad vendida</th>
 
                                     <th>Precio a pagar</th>
+                                    
+                                    <th>Memo</th>
 
                                     <th>Fecha</th>
 
@@ -93,6 +95,8 @@
                                         <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $payment->amount }} {{ $payment->currency }}</td>
 
                                         <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $payment->to_pay }} Bs</td>
+                                        
+                                        <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $payment->memo }}</td>
 
                                         <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ date('d-m-Y H:i:s', strtotime($payment->created_at)) }}</td>
 

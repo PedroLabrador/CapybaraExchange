@@ -57,11 +57,14 @@
                                     <tr>
                                         <th></th>
                                         <th>Usuario</th>
+                                        <th>Banco</th>
                                         <th>Cantidad</th>
+                                        <th>Monto</th>
                                         <th>Gastado</th>
                                         <th>Generado</th>
                                         <th>Ganancia</th>
                                         <th>ROI</th>
+                                        <th>Memo</th>
                                         <th>Fecha</th>
                                         <th>Editar</th>
                                     </tr>
@@ -69,7 +72,9 @@
                                         <tr>
                                             <td class="checkbox"><input type="checkbox" name="checked[]" value="{{ $finance->id }}"></td>
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $finance->payment->user->name }}</td>
+                                            <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $finance->payment->bankaccount->bank->bankname }}</td>
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $finance->payment->amount }} {{ $finance->payment->currency }}</td>
+                                            <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><?= rtrim(sprintf('%.2F', $finance->payment->to_pay), '0') ?>Bs</td>
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><?= rtrim(sprintf('%.8F', $finance->btc_spent), '0') ?> BTC</td>
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><?= rtrim(sprintf('%.8F', $finance->btc_won), '0') ?> BTC</td>
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><?php
@@ -78,6 +83,7 @@
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><?=
                                                 ($finance->btc_won == 0) ? '0' : rtrim(sprintf('%.2F', (($finance->btc_won - $finance->btc_spent) / $finance->btc_won)*100) ,'0')
                                             ?>%</td>
+                                            <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ $finance->payment->memo }}</td>
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}">{{ date('d-m-Y H:i:s', strtotime($finance->created_at)) }}</td>
                                             <td class="{{ (($loop->iteration % 2) == 0) ? '' : 'color-blue'}}"><a href="/admin/finances/{{ $finance->id }}" class="btn btn-primary">Editar</a></td>
                                         </tr>

@@ -62,13 +62,13 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get ('/exchange/list/approved', 'ExchangeController@listapproved');
         Route::get ('/exchange/list/disapproved', 'ExchangeController@listdisapproved');
     	Route::get ('/exchange/list/{id}', 'ExchangeController@show');
-    	Route::post('/bank', 'AdminController@bankcreate');
+    	Route::get ('/bank/deactivateall', 'AdminController@deactivateall');
+        Route::post('/bank', 'AdminController@bankcreate');
         Route::get ('/bank', 'AdminController@bank');
         Route::get ('/bank/{id}', 'AdminController@bankedit');
-    	Route::post('/bank/{id}', 'AdminController@bankupdate');
-    	Route::get ('/bank/activate/{id}', 'AdminController@activate');
-    	Route::get ('/bank/deactivate/{id}', 'AdminController@deactivate');
-    	Route::get ('/bank/totaldeactivate/', 'AdminController@totaldeactivate');
+        Route::post('/bank/{id}', 'AdminController@bankupdate');
+        Route::get ('/bank/activate/{id}', 'AdminController@activate');
+        Route::get ('/bank/deactivate/{id}', 'AdminController@deactivate');
         Route::post('/exchange/approve/{id}', 'ExchangeController@approve');
     	Route::post('/exchange/disapprove/{id}', 'ExchangeController@disapprove');
     	Route::post('/currency/edit/{id}', 'CurrencyController@update');

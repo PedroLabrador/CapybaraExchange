@@ -18,6 +18,8 @@ class CreateFinancesTable extends Migration
             $table->integer('payment_id')->unsigned();
             $table->string('btc_won');
             $table->string('btc_spent');
+            $table->string('btc_rate');
+            $table->string('cfactor');
 
             $table->timestamps();
             $table->foreign('payment_id')->references('id')->on('payments');

@@ -19,7 +19,7 @@ class AdminController extends Controller
     }
 
     public function users() {
-        $users = User::paginate(10);
+        $users = User::paginate(1000);
         return view('admin.users', [
             'users' => $users
         ]);
@@ -62,7 +62,7 @@ class AdminController extends Controller
     }
 
     public function bank() {
-        $banks = Bank::paginate(15);
+        $banks = Bank::paginate(20);
         return view('admin.bank', [
             'banks' => $banks
         ]);
@@ -104,10 +104,11 @@ class AdminController extends Controller
         return redirect()->back()->with(['success' => 'Banco desactivado']);
     }
     
-    public function totaldeactivate() {
+    public function deactivateall() {
         $banks = Bank::all();
         foreach ($banks as $bank) {
-           
+           $bank->status = 1;
+           $bank->save();
         }
         return redirect()->back()->with(['success' => 'Bancos desactivados']);
     }
@@ -155,8 +156,20 @@ class AdminController extends Controller
             $finance = Finance::where('id', $checked)->first();
             $payment = $finance->payment;
 
-            if ($request->btcrateves !== null && $request->cfactor !== null) {
-                $btc_spent = (floatval($payment->to_pay) * floatval($request->cfactor)) / floatval($request->btcrateves);
+            if ($request->cfactor !== null) {
+                $finance->cfactor = $request->cfactor;
+                if ($finance->btcrate == '')
+                    $btc_spent = (floatval($payment->to_pay) * floatval($request->cfactor)) / 1;
+                else
+                    $btc_spent = (floatval($payment->to_pay) * floatval($request->cfactor)) / floatval($payment->btcrate);
+                $finance->btc_spent = $btc_spent;
+            }
+            if ($request->btcrateves !== null) {
+                $finance->btcrate = $request->btcrateves;
+                if ($finance->cfactor == '')
+                    $btc_spent = (floatval($payment->to_pay) * 1) / floatval($request->btcrateves);   
+                else
+                    $btc_spent = (floatval($payment->to_pay) * floatval($payment->cfactor)) / floatval($request->btcrateves);   
                 $finance->btc_spent = $btc_spent;
             }
             if ($request->btcrate !== null) {

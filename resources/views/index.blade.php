@@ -82,7 +82,7 @@
 	  </div>
 	</nav>
 
-	<p style="text-align: center; margin-top: 5%"><a href="/"><style>img {max-width: 230px; width: 35%;height: auto;}</style><img src="/img/Icono.png" width="230px" maxheight="230px"></p></a>
+	<p style="text-align: center; margin-top: 5%"><a href="/"><style>img {max-width: 230px; width: 35%;height: auto;}</style><img src="/img/capybara_logo-27.png" width="230px" maxheight="230px"></p></a>
 <div class="col-md-11" style="margin: 3%;">
 				<div class="panel">
                     <div class="panel-body opaque-8 opaque-radius">
@@ -93,10 +93,6 @@
 	<p style="text-align: center;"><font color="#000000"><span style="font-size:16px;">Bienvenido a la versi&oacute;n beta de Capybara Exchange, aqu&iacute; podr&aacute;s cambiar tus Bytes y otras cryptomonedas a Bol&iacute;vares f&aacute;cilmente.</br>
 	Si vas a cambiar por favor siempre cont&aacute;ctanos primero para poder verificar la disponibilidad.
 	<br />
-    <strong>Orden m&iacute;nima:</strong></br>
-	<strong>0.01Bs.S</strong></br>
-	<strong>Nota:</strong> Todos los precios estan marcados en Bs.S o bolívares soberanos, 1Bs.S=100.000Bs antiguos.</p></span>
-	
 
 	<div class="container" id="calculadora">
 		<div class="row">
@@ -315,7 +311,6 @@
 				@endforeach
 			</p>
 
-			<p style="text-align: center;"><span style="font-size:16px;">Si no encuentras tu banco te invitamos a preguntar, igualmente si deseas vender por un monto inferior a la orden m&iacute;nima.&nbsp;</p>
 			<p style="text-align: center;"><br /><span style="font-size:16px;">
 			Cont&aacute;ctanos a traves de Telegram <a href="http://t.me/capybaraexchange">@capybaraexchange</a>&nbsp;o nuestro <a href="https://discord.gg/zFPWeVK">Discord</a> y pregunta la liquidez al momento ya que siempre tratamos de ofrecer la mejor tasa y se nos agota rápido.</p></span>
 			<p style="text-align: center;"><a href="http://t.me/capybaraexchange" target="_blank"><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" style="width: 90px; height: 90px;" /></a><a href="https://discord.gg/zFPWeVK" target="_blank"><img alt="" src="https://www.shareicon.net/data/512x512/2017/06/21/887435_logo_512x512.png" style="width: 100px; height: 100px;" /></a></p>

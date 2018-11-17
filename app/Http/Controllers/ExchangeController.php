@@ -63,8 +63,6 @@ class ExchangeController extends Controller
             return redirect()->back()->with(['wrong' => 'Saldo incorrecto']);
 
         $currency = Currency::find($request->get('from'));
-        if (!($money_from * $currency->price_bs == $money_to))
-            return redirect()->back()->with(['wrong' => 'Saldo incorrecto']);
         
         if ($currency->memo == 'on') {
             if (!$link)
@@ -136,7 +134,6 @@ class ExchangeController extends Controller
             'btcrateves.required' => 'La tasa de BTC ves es requerida.',
             'cfactor.required' => 'El factor de correcion es requerido.',
         ]);
-
         if ($request->btcrateves == 0)
             return redirect()->back()->with(['wrong' => "Division por 0???"]);
 
@@ -144,17 +141,22 @@ class ExchangeController extends Controller
         
         if ($payment->done != 0)
             return redirect()->back();
+
+        $btc_spent = (floatval($payment->to_pay) * floatval($request->cfactor)) / floatval($request->btcrateves);
+        $btc_won = floatval($payment->amount) * floatval($request->btcrate);
+        $btc_rate = $request->btcrateves;
+        $cfactor = $request->cfactor;
+        
         $payment->done = 1;
         $payment->reference = $request->get('reference');
         $payment->save();
 
-        $btc_spent = (floatval($payment->to_pay) * floatval($request->cfactor)) / floatval($request->btcrateves);
-        $btc_won = floatval($payment->amount) * floatval($request->btcrate);
-
         $finance = Finance::create([
             'payment_id' => $payment->id,
             'btc_won' => $btc_won,
-            'btc_spent' => $btc_spent
+            'btc_spent' => $btc_spent,
+            'btc_rate' => $btc_rate,
+            'cfactor' => $cfactor
         ]);
 
         $user = $payment->user;
@@ -204,7 +206,7 @@ class ExchangeController extends Controller
     public function listapproved() {
         $payments = Payment::orderBy('id', 'desc')
                             ->where('done', 1)
-                            ->paginate(10);
+                            ->paginate(1000);
         return view('admin.exchangelist', [
             'payments' => $payments
         ]);
