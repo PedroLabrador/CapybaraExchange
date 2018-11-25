@@ -41,7 +41,7 @@
                                                 <input autocomplete="off" id='money_from' class='form-control form-calc' type="text" name='money_from' value="1" onkeyup="calculate(1)" onkeypress="return validateFloatKeyPress(this, event, 1);">
                                             </div>
                                             <div class="col-md-2 mt-1 reset">
-                                                <select id='from_id' name='from' class="form-control form-calc s-picker" onclick="checkdecimals(1)">
+                                                <select id='from_id' name='from' class="form-control form-calc s-picker" onchange="checkdecimals(1)" onclick="">
                                                     @foreach ($currencies as $currency)
                                                         @if ($currency->status == 0)
                                                             <option value="{{ $currency->id }}">{{ $currency->name }}</option>
@@ -55,7 +55,7 @@
                                                 <input autocomplete="off" id='money_to' class='form-control form-calc' type="text" name='money_to' value="0" onkeyup="calculate(0)" onkeypress="return validateFloatKeyPress(this, event, 0);">
                                             </div>
                                             <div class="col-md-2 mt-1 reset">
-                                                <select id='to_id' name='to' class="form-control form-calc s-picker" onclick="calculate(0)">
+                                                <select id='to_id' name='to' class="form-control form-calc s-picker" onchange="calculate(0)">
                                                     <option value="1">Bs.S</option>
                                                 </select>
                                             </div>
@@ -247,7 +247,7 @@
                     $('#deposit')  .html(currency.deposit);
                     $('#fixedmemo').html(currency.fixedmemo);
 
-                    if (currency.fixedmemo == '')
+                    if (!currency.fixedmemo)
                         $('#fixedshow').hide();
                     else
                         $('#fixedshow').show();
@@ -279,15 +279,18 @@
 
                             $('#link').attr('value', route);
                             $('#steemconnect').show();
-                        } else 
+                        } else {
                             $('#exchange').attr('action', '');
+                        }
                     } else {
                         $('#exchange').attr('action', '');
-                        $('#link').attr('value', '');
                         $('#memo2').hide();
                         $('#memo').show();
                         $('#steemconnect').hide();
                     }
+                    if (!currencyList.includes(currency.name))
+                        $('#link').attr('value', '');
+                    
                 }
             });
         }
