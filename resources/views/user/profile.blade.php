@@ -166,6 +166,8 @@
 
 											<th>Número de cuenta    /    Número de telefono</th>
 
+											<th>U-MEMO</th>
+
 											<th>Tipo de cuenta</th>
 
 											<th>Editar</th>
@@ -187,6 +189,8 @@
 													<input id='bank' type="text" value="{{ $bankaccount->account }}" class="form-control" disabled>
 
 												</td>
+
+												<td>{{ $bankaccount->memo }}</td>
 
 												<td style="width: 10%">{{ $bankaccount->account_type }}</td>
 

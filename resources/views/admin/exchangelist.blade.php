@@ -62,6 +62,10 @@
 
                         @endif
 
+                        <form action='/admin/checkupdates'>
+                            <button class="btn btn-primary" style="float: right">Actualizar</button>
+                        </form>
+
                         <div class="col-md-12">
 
                             <table class="table">

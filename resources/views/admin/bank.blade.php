@@ -10,7 +10,11 @@
 
                 <div class="panel">
 
-                    <div class="panel-header">Habilita un nuevo banco <a class='btn btn-danger' href="/admin/bank/deactivateall">Desactivar Todos</a></div>
+                    <div class="panel-header">
+                        Habilita un nuevo banco 
+                        <a class='btn btn-danger' href="/admin/bank/deactivateall">Desactivar Todos</a>
+                        <a class='btn btn-success' href="/admin/bank/activateall">Activar Todos</a>
+                    </div>
 
 
 

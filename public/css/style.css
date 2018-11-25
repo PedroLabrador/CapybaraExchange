@@ -170,25 +170,73 @@
 	text-align: center;
 
 }
- #boton1,#boton2{
+
+#boton1,#boton2{
  	margin-top: 40px;
  	margin-left: 40px;
- }
+}
 
- .footer{
+.footer{
  	float: right;
  	margin-top: 80px;
  	margin-right:30px; 
- }
+}
 
- #texto_clave{
- 	margin: 15px 0 0 0;
+#texto_clave {
+	margin: 15px 0 0 0;
  	color: 	black;
 	font-size: 13px;
 	font-weight: bold;
 	font-family: heveltica;
 	text-align: center;
- }
+}
 
+.reset {
+	margin: 0 -5% 0 0;
+	padding: 0
+}
 
+.v-algn-m {
+	height: 100px; 
+	text-align: center;
+	line-height: 100px
+}
 
+.v-algn-m button {
+	vertical-align: middle
+}
+
+.form-calc {
+	border-radius: 10px;
+	border: 1px solid #9DA1A5;
+}
+
+.form-calc:focus {
+	border: 1px solid #2A3F54;
+}
+
+.s-picker {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	font-size: .9em;
+	background-color: rgb(57, 71, 85) !important;
+	color: #fff;
+	border: 1px solid rgb(57, 71, 85) !important;
+    background: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") no-repeat right;
+	background-position-x: 90%;
+}
+
+.s-picker:focus {
+	background-color: #2A3F54 !important;
+	border: 1px solid #fff !important;
+}
+
+.btn-capy {
+	color: #fff;
+	background-color: rgb(57, 71, 85);
+}
+
+.btn-capy:hover {
+	color: white;
+	background-color: #2A3F54;
+}

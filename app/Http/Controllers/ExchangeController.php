@@ -53,7 +53,7 @@ class ExchangeController extends Controller
         $money_to = $request->get('money_to');
         $link = $request->get('link');
         $memo = $request->get('memo');
-
+        
         if (!$link && !$memo)
             return redirect()->back()->with(['wrong' => 'El enlace no puede estar vacio']);
 

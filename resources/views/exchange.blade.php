@@ -1,983 +1,295 @@
 @extends('layouts.user')
 
-
-
 @section('content')
-
-
-
     <?php $temp = false; ?>
-
-
-
 	<div class="container">
-
-
-
         <div class="row">
-
-
-
             <div class="col-md-11" style="margin: 3%;">
-
-
-
                 <div class="panel">
-
-
-
                     <div class="panel-heading">Venta</div>
-
-
-
                     <div class="panel-body">
-
-
-
                         @if (Session::has('success'))
-
-
-
                             <div class="col-md-10 col-md-offset-1">
-
-
-
                                 <div class="form-control has-success">
-
-
-
                                     <span style="border-color: #3c763d; color: #3c763d; text-align: center">{{ Session::get('success') }}</span>
-
-
-
                                 </div>
-
-
-
                             </div>
-
-
-
                         @endif
-
-
-
                         @if (Session::has('wrong'))
-
-
-
                             <div class="col-md-10 col-md-offset-1">
-
-
-
                                 <div class="form-control has-success">
-
-
-
                                     <span style="border-color: #c01d1d; color: #c01d1d; text-align: center">{{ Session::get('wrong') }}</span>
-
-
-
                                 </div>
-
-
-
                             </div>
-
-
-
                         @endif
-
-
-
                         @if ($errors->any())
-
-
-
                             <div class="col-md-10 col-md-offset-1">
-
-
-
                                 <div class="form-group @if ($errors->any()) has-danger @endif">
-
-
-
                                     @foreach ($errors->all() as $error)
-
-
-
                                         <div class="form-control" style="border-color: #FF4136; color: #FF4136;">{{ $error }}</div>
-
-
-
                                     @endforeach
-
-
-
                                 </div>
-
-
-
                             </div>
-
-
-
                         @endif
-
-
-
-                        <form id='formlink' method="post" action="">
-
-
-
+                        <form id='exchange' method="post">
                             {{ csrf_field() }}
-
-
-
                             <div class="container">
-
-
-
                                 <div class="row">
-
-
-
-                                    <div class="col-md-9 mt-1">
-
-
-
-                                        <input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()" step="0.01" onkeypress="return validateFloatKeyPress(this, event);">
-
-
-
+                                    <div class="col-md-10 mt-1">
+                                        <div class="row">
+                                            <div class="col-md-10 mt-1 reset">
+                                                <input autocomplete="off" id='money_from' class='form-control form-calc' type="text" name='money_from' value="1" onkeyup="calculate(1)" onkeypress="return validateFloatKeyPress(this, event, 1);">
+                                            </div>
+                                            <div class="col-md-2 mt-1 reset">
+                                                <select id='from_id' name='from' class="form-control form-calc s-picker" onclick="checkdecimals(1)">
+                                                    @foreach ($currencies as $currency)
+                                                        @if ($currency->status == 0)
+                                                            <option value="{{ $currency->id }}">{{ $currency->name }}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-10 mt-1 reset">
+                                                <input autocomplete="off" id='money_to' class='form-control form-calc' type="text" name='money_to' value="0" onkeyup="calculate(0)" onkeypress="return validateFloatKeyPress(this, event, 0);">
+                                            </div>
+                                            <div class="col-md-2 mt-1 reset">
+                                                <select id='to_id' name='to' class="form-control form-calc s-picker" onclick="calculate(0)">
+                                                    <option value="1">Bs.S</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-
-
-
-                                    <div class="col-md-3 mt-1">
-
-
-
-                                        <select id='money_from' name='from' class="form-control" onclick="calculate()">
-
-
-
-                                            @foreach ($currencies as $currency)
-
-
-
-                                                @if ($currency->status == 0)
-
-
-
-                                                    <option value="{{ $currency->id }}">{{ $currency->name }}</option>
-
-
-
-                                                @endif
-
-
-
-                                            @endforeach
-
-
-
-                                        </select>
-
-
-
+                                    <div class="col-md-2 mt-1 v-algn-m">
+                                        <button type="button" class="btn btn-capy" data-toggle="modal" data-target=".exchange-window">Proceder</button>
                                     </div>
-
-
-
                                 </div>
-
-
-
-                                <div class="row">
-
-
-
-                                    <div class="col-md-9 mt-1">
-
-
-
-                                        <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()" step="0.01" onkeypress="return validateFloatKeyPress(this, event);">
-
-
-
-                                    </div>
-
-
-
-                                    <div class="col-md-3 mt-1">
-
-
-
-                                        <select id='money_to' name='to' class="form-control" onclick="calculate2()">
-
-
-
-                                            <option value="1">Bs.S</option>
-
-
-
-                                        </select>
-
-
-
-                                    </div>
-
-                                
-
+                                <div class="col-md-12 mt-1">
+                                    <strong>Nota:</strong> Todos los precios estan marcados en Bs.S o bolívares soberanos, 1Bs.S=100.000Bs antiguos.
                                 </div>
-
                                 
-
-                                <div class="panel"><strong>Nota:</strong> Todos los precios estan marcados en Bs.S o bolívares soberanos, 1Bs.S=100.000Bs antiguos.</div>
-
-                                
-
                                 <div class="col-md-10 col-md-offset-1 mt-1">
-
-
-
-                                    <!-- <button class="btn btn-primary">Proceder</button> -->
-
-
-
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".exchange-window">Proceder</button>
-
-
-
                                     <div class="modal fade exchange-window" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-
-
-
                                         <div class="modal-dialog modal-lg">
-
-
-
                                             <div class="modal-content">
-
-
-
                                                 <div class="modal-header">
-
-
-
                                                     <h3 class="modal-title" id="exampleModalLabel">Datos</h3>
-
-
-
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-
-
-
                                                         <span aria-hidden="true">&times;</span>
-
-
-
                                                     </button>
-
-
-
                                                 </div>
-
-
-
                                                 <div class="modal-body" style="overflow-x: scroll; text-align: center">
-
-
-
                                                     <div class="form-group">
-
-
-
                                                         <div class="col-md-12">
-
-
-
                                                             <div class="col-md-12">
-
-
-
                                                                 <div class="col-md-12 mt-1">
-
-
-
                                                                     <label>Por favor deposita aquí:</label>
-
-                                                                        
-
                                                                     <span id='deposit' class="form-control"></span>
-
-
-
                                                                     <div id='fixedshow' style="display: none;">
-
                                                                         <label>No olvides usar este memo al depositar</label>
-
-
-
                                                                         <span id='fixedmemo' class="form-control"></span>
-
                                                                     </div>
-
-
-
                                                                 </div>
-
-
-
                                                             </div>
-
-
-
                                                             <div class="col-md-12 mt-1">
-
-
-
                                                                     <label for="bankaccount">Seleccione la cuenta bancaria: </label>
-
-
-
                                                                     <select id='bankaccount' name="bankaccount" class="form-control">
-
-
-
                                                                         @forelse ($bankaccounts as $bankaccount)
-
                                                                             @if ($bankaccount->bank->status == 0)
-
-                                                                            <option value='{{ $bankaccount->id }}'>{{ $bankaccount->user_name }} -- {{ $bankaccount->bank->bankname }} -- {{ $bankaccount->account_type }} -- {{ $bankaccount->account }}</option>
-
+                                                                                <option value='{{ $bankaccount->id }}'>{{ $bankaccount->user_name }} -- {{ $bankaccount->bank->bankname }} -- {{ $bankaccount->account_type }} -- {{ $bankaccount->account }}</option>
                                                                             @endif
-
                                                                         @empty
-
-
-
                                                                             <option disabled>No hay bancos asociados a su cuenta</option>
-
-
-
                                                                             <?php $temp = true; ?>
-
-
-
                                                                         @endforelse
-
-
-
                                                                     </select>
-
-
-
                                                                 @if ($temp)
-
-
-
                                                                     <div class="mt-1">
-
-
-
                                                                         <a class='form-control btn btn-success' href="/user/profile">Asocia una cuenta aqui</a>
-
-
-
                                                                     </div>
-
-
-
                                                                 @endif
-
-
-
                                                             </div>
-
-
-
                                                             <div id='memo' class="col-md-12 mt-1">
-
-
-
                                                                 <label for="url">Inserte el link del pago: </label>
-
-
-
-                                                                <input id='url' type="url" name="link" class="form-control">
-
-
-
+                                                                <input id='link' type="url" name="link" class="form-control">
                                                             </div>
-
-
-
                                                             <div id='memo2' class="col-md-12 mt-1" style="display: none">
-
-
-
                                                                 <label>Antes de proceder, por favor usa este codigo para realizar tu transferencia</label>
-
                                                                 <span class="form-control">{{ $memo }}</span>
-
-
-
-
                                                             </div>
-
-
-
                                                             <div id='steemconnect' class="col-md-12 mt-1" style="display: none">
-
-
-
                                                                 <div class="col-md-12">
-
                                                                     <label class="mt-1">También puedes pagar con steemconnect: </label>
-
                                                                 </div>
-
-
-
                                                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confimation">Pagar con SteemConnect</button>
-
                                                                 <div id="confimation" class="modal fade" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-
                                                                   <div class="modal-dialog modal-md">
-
-
-
                                                                     <div class="modal-content" style="text-align: center">
-
                                                                       <div class="modal-header">
-
                                                                         <h4 class="modal-title">Paga con SteemConnect</h4>
-
                                                                       </div>
-
                                                                       <div class="modal-body">
-
                                                                         <div class="col-md-12">
-
                                                                             <h3 style="color:blue">Vas a ser redirigido a SteemConnect, no olvides regresar a esta pestaña para registrar tu pago en nuestra plataforma despues de darle al boton cerrar.</h3>
-
                                                                             <img alt="" src="https://www.capybaraexchange.com/img/Instrucciones.jpg" /> 
-
                                                                         </div>
-
                                                                         <div class="col-md-12">
-                                                                            <input type="hidden" id="steemlink" name="link" value="">
                                                                             <input id='btn-transfer' type="submit" class='btn btn-primary mt-1' value="Transferir">
                                                                         </div>
-
                                                                       </div>
-
                                                                       <div class="modal-footer">
-
                                                                         <button type="button" class="btn btn-default" id='btnCancelConfimation'>Cerrar</button>
-
                                                                       </div>
-
                                                                     </div>
-
-
-
                                                                   </div>
-
                                                                 </div>
-
                                                             </div>
-
-
-
                                                         </div>
-
-
-
                                                     </div>
-
-
-
                                                 </div>
-
-
-
                                                 <div class="modal-footer">
-
-
-
                                                     <button type="button" class="btn btn-secondary mt-1" data-dismiss="modal">Cerrar</button>
-
-
-
                                                     <button type="submit" class="btn btn-primary mt-1">Registrar pago</button>
-
-
-
                                                 </div>
-
-
-
                                             </div>
-
-
-
                                         </div>
-
-
-
                                     </div>
-
-
-
                                 </div>
-
-
-
                             </div>
-
                             <input type="hidden" value="{{ $memo }}" name="memo">
-
                         </form>
-
-
                     </div>
-
-
-
                 </div>
-
-
-
             </div>
-
-
-
         </div>
-
-
-
     </div>
-
-
-
     <script type="text/javascript">
-
-
-
-        function validateFloatKeyPress(el, evt) {
-
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-
-            var number = el.value.split('.');
-
-            if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
-
+        function validateFloatKeyPress(el, evt, hlpr) {
+            let charCode       = (evt.which) ? evt.which : evt.keyCode;
+            let key            = evt.key;
+            let numbers        = el.value.split('.');
+            let validCharCodes = [8, 35, 36, 37, 39, 46];
+            let currencyList   = ['SBD', 'STEEM'];
+            let caratPos       = getSelectionStart(el);
+            let dotPos         = el.value.indexOf(".");
+            let currency       = $("#from_id option:selected").text();
+            let currencyLength = (!hlpr) ? 1 : ((currencyList.includes(currency)) ? 2 : 7);
+            
+            if (numbers.length > 1 && (charCode == 46 && key == '.'))
                 return false;
-
-            }
-
-            if (number.length>1 && charCode == 46){
-
-                 return false;
-
-            }
-
-            var caratPos = getSelectionStart(el);
-
-            var dotPos = el.value.indexOf(".");
-
-            if ((caratPos > dotPos && dotPos>-1 && (number[1].length > 7)) && charCode != 8){
-
+            if (validCharCodes.includes(charCode))
+                return true;
+            if (charCode < 46 || charCode > 57)
                 return false;
-
-            }
-
+            if ((caratPos > dotPos && dotPos>-1 && (numbers[1].length > currencyLength)) && (charCode != 8 || (charcode != 46 && key != '.')))
+                return false;
             return true;
-
         }
-
-
 
         function getSelectionStart(o) {
-
             if (o.createTextRange) {
-
                 var r = document.selection.createRange().duplicate()
-
                 r.moveEnd('character', o.value.length)
-
                 if (r.text == '') return o.value.length
-
                 return o.value.lastIndexOf(r.text)
-
             } else return o.selectionStart
-
         }
-
-
 
         function stopRKey(evt) {
-
-            var evt = (evt) ? evt : ((event) ? event : null);
-
-
-
+            var evt  = (evt) ? evt : ((event) ? event : null);
             var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
-
-
-
-            if (evt.keyCode == 27) $("#confimation").modal('toggle');
-
-
-
+            let isShown = ($("#confimation").data('bs.modal') || {isShown: false}).isShown;
+            
+            if (evt.keyCode == 27 && isShown) $("#confimation").modal('toggle');
             if ((evt.keyCode == 13) && (node.type=="text")) return false;
-
         }
-
-
-
         document.onkeypress = stopRKey;
-
-
-
     </script> 
 
-
-
     <script type="text/javascript">
-
-        window.onload = function() { 
-
-            calculate(); 
-
-
-
+        window.onload = () => { 
+            calculate(1); 
             $("#btnCancelConfimation").click(function(){
-
                 $("#confimation").modal('toggle');
-
             });
-
         };
 
-
-
-        function calculate() {
-
-
-
-            var money_from = $("#money_from").val();
-
-
-
-            var money_to   = $("#money_to").val();
-
-
-
-            <?php foreach ($currencies as $currency): ?>
-
-
-
-                <?php 
-
-
-
-                    echo "if (money_from == $currency->id && money_to == 1) {";
-
-
-
-                    echo "var price_cu = $currency->price_cu;";
-
-                    echo "var price_bs = $currency->price_bs;";
-
-
-
-                    echo "$('#deposit').html('$currency->deposit');";
-
-                    echo "$('#fixedmemo').html('$currency->fixedmemo');";
-
-
-
-                        echo "if ('$currency->fixedmemo' == '') {";
-
-
-
-                            echo "$('#fixedshow').hide();";
-
-
-
-                        echo "} else {";
-
-
-
-                            echo "$('#fixedshow').show();";
-
-
-
-                        echo "}";
-
-
-
-                        echo "var from = $('#from').val();";
-
-
-
-                        echo "var res  = parseFloat(from) * price_bs;";
-
-
-
-                        echo "$('#to').val(res.toFixed(2));";
-
-
-
-                        echo "var to   = $('#to').val();";
-
-
-
-                        echo "if ('$currency->memo' == 'on') {";
-
-
-
-                        echo "$('#memo').hide();";
-
-
-
-                        echo "$('#memo2').show();";
-
-
-
-                        echo "if ('$currency->name' == 'SBD' || '$currency->name' == 'STEEM') {";
-
-
-
-                            echo "from = parseFloat(from).toFixed(3);";
-
-
-
-                            echo "$('#to').val(res.toFixed(2));";
-
-
-                            echo "var route = 'https://steemconnect.com/sign/transfer?to=capybaraexchange&amount='+from+'%20$currency->name&memo=$memo&redirect_uri=https://capybaraexchange.com/user/payment/$memo';";
-
-
-                            echo "$('#btn-transfer').click(function() {";
-                            echo "$('#formlink').attr('action', '/user/exchange/steem');";
-                            echo "});";
-                            echo "$('#steemlink').attr('value', route);";
-
-                            echo "$('#steemconnect').show();";
-
-
-
-                        echo "} else {";
-
-
-                            echo "$('#formlink').attr('action', '');";
-
-
-                        echo "}";
-
-
-
-                    echo "} else {";
-
+        function checkdecimals(op) {
+            let c_selected         = $("#from_id option:selected").text();
+            let numbers            = $("#money_from").val().split('.');
+            let currencyList       = ['SBD', 'STEEM'];
+            let output             = parseFloat(numbers[0] + '.' + ((numbers[1]) ? ((currencyList.includes(c_selected) && numbers[1].toString().length > 3) ? (numbers[1].toString().substr(0,3)) : (numbers[1].toString()) ): '0'));
+            
+            $('#money_from').val(output);
+            calculate(op);
+        }
+
+        function modifyValues(op, res, a, b) {
+            if (op)
+                $('#money_to').val(res.toFixed(a));
+            else
+                $('#money_from').val(res.toFixed(b));
+        }
+
+        function calculate(op) {
+            let currencyList    = ['SBD', 'STEEM'];
+            var from_id         = $("#from_id").val();
+            var to_id           = $("#to_id").val();
+            let currencies      =  <?= ($currencies) ? $currencies : 'undefined' ?>;
+            let memo            = "<?= $memo ?>";
+            
+            currencies.forEach((currency) => {
+                if (from_id == currency.id && to_id == 1) {
+                    var price_cu = currency.price_cu;
+                    var price_bs = currency.price_bs;
+
+                    $('#deposit')  .html(currency.deposit);
+                    $('#fixedmemo').html(currency.fixedmemo);
+
+                    if (currency.fixedmemo == '')
+                        $('#fixedshow').hide();
+                    else
+                        $('#fixedshow').show();
                     
+                    var from = $('#money_from').val();
+                    var to   = $('#money_to').val();
+                    var res  = (op) ? (parseFloat(from) * price_bs) : (parseFloat(to) / price_bs);
 
-                    echo "$('#formlink').attr('action', '');";
+                    modifyValues(op, res, 2, 8);
 
+                    if (currency.memo == 'on') {
+                        $('#memo').hide();
+                        $('#memo2').show();
 
+                        if (currencyList.includes(currency.name)) {
+                            from = parseFloat($('#money_from').val()).toFixed(3);
 
-                    echo "$('#memo2').hide();";
+                            modifyValues(op, res, 2, 3);
 
+                            let transfer_to = "capybaraexchange";
+                            let amount = `${from}%20${currency.name}`;
+                            let redirect = `https://capybaraexchange.com/user/payment/${memo}`;
 
+                            let route = `https://steemconnect.com/sign/transfer?to=${transfer_to}&amount=${amount}&memo=${memo}&redirect_uri=${redirect}`;
 
-                    echo "$('#memo').show();";
+                            $('#btn-transfer').click(function() {
+                                $('#exchange').attr('action', '/user/exchange/steem');
+                            });
 
-
-
-                    echo "$('#steemconnect').hide();";
-
-
-
-                    echo "}";
-
-
-
-                    echo "}";
-
-
-
-                ?>
-
-                
-
-            <?php endforeach ?>
-
-
-
+                            $('#link').attr('value', route);
+                            $('#steemconnect').show();
+                        } else 
+                            $('#exchange').attr('action', '');
+                    } else {
+                        $('#exchange').attr('action', '');
+                        $('#link').attr('value', '');
+                        $('#memo2').hide();
+                        $('#memo').show();
+                        $('#steemconnect').hide();
+                    }
+                }
+            });
         }
-
-
-
-        function calculate2() {
-
-
-
-            var money_from = $("#money_from").val();
-
-
-
-            var money_to   = $("#money_to").val();
-
-
-
-            <?php foreach ($currencies as $currency): ?>
-
-
-
-                <?php 
-
-
-
-                    echo "if (money_from == $currency->id && money_to == 1) {";
-
-
-
-                        echo "var price_cu = $currency->price_cu;";
-
-                        echo "var price_bs = $currency->price_bs;";
-
-
-
-                        echo "$('#deposit').html('$currency->deposit');";
-
-                        echo "$('#fixedmemo').html('$currency->fixedmemo');";
-
-
-
-                        echo "if ('$currency->fixedmemo' == '') {";
-
-
-
-                        echo "$('#fixedshow').hide();";
-
-
-
-                    echo "} else {";
-
-
-
-                        echo "$('#fixedshow').show();";
-
-
-
-                    echo "}";
-
-
-
-                    echo "var to   = $('#to').val();";
-
-
-
-                    echo "var res  = parseFloat(to) / price_bs;";
-
-
-
-                    echo "$('#from').val(res.toFixed(8));";
-
-
-
-                    echo "var from = $('#from').val();";
-
-
-
-                    echo "if ('$currency->memo' == 'on') {";
-
-
-
-                        echo "$('#memo').hide();";
-
-
-
-                        echo "$('#memo2').show();";
-
-
-
-                        echo "if ('$currency->name' == 'SBD' || '$currency->name' == 'STEEM') {";
-
-
-
-                            echo "from = parseFloat(from).toFixed(3);";
-
-
-
-                            echo "$('#from').val(res.toFixed(3));";
-
-
-                            echo "var route = 'https://steemconnect.com/sign/transfer?to=capybaraexchange&amount='+from+'%20$currency->name&memo=$memo&redirect_uri=https://capybaraexchange.com/user/payment/$memo';";
-
-                            echo "$('#btn-transfer').click(function() {";
-                            echo "$('#formlink').attr('action', '/user/exchange/steem');";
-                            echo "});";
-                            
-                            echo "$('#steemlink').attr('value', route);";
-
-                            echo "$('#steemconnect').show();";
-
-
-                        echo "} else {";
-
-
-                            echo "$('#formlink').attr('action', '');";
-
-
-                        echo "}";
-
-
-
-                    echo "} else {";
-
-
-                        echo "$('#formlink').attr('action', '');";
-
-
-                        echo "$('#memo2').hide();";
-
-                        
-
-                        echo "$('#memo').show();";
-
-
-
-                        echo "$('#steemconnect').hide()";
-
-
-
-                    echo "}";
-
-
-
-                    echo "}";
-
-
-
-                ?>
-
-                
-
-            <?php endforeach ?>
-
-
-
-        }
-
-
-
     </script>
-
-
-
 @endsection

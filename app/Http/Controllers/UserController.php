@@ -99,12 +99,38 @@ class UserController extends Controller
         
         if (!isset($data['account']) || !isset($data['bank']))
             return redirect()->back();
+
+
+        $memodatabase = 
+            strtoupper(str_replace(' ', '', $data['user_name'])) . 
+            strtoupper(str_replace(' ', '', $data['account_type'])) . 
+            str_replace('-', '', $data['dni']) . 
+            $data['account'] .
+            strtoupper(str_replace(' ', '', $bank->bankname)) .
+            $bank->accountcode;
+            
+        $memogenerated = "";
+        $len = strlen($memodatabase);
+        $memolen = 8;
+
+        do {
+            for ($i = 0; $i < $memolen; $i++)
+                $memogenerated .= substr($memodatabase, rand(0, $len), 1);
+
+            $count = Bankaccount::where('memo', 'like', "%$memogenerated%")
+                            ->get()
+                            ->count();
+        } while ($count != 0);
+            
+        $request['memo'] = $memogenerated;
+        
         $request->validate([
             'bank' => 'required',
             'account' => 'required',
             'user_name' => 'required',
             'dni' => 'required',
             'account_type' => 'required',
+            'memo' => 'required|unique:bankaccounts'
         ],[
             'bank.required' => 'El banco es requerido.',
             'account.required' => 'La cuenta es requerida.',
@@ -114,6 +140,7 @@ class UserController extends Controller
         ]);
         
         $user = \Auth::user();
+        $data['memo'] = $memogenerated;
         $data['user_id'] = $user->id;
         $data['bank_id'] = $bank->id;
 

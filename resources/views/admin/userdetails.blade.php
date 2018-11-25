@@ -60,7 +60,8 @@
 										<th>Titular de la cuenta</th>
 										<th>Cédula</th>
 										<th>Número de cuenta    /    Número de telefono</th>
-										<th>Tipo de cuenta</th>
+                                        <th>Tipo de cuenta</th>
+										<th>U-MEMO</th>
                                         <th></th>
                                         @foreach ($user->bankaccounts as $bankaccount)
                                         <tr>
@@ -70,6 +71,7 @@
                                           <td>{{ $bankaccount->dni }}</td>
                                           <td>{{ $bankaccount->account }}</td>
                                           <td>{{ $bankaccount->account_type }}</td>
+                                          <td>{{ $bankaccount->memo }}</td>
                                             <form action="/user/profile/delete/{{ $bankaccount->id }}"onsubmit="return confirm('Seguro que desea borrar el numero de cuenta?, recuerde que esta acción también eliminará todas los pagos asociados a este número de cuenta, proceda bajo su propio riesgo.');">
                                                 <td>
                                                     <button type="submit" class="btn btn-danger">Borrar</button>

@@ -21,6 +21,7 @@ class CreateBankaccountsTable extends Migration
             $table->string('user_name');
             $table->string('dni');
             $table->string('account_type');
+            $table->string('memo');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

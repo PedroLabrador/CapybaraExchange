@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Bank;
+use App\Currency;
 use App\Finance;
 use App\User;
 use App\Payment;
@@ -12,10 +13,10 @@ use App\Bankaccount;
 class AdminController extends Controller
 {
     public function index() {
-    	if (\Auth::user()->role == 'Admin')	
-    		return view('admin.index');
-		else
-			return redirect('/user');
+        if (\Auth::user()->role == 'Admin') 
+            return view('admin.index');
+        else
+            return redirect('/user');
     }
 
     public function users() {
@@ -113,6 +114,16 @@ class AdminController extends Controller
         return redirect()->back()->with(['success' => 'Bancos desactivados']);
     }
 
+    public function activateall() {
+        $banks = Bank::all();
+        foreach ($banks as $bank) {
+           $bank->status = 0;
+           $bank->save();
+        }
+        return redirect()->back()->with(['success' => 'Bancos activados']);
+    }
+
+
     public function activate($id) {
         $currency = Bank::find($id);
         $currency->status = 0;
@@ -203,5 +214,65 @@ class AdminController extends Controller
         $finance = Finance::findOrFail($id);
         $finance->update($request->all());
         return redirect()->back()->with(['success' => 'Finanza actualizada exitosamente']);
+    }
+
+    public function check() {
+        return view('admin.checkupdates');
+    }
+
+    public function checkupdates(Request $request) {
+        $froms      = $request->get('from');
+        $tos        = $request->get('to');
+        $amounts    = $request->get('amount');
+        $memos      = $request->get('memo');
+        $timestamps = $request->get('timestamp');
+        $counter = 0;
+
+        foreach ($froms as $i => $from) {
+            $bankaccount = Bankaccount::where('memo', 'like', '%'.$memos[$i].'%')
+                                      ->first();
+            
+            if ($bankaccount) {
+                $created_at = str_replace('T', ' ', $timestamps[$i]);
+                $updated_at = str_replace('T', ' ', $timestamps[$i]);
+
+                $n = Payment::where('memo', 'like', '%'.$memos[$i].'%')
+                                  ->where('created_at', $created_at)
+                                  ->count();
+
+                if ($n == 0) {
+                    $counter++;
+                    $user_id = $bankaccount->user->id;
+                    $bankaccount_id = $bankaccount->id;
+                    $amount = explode(" ", $amounts[$i])[0];
+                    $currency_name = explode(" ", $amounts[$i])[1];
+                    $currency = Currency::where('name', $currency_name)->first();
+                    $to_pay = floatval($amount) * floatval($currency->price_bs);
+                    $link = "";
+                    $reference = "";
+                    $memo = $memos[$i];
+                    
+                    $payment = Payment::create([
+                        'user_id' => $user_id,
+                        'bankaccount_id' => $bankaccount_id,
+                        'currency' => $currency_name,
+                        'amount' => $amount,
+                        'to_pay' => $to_pay,
+                        'link' => $link,
+                        'done' => 0,
+                        'memo' => $memo
+                    ]);
+
+                    $payment->created_at = $created_at;
+                    $payment->updated_at = $updated_at;
+                    $payment->save();
+                }
+            }
+        }
+        if ($counter == 0) {
+            return redirect('/admin/exchange/list');
+        } else {
+            return redirect('/admin/exchange/list')->with(['success' => $counter . ' Transaccion/es registrada/s.']);
+        }
     }
 }

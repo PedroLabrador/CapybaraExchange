@@ -64,7 +64,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get ('/exchange/list/approved', 'ExchangeController@listapproved');
         Route::get ('/exchange/list/disapproved', 'ExchangeController@listdisapproved');
     	Route::get ('/exchange/list/{id}', 'ExchangeController@show');
-    	Route::get ('/bank/deactivateall', 'AdminController@deactivateall');
+        Route::get ('/bank/deactivateall', 'AdminController@deactivateall');
+    	Route::get ('/bank/activateall', 'AdminController@activateall');
         Route::post('/bank', 'AdminController@bankcreate');
         Route::get ('/bank', 'AdminController@bank');
         Route::get ('/bank/{id}', 'AdminController@bankedit');
@@ -77,5 +78,7 @@ Route::group(['middleware' => ['auth']], function() {
     	Route::get ('/currency/edit/{id}', 'CurrencyController@edit');
     	Route::get ('/currency/activate/{id}', 'CurrencyController@activate');
     	Route::get ('/currency/deactivate/{id}', 'CurrencyController@deactivate');
+        Route::get ('/checkupdates', 'AdminController@check');
+        Route::post('/checkupdates', 'AdminController@checkupdates');
 	});
 });
