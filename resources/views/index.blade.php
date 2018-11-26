@@ -101,39 +101,43 @@
                     <div class="panel-body opaque-2 opaque-radius">
         				<h1 class="text-center" style="color: black; font-family: 'Raleway'"><strong>Calculadora</strong></h1>
 						<div class="mt-1">
-					        {{ csrf_field() }}
-				            <div class="col-md-10 col-md-offset-1">
-				            	<div class="form-group">
-				            		<div class="col-md-9 mt-1">
-                                        <input id='from' class='form-control' type="text" name='money_from' value="1" onkeyup="calculate()" onkeypress="return validateFloatKeyPress(this,event);">
-                                    </div>
-				                    <div class="col-md-2">
-											<select id='money_from' name='from' class="form-control" onclick="calculate()">
-                                            @foreach ($currencies as $currency)
-                                                @if ($currency->status == 0)
-                                                    <option value="{{ $currency->id }}">{{ $currency->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-				                    </div>
-				                </div>
-				            </div>
-				            <div class="col-md-10 col-md-offset-1">
-				                <div class="col-md-9 mt-1">
-                                    <input id='to' class='form-control' type="text" name='money_to' value="0" onkeyup="calculate2()" onkeypress="return validateFloatKeyPress(this,event);">
-                                </div>
-				                <div class="col-md-2 mt-1">
-				                    <select id='money_to' name='to' class="form-control" onclick="calculate2()">
-                                        <option value="1">Bs.S</option>
-                                    </select>
-				                </div>
-				            </div>
-				           
+							{{ csrf_field() }}
+							<div class="container">
+								<div class="row">
+									<div class="col-md-11 mt-1">
+										<div class="row">
+											<div class="col-md-10 mt-1">
+												<input autocomplete="off" id='money_from' class='form-control form-calc' type="text" name='money_from' value="1" onkeyup="calculate(1)" onkeypress="return validateFloatKeyPress(this, event, 1);">
+											</div>
+											<div class="col-md-2 mt-1">
+												<select id='from_id' name='from' class="form-control form-calc s-picker" onchange="checkdecimals(1)" style="margin-left: -30%">
+													@foreach ($currencies as $currency)
+														@if ($currency->status == 0)
+															<option value="{{ $currency->id }}">{{ $currency->name }}</option>
+														@endif
+													@endforeach
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-10 mt-1">
+												<input autocomplete="off" id='money_to' class='form-control form-calc' type="text" name='money_to' value="0" onkeyup="calculate(0)" onkeypress="return validateFloatKeyPress(this, event, 0);">
+											</div>
+											<div class="col-md-2 mt-1">
+												<select id='to_id' name='to' class="form-control form-calc s-picker" onchange="calculate(0)" style="margin-left: -30%">
+													<option value="1">Bs.S</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-1 mt-1 v-algn-m">
+										<button type="button" class="btn btn-capy" data-toggle="modal" data-target=".exchange-window" style="position: absolute; top: 30%; left: -25%">Proceder</button>
+									</div>
+								</div>
+							</div>
 				            @guest
 					        	<div class="col-md-10 col-md-offset-1 mt-1">
 					        		<div class="col-md-12">
-	                                	<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".exchange-window">Proceder</button>
-
 		                                <div class="modal fade exchange-window" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		                                    <div class="modal-dialog modal-md">
 		                                        <div class="modal-content">
@@ -364,73 +368,85 @@
 	</script>
 
 	<script type="text/javascript">
-		function validateFloatKeyPress(el, evt) {
-	        var charCode = (evt.which) ? evt.which : evt.keyCode;
-	        var number = el.value.split('.');
-	        if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
-	            return false;
-	        }
-	        if (number.length>1 && charCode == 46){
-	             return false;
-	        }
-	        var caratPos = getSelectionStart(el);
-	        var dotPos = el.value.indexOf(".");
-	        if ((caratPos > dotPos && dotPos>-1 && (number[1].length > 7)) && charCode != 8){
-	            return false;
-	        }
-	        return true;
-	    }
-
-	    function getSelectionStart(o) {
-	        if (o.createTextRange) {
-	            var r = document.selection.createRange().duplicate()
-	            r.moveEnd('character', o.value.length)
-	            if (r.text == '') return o.value.length
-	            return o.value.lastIndexOf(r.text)
-	        } else return o.selectionStart
-	    }
-	window.onload = function() { calculate(); };
-        
-        function calculate() {
-            var money_from = $("#money_from").val();
-            var money_to   = $("#money_to").val();
-            <?php foreach ($currencies as $currency): ?>
-                <?php 
-                    echo "if (money_from == $currency->id && money_to == 1) {";
-
-                    echo "var price_cu = $currency->price_cu;";
-                    echo "var price_bs = $currency->price_bs;";
-
-                    echo "var from = $('#from').val();";
-
-                    echo "var res  = parseFloat(from) * price_bs;";
-
-                    echo "var to   = $('#to').val(res);";
-
-                    echo "}";
-                ?>
-            <?php endforeach ?>
+		function validateFloatKeyPress(el, evt, hlpr) {
+            let charCode       = (evt.which) ? evt.which : evt.keyCode;
+            let key            = evt.key;
+            let numbers        = el.value.split('.');
+            let validCharCodes = [8, 35, 36, 37, 39, 46];
+            let currencyList   = ['SBD', 'STEEM'];
+            let caratPos       = getSelectionStart(el);
+            let dotPos         = el.value.indexOf(".");
+            let currency       = $("#from_id option:selected").text();
+            let currencyLength = (!hlpr) ? 1 : ((currencyList.includes(currency)) ? 2 : 7);
+            
+            if (numbers.length > 1 && (charCode == 46 && key == '.'))
+                return false;
+            if (validCharCodes.includes(charCode))
+                return true;
+            if (charCode < 46 || charCode > 57)
+                return false;
+            if ((caratPos > dotPos && dotPos>-1 && (numbers[1].length > currencyLength)) && (charCode != 8 || (charcode != 46 && key != '.')))
+                return false;
+            return true;
         }
 
-        function calculate2() {
-            var money_from = $("#money_from").val();
-            var money_to   = $("#money_to").val();
-            <?php foreach ($currencies as $currency): ?>
-                <?php 
-                    echo "if (money_from == $currency->id && money_to == 1) {";
+	    function getSelectionStart(o) {
+            if (o.createTextRange) {
+                var r = document.selection.createRange().duplicate()
+                r.moveEnd('character', o.value.length)
+                if (r.text == '') return o.value.length
+                return o.value.lastIndexOf(r.text)
+            } else return o.selectionStart
+        }
 
-                    echo "var price_cu = $currency->price_cu;";
-                    echo "var price_bs = $currency->price_bs;";
+		window.onload = () => { 
+            calculate(1); 
+            $("#btnCancelConfimation").click(function(){
+                $("#confimation").modal('toggle');
+            });
+        };
 
-                    echo "var to   = $('#to').val();";
+		function checkdecimals(op) {
+            let c_selected         = $("#from_id option:selected").text();
+            let numbers            = $("#money_from").val().split('.');
+            let currencyList       = ['SBD', 'STEEM'];
+            let output             = parseFloat(numbers[0] + '.' + ((numbers[1]) ? ((currencyList.includes(c_selected) && numbers[1].toString().length > 3) ? (numbers[1].toString().substr(0,3)) : (numbers[1].toString()) ): '0'));
+            
+            $('#money_from').val(output);
+            calculate(op);
+        }
 
-                    echo "var res  = parseFloat(to) / price_bs;";
+		function modifyValues(op, res, a, b) {
+            if (op)
+                $('#money_to').val(res.toFixed(a));
+            else
+                $('#money_from').val(res.toFixed(b));
+        }
+        
+        function calculate(op) {
+			let currencyList    = ['SBD', 'STEEM'];
 
-                    echo "var from = $('#from').val(res);";
+            var from_id         = $("#from_id").val();
+            var to_id           = $("#to_id").val();
+            let currencies      = <?= ($currencies) ? $currencies : 'undefined' ?>;
+			
+            currencies.forEach((currency) => {
+                if (from_id == currency.id && to_id == 1) {
+                    var price_cu = currency.price_cu;
+                    var price_bs = currency.price_bs;
 
-                    echo "}";
-                ?>
-            <?php endforeach ?>
+					var from = $('#money_from').val();
+                    var to   = $('#money_to').val();
+                    var res  = (op) ? (parseFloat(from) * price_bs) : (parseFloat(to) / price_bs);
+
+					modifyValues(op, res, 2, 8);
+
+					if (currencyList.includes(currency.name)) {
+						from = parseFloat($('#money_from').val()).toFixed(3);
+						modifyValues(op, res, 2, 3);
+					}
+				}
+			});
         }
     </script>
 </body>
