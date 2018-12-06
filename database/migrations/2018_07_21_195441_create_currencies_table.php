@@ -22,6 +22,10 @@ class CreateCurrenciesTable extends Migration
             $table->boolean('status')->default(0);
             $table->string('memo');
             $table->string('fixedmemo')->nullable();
+            $table->string('minrate')->nullable();
+            $table->string('increment')->nullable();
+            $table->string('lmin')->nullable();
+            $table->string('lmax')->nullable();
             $table->timestamps();
         });
     }

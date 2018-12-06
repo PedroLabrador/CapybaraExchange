@@ -110,7 +110,7 @@
 												<input autocomplete="off" id='money_from' class='form-control form-calc' type="text" name='money_from' value="1" onkeyup="calculate(1)" onkeypress="return validateFloatKeyPress(this, event, 1);">
 											</div>
 											<div class="col-md-2 mt-1">
-												<select id='from_id' name='from' class="form-control form-calc s-picker" onchange="checkdecimals(1)" style="margin-left: -30%">
+												<select id='from_id' name='from' class="form-control form-calc s-picker pos" onchange="checkdecimals(1)">
 													@foreach ($currencies as $currency)
 														@if ($currency->status == 0)
 															<option value="{{ $currency->id }}">{{ $currency->name }}</option>
@@ -124,15 +124,33 @@
 												<input autocomplete="off" id='money_to' class='form-control form-calc' type="text" name='money_to' value="0" onkeyup="calculate(0)" onkeypress="return validateFloatKeyPress(this, event, 0);">
 											</div>
 											<div class="col-md-2 mt-1">
-												<select id='to_id' name='to' class="form-control form-calc s-picker" onchange="calculate(0)" style="margin-left: -30%">
+												<select id='to_id' name='to' class="form-control form-calc s-picker pos" onchange="calculate(0)">
 													<option value="1">Bs.S</option>
 												</select>
 											</div>
 										</div>
 									</div>
 									<div class="col-md-1 mt-1 v-algn-m">
-										<button type="button" class="btn btn-capy" data-toggle="modal" data-target=".exchange-window" style="position: absolute; top: 30%; left: -25%">Proceder</button>
+										@guest
+											<button type="button" class="btn btn-capy btn-pos" data-toggle="modal" data-target=".exchange-window">Proceder</button>
+										@else
+											<a href="/user/exchange" class="btn btn-capy btn-pos">Proceder</a>
+										@endguest
 									</div>
+									<div id='rates' class='col-md-10 mt-1' style='display: hidden'>
+                                        <div class='col-md-4' style='margin-left: 0; margin-bottom: 1em'>
+                                            <label for="minrate">Tasa mínima</label>
+                                            <input readonly id='minrate' type="text" class='form-control form-calc'>
+                                        </div>
+                                        <div class='col-md-4' style='margin-left: 0; margin-bottom: 1em'>
+                                            <label for="rate">Tasa actual</label>
+                                            <input readonly id='rate' type="text" class='form-control form-calc'>
+                                        </div>
+                                        <div class='col-md-4' style='margin-left: 0; margin-bottom: 1em'>
+                                            <label for="maxrate">Tasa máxima</label>
+                                            <input readonly id='maxrate' type="text" class='form-control form-calc'>
+                                        </div>
+                                    </div>
 								</div>
 							</div>
 				            @guest
@@ -293,12 +311,6 @@
 		                                </div>
 	                                </div>
 	                            </div>
-		        			@else
-					        	<div class="col-md-10 col-md-offset-1 mt-1">
-		        					<div class="col-md-12">
-		        						<a href="/user/exchange" class="btn btn-primary">Proceder</a>
-		        					</div>
-		        				</div>
 		        			@endguest
 					    </div>
 					</div>
@@ -440,6 +452,30 @@
                     var res  = (op) ? (parseFloat(from) * price_bs) : (parseFloat(to) / price_bs);
 
 					modifyValues(op, res, 2, 8);
+
+					                    var minrate = parseFloat(currency.minrate);
+                    var increment = parseFloat(currency.increment);
+                    var lmin = parseFloat(currency.lmin);
+                    var lmax = parseFloat(currency.lmax);
+                    var X = 0;
+                    var rate = 0;
+                    
+                    if (lmin && lmax && increment && minrate) {
+                        if (from >= lmin && from <= lmax)
+                            X = parseFloat(from / parseFloat(lmax));
+                        else if (from >= lmax)
+                            X = 1;
+                        
+                        $('#minrate').val(minrate.toFixed(2));
+                        rate = minrate + (minrate * increment * X);
+                        $('#rate').val(rate.toFixed(2));
+                        rate = minrate + (minrate * increment * 1);
+                        $('#maxrate').val(rate.toFixed(2));
+
+                        $("#rates").show();
+                    } else {
+                        $("#rates").hide();
+                    }
 
 					if (currencyList.includes(currency.name)) {
 						from = parseFloat($('#money_from').val()).toFixed(3);

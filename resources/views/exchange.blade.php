@@ -64,11 +64,22 @@
                                     <div class="col-md-2 mt-1 v-algn-m">
                                         <button type="button" class="btn btn-capy" data-toggle="modal" data-target=".exchange-window">Proceder</button>
                                     </div>
+                                    <div id='rates' class='col-md-10 mt-1' style='padding-left:0; display: hidden'>
+                                        <div class='col-md-4' style='margin-left: 0; padding-left: 0'>
+                                            <label for="minrate">Tasa mínima</label>
+                                            <input readonly id='minrate' type="text" class='form-control form-calc'>
+                                        </div>
+                                        <div class='col-md-4' style='margin-left: 0; padding-left: 0'>
+                                            <label for="rate">Tasa actual</label>
+                                            <input readonly id='rate' type="text" class='form-control form-calc'>
+                                        </div>
+                                        <div class='col-md-4' style='margin-left: 0; padding-left: 0'>
+                                            <label for="maxrate">Tasa máxima</label>
+                                            <input readonly id='maxrate' type="text" class='form-control form-calc'>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-12 mt-1">
-                                    <strong>Nota:</strong> Todos los precios estan marcados en Bs.S o bolívares soberanos, 1Bs.S=100.000Bs antiguos.
-                                </div>
-                                
+                                <div class="col-md-2"></div>
                                 <div class="col-md-10 col-md-offset-1 mt-1">
                                     <div class="modal fade exchange-window" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
@@ -257,6 +268,30 @@
                     var res  = (op) ? (parseFloat(from) * price_bs) : (parseFloat(to) / price_bs);
 
                     modifyValues(op, res, 2, 8);
+                    
+                    var minrate = parseFloat(currency.minrate);
+                    var increment = parseFloat(currency.increment);
+                    var lmin = parseFloat(currency.lmin);
+                    var lmax = parseFloat(currency.lmax);
+                    var X = 0;
+                    var rate = 0;
+                    
+                    if (lmin && lmax && increment && minrate) {
+                        if (from >= lmin && from <= lmax)
+                            X = parseFloat(from / parseFloat(lmax));
+                        else if (from >= lmax)
+                            X = 1;
+                        
+                        $('#minrate').val(minrate.toFixed(2));
+                        rate = minrate + (minrate * increment * X);
+                        $('#rate').val(rate.toFixed(2));
+                        rate = minrate + (minrate * increment * 1);
+                        $('#maxrate').val(rate.toFixed(2));
+
+                        $("#rates").show();
+                    } else {
+                        $("#rates").hide();
+                    }
 
                     if (currency.memo == 'on') {
                         $('#memo').hide();

@@ -127,6 +127,54 @@
                                     <input id='fixedmemo' class='form-control' type="text" value='{{ $currency->fixedmemo }}' name="fixedmemo">
 
                                 </div>
+
+                                <div class="col-md-10 col-md-offset-1 mt-1">
+
+                                    <label for='minrate'>Tasa Minima:</label>
+
+                                </div>
+
+                                <div class="col-md-10 col-md-offset-1">
+
+                                    <input id='minrate' class='form-control' type="text" value='{{ ($currency->minrate) ? $currency->minrate : "" }}' name="minrate">
+
+                                </div>
+
+                                <div class="col-md-10 col-md-offset-1 mt-1">
+
+                                    <label for='increment'>Incremento:</label>
+
+                                </div>
+
+                                <div class="col-md-10 col-md-offset-1">
+
+                                    <input id='increment' class='form-control' type="text" value='{{ ($currency->increment) ? $currency->increment : "" }}' name="increment">
+
+                                </div>
+
+                                <div class="col-md-10 col-md-offset-1 mt-1">
+
+                                    <label for='lmin'>Lmin:</label>
+
+                                </div>
+
+                                <div class="col-md-10 col-md-offset-1">
+
+                                    <input id='lmin' class='form-control' type="text" value='{{ ($currency->lmin) ? $currency->lmin : "" }}' name="lmin">
+
+                                </div>
+
+                                <div class="col-md-10 col-md-offset-1 mt-1">
+
+                                    <label for='lmax'>Lmax:</label>
+
+                                </div>
+
+                                <div class="col-md-10 col-md-offset-1">
+
+                                    <input id='lmax' class='form-control' type="text" value='{{ ($currency->lmax) ? $currency->lmax : "" }}' name="lmax">
+
+                                </div>
                             
                                 <div class="col-md-10 col-md-offset-1 mt-1">
 

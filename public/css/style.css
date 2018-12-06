@@ -240,3 +240,24 @@
 	color: white;
 	background-color: #2A3F54;
 }
+
+.btn-pos {
+	position: absolute; 
+	top: 30%; 
+	left: -25%
+}
+
+.pos {
+	margin-left: -30%
+}
+
+@media only screen and (max-width : 480px) {
+	.btn-pos {
+		position: absolute;
+		top: 30%;
+		left: 400%;
+	}
+	.pos {
+		margin-left: 0%
+	}
+}
