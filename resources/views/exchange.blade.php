@@ -64,7 +64,7 @@
                                     <div class="col-md-2 mt-1 v-algn-m">
                                         <button type="button" class="btn btn-capy" data-toggle="modal" data-target=".exchange-window">Proceder</button>
                                     </div>
-                                    <div id='rates' class='col-md-10 mt-1' style='padding-left:0; display: hidden'>
+                                    <div id='rates' class='col-md-10 mt-1' style='padding-left:0; display: none'>
                                         <div class='col-md-4' style='margin-left: 0; padding-left: 0'>
                                             <label for="minrate">Tasa mínima</label>
                                             <input readonly id='minrate' type="text" class='form-control form-calc'>
@@ -265,16 +265,14 @@
                     
                     var from = $('#money_from').val();
                     var to   = $('#money_to').val();
-                    var res  = (op) ? (parseFloat(from) * price_bs) : (parseFloat(to) / price_bs);
-
-                    modifyValues(op, res, 2, 8);
                     
-                    var minrate = parseFloat(currency.minrate);
+					var minrate = parseFloat(price_bs);
                     var increment = parseFloat(currency.increment);
                     var lmin = parseFloat(currency.lmin);
                     var lmax = parseFloat(currency.lmax);
                     var X = 0;
-                    var rate = 0;
+                    var rate = parseFloat(from) * price_bs;
+                    var maxrate = 0;
                     
                     if (lmin && lmax && increment && minrate) {
                         if (from >= lmin && from <= lmax)
@@ -283,15 +281,20 @@
                             X = 1;
                         
                         $('#minrate').val(minrate.toFixed(2));
-                        rate = minrate + (minrate * increment * X);
+                        rate = (minrate + (minrate * increment * X));
                         $('#rate').val(rate.toFixed(2));
-                        rate = minrate + (minrate * increment * 1);
-                        $('#maxrate').val(rate.toFixed(2));
+                        maxrate = minrate + (minrate * increment * 1);
+                        $('#maxrate').val(maxrate.toFixed(2));
+						rate *= parseFloat(from);
 
                         $("#rates").show();
                     } else {
                         $("#rates").hide();
                     }
+
+                    var res  = (op) ? (rate) : (parseFloat(to) / price_bs);
+
+                    modifyValues(op, res, 2, 8);
 
                     if (currency.memo == 'on') {
                         $('#memo').hide();

@@ -130,18 +130,6 @@
 
                                 <div class="col-md-10 col-md-offset-1 mt-1">
 
-                                    <label for='minrate'>Tasa Minima:</label>
-
-                                </div>
-
-                                <div class="col-md-10 col-md-offset-1">
-
-                                    <input id='minrate' class='form-control' type="text" value='{{ ($currency->minrate) ? $currency->minrate : "" }}' name="minrate">
-
-                                </div>
-
-                                <div class="col-md-10 col-md-offset-1 mt-1">
-
                                     <label for='increment'>Incremento:</label>
 
                                 </div>

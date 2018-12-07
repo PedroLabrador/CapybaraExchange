@@ -13,7 +13,6 @@ class Currency extends Model
         'deposit', 
         'memo', 
         'fixedmemo', 
-        'minrate', 
         'increment', 
         'lmin', 
         'lmax'
