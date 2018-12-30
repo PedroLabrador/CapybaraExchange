@@ -38,7 +38,7 @@
                                     <div class="col-md-10 mt-1">
                                         <div class="row">
                                             <div class="col-md-10 mt-1 reset">
-                                                <input autocomplete="off" id='money_from' class='form-control form-calc' type="text" name='money_from' value="1" onkeyup="calculate(1)" onkeypress="return validateFloatKeyPress(this, event, 1);">
+                                                <input autocomplete="off" id='money_from' class='form-control form-calc' type="text" name='money_from' value="1" onkeyup="calculate(1)" onkeyup="return validateFloatKeyPress(this, event, 1);">
                                             </div>
                                             <div class="col-md-2 mt-1 reset">
                                                 <select id='from_id' name='from' class="form-control form-calc s-picker" onchange="checkdecimals(1)" onclick="">
@@ -52,7 +52,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-10 mt-1 reset">
-                                                <input autocomplete="off" id='money_to' class='form-control form-calc' type="text" name='money_to' value="0" onkeyup="calculate(0)" onkeypress="return validateFloatKeyPress(this, event, 0);">
+                                                <input autocomplete="off" id='money_to' class='form-control form-calc' type="text" name='money_to' value="0" onkeyup="calculate(0)" onkeyup="return validateFloatKeyPress(this, event, 0);">
                                             </div>
                                             <div class="col-md-2 mt-1 reset">
                                                 <select id='to_id' name='to' class="form-control form-calc s-picker" onchange="calculate(0)">
@@ -272,6 +272,7 @@
                     var lmax = parseFloat(currency.lmax);
                     var X = 0;
                     var rate = parseFloat(from) * price_bs;
+                    var rate2 = parseFloat(to) / price_bs;
                     var maxrate = 0;
                     
                     if (lmin && lmax && increment && minrate) {
@@ -281,18 +282,21 @@
                             X = 1;
                         
                         $('#minrate').val(minrate.toFixed(2));
-                        rate = (minrate + (minrate * increment * X));
+                        rate  = (minrate + (minrate * increment * X));
+                        rate2 = (rate2 - (rate2 - rate));
                         $('#rate').val(rate.toFixed(2));
                         maxrate = minrate + (minrate * increment * 1);
                         $('#maxrate').val(maxrate.toFixed(2));
+                        rate2 = parseFloat(to) / rate2;
 						rate *= parseFloat(from);
+
 
                         $("#rates").show();
                     } else {
                         $("#rates").hide();
                     }
 
-                    var res  = (op) ? (rate) : (parseFloat(to) / price_bs);
+                    var res  = (op) ? (rate) : (rate2);
 
                     modifyValues(op, res, 2, 8);
 
